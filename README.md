@@ -10,15 +10,19 @@
 - **Username:** ReplaceThisWithUsername
 - **Password:** ReplaceThisWithPassword
 
-## 📖 About this Software
 
-Provide a comprehensive explanation of your software here. Dive into its core functionalities, why you opted to create it, its target users, and its value proposition.
+## 📖 About This Software
 
-### Features:
+Kanban Board is a full-stack application built from scratch to manage tasks visually across boards and columns. It demonstrates the ability to design, implement, and deploy a production-ready application.
 
-1. **Feature 1:** Brief description.
-2. **Feature 2:** Brief description.
-3. **...:** Continue listing out the core features of your application.
+## Key Features:
+
+- User authentication and authorization using ASP.NET Core Identity
+- Task and board management (create, update, move, delete)
+- Secure API endpoints with policy-based authorization
+- Built with .NET 8 minimal APIs and C# 12
+- Data access via Entity Framework Core 8
+- Cloud deployment to Azure with automated builds and deployments via GitHub Actions
 
 ## 🖼️ Screenshots
 
