@@ -1,2 +1,40 @@
+# Visual Studio / VS Code
+.vscode/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build artifacts
 bin/
 obj/
+out/
+TestResults/
+
+# Rider IDE
+.idea/
+
+# NuGet
+*.nupkg
+packages/
+*.snupkg
+
+# ASP.NET / Web
+*.db
+*.log
+*.vspscc
+appsettings.*.json
+secrets.json
+*.publishsettings
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.tmp
+*.temp
+
+

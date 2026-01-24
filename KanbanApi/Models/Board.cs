@@ -1,0 +1,41 @@
+namespace KanbanApi.Models;
+
+public class Board{
+
+    public int Id {get; set; }
+    public string Name { get; set; } = string.Empty;
+    public List<Column> Columns {get; set; } = new();
+    public List<BoardMember> Users {get; set; } = new();
+
+    //Default constructor
+    private Board(){}
+
+    // Parameterized constructor
+    public Board(string name){
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Board name cannot be empty!", nameof(name));
+
+        //trimming the name in case of white spaces
+        Name = name.Trim();
+
+        Columns = new List<Column>
+        {
+            new Column("Backlog", 0, this),
+            new Column("To Do", 1, this),
+            new Column("In Progress", 2, this),
+            new Column("Done", 3, this)
+        };
+    }
+
+    public void AddUser(BoardMember user)
+    {
+        if (user == null)
+            throw new ArgumentNullException(nameof(user));
+        
+        if (Users.Exists(u => u.UserId == user.UserId))
+            throw new InvalidOperationException("User already exists on this board.");
+        Users.Add(user);
+    }
+}
+
+
