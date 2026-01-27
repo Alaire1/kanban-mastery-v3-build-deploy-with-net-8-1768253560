@@ -9,7 +9,7 @@ public class Column
     public int BoardId { get; set; }
     public Board Board { get; set; } = null!;
 
-    public List<Card> Cards { get; set; } = new List<Card>();
+    public ICollection<Card> Cards { get; set; } = new List<Card>();
 
     // Default constructor
     private Column() { }
