@@ -4,6 +4,6 @@ namespace KanbanApi.Models;
 
 public class ApplicationUser : IdentityUser {
     public string FullName { get; set; } = string.Empty;
-    public List<BoardMember> Boards { get; set; } = new();
+    public ICollection<BoardMember> BoardMemberships { get; set; } = new List<BoardMember>();
 }
 

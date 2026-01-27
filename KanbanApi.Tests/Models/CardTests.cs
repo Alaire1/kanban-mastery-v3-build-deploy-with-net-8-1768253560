@@ -1,6 +1,8 @@
 using KanbanApi.Models; 
 using FluentAssertions; 
-using Xunit;            
+using Xunit;
+
+namespace KanbanApi.Tests.Models;
 
 public class CardTests
 {
@@ -10,12 +12,12 @@ public class CardTests
         var board = new Board("Test Board");
         var column = new Column("Backlog", 0, board);
         var card = new Card("Implement feature", column);
-
+        
         card.Title.Should().Be("Implement feature");
         card.Column.Should().Be(column);
-        card.Column.Cards.Should().Contain(card); // if constructor adds automatically
+        card.Column.Cards.Should().Contain(card);
     }
-
+    
     [Theory]
     [InlineData(null)]
     [InlineData("")]
@@ -24,17 +26,19 @@ public class CardTests
     {
         var board = new Board("Test Board");
         var column = new Column("Backlog", 0, board);
-
+        
         Action act = () => new Card(invalidTitle, column);
+        
         act.Should().Throw<ArgumentException>()
             .WithMessage("Card title cannot be empty!*")
             .WithParameterName("title");
     }
-
+    
     [Fact]
     public void Constructor_WithNullColumn_ShouldThrowArgumentNullException()
     {
         Action act = () => new Card("Test Card", null!);
+        
         act.Should().Throw<ArgumentNullException>();
     }
 }

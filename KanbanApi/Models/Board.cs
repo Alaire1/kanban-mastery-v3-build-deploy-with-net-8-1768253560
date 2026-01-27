@@ -4,8 +4,8 @@ public class Board{
 
     public int Id {get; set; }
     public string Name { get; set; } = string.Empty;
-    public List<Column> Columns {get; set; } = new();
-    public List<BoardMember> Users {get; set; } = new();
+    public ICollection<Column> Columns { get; set; } = new List<Column>();
+    public ICollection<BoardMember> Members { get; set; } = new List<BoardMember>();
 
     //Default constructor
     private Board(){}
@@ -32,9 +32,9 @@ public class Board{
         if (user == null)
             throw new ArgumentNullException(nameof(user));
         
-        if (Users.Exists(u => u.UserId == user.UserId))
+        if (Members.Any(u => u.UserId == user.UserId))  // ✅ Use LINQ's Any() instead
             throw new InvalidOperationException("User already exists on this board.");
-        Users.Add(user);
+        Members.Add(user);
     }
 }
 
