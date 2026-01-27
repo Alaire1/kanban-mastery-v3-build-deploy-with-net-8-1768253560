@@ -1,3 +1,11 @@
+/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/KanbanApi.csproj.AssemblyReference.cache
+/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/KanbanApi.GeneratedMSBuildEditorConfig.editorconfig
+/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/KanbanApi.AssemblyInfoInputs.cache
+/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/KanbanApi.AssemblyInfo.cs
+/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/KanbanApi.csproj.CoreCompileInputs.cache
+/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/KanbanApi.MvcApplicationPartsAssemblyInfo.cs
+/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/KanbanApi.MvcApplicationPartsAssemblyInfo.cache
+/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/KanbanApi.sourcelink.json
 /home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/bin/Debug/net8.0/appsettings.Development.json
 /home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/bin/Debug/net8.0/appsettings.json
 /home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/bin/Debug/net8.0/KanbanApi
@@ -10,14 +18,6 @@
 /home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/bin/Debug/net8.0/Swashbuckle.AspNetCore.Swagger.dll
 /home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerGen.dll
 /home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/bin/Debug/net8.0/Swashbuckle.AspNetCore.SwaggerUI.dll
-/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/KanbanApi.csproj.AssemblyReference.cache
-/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/KanbanApi.GeneratedMSBuildEditorConfig.editorconfig
-/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/KanbanApi.AssemblyInfoInputs.cache
-/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/KanbanApi.AssemblyInfo.cs
-/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/KanbanApi.csproj.CoreCompileInputs.cache
-/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/KanbanApi.MvcApplicationPartsAssemblyInfo.cs
-/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/KanbanApi.MvcApplicationPartsAssemblyInfo.cache
-/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/KanbanApi.sourcelink.json
 /home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/staticwebassets.build.json
 /home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/staticwebassets.development.json
 /home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/obj/Debug/net8.0/staticwebassets/msbuild.KanbanApi.Microsoft.AspNetCore.StaticWebAssets.props
