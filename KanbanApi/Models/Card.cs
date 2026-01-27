@@ -2,11 +2,10 @@ namespace KanbanApi.Models;
 
 public class Card
 {
-    public int Id { get; set; }
-    public string Title { get; set; } = string.Empty;
-
-    public int ColumnId { get; set; }
-    public Column Column { get; set; } = null!;
+    public int Id { get; private set; }
+    public string Title { get; private set; } = string.Empty;
+    public int ColumnId { get; private set; }
+    public Column Column { get; private set; } = null!;
 
     // Default constructor
     private Card() { }
@@ -23,6 +22,5 @@ public class Card
         Title = title.Trim();
         Column = column;
         ColumnId = column.Id;
-        column.Cards.Add(this);
     }
 }
