@@ -6,6 +6,7 @@ namespace KanbanApi.Tests.Models;
 
 public class BoardTests
 {
+    //BASIC TEST
     [Fact]
     public void Constructor_WithValidName_ShouldCreateBoard()
     {
@@ -14,9 +15,9 @@ public class BoardTests
         board.Name.Should().Be("My Project");
         board.Id.Should().Be(0);
         
-        // Users should exist and be empty
-        board.Users.Should().NotBeNull();
-        board.Users.Should().BeEmpty();
+        // Members should exist and be empty
+        board.Members.Should().NotBeNull();
+        board.Members.Should().BeEmpty();
         
         // Columns should exist and have 4 items
         board.Columns.Should().NotBeNull();
@@ -27,18 +28,25 @@ public class BoardTests
     public void Constructor_WithValidName_ShouldCreateFourDefaultColumns()
     {
         var board = new Board("Test Board");
+        var columns = board.Columns.OrderBy(c => c.Position).ToList();
         
         board.Columns.Should().HaveCount(4);
-        board.Columns[0].Name.Should().Be("Backlog");
-        board.Columns[0].Position.Should().Be(0);
-        board.Columns[1].Name.Should().Be("To Do");
-        board.Columns[1].Position.Should().Be(1);
-        board.Columns[2].Name.Should().Be("In Progress");
-        board.Columns[2].Position.Should().Be(2);
-        board.Columns[3].Name.Should().Be("Done");
-        board.Columns[3].Position.Should().Be(3);
+        columns[0].Name.Should().Be("Backlog");
+        columns[0].Position.Should().Be(0);
+        columns[1].Name.Should().Be("To Do");
+        columns[1].Position.Should().Be(1);
+        columns[2].Name.Should().Be("In Progress");
+        columns[2].Position.Should().Be(2);
+        columns[3].Name.Should().Be("Done");
+        columns[3].Position.Should().Be(3);
     }
-    
+    [Fact]
+    public void Constructor_ShouldTrimBoardName()
+    {
+        var board = new Board("  My Board  ");
+        board.Name.Should().Be("My Board");
+    }  
+
     [Theory]
     [InlineData(null)]
     [InlineData("")]
@@ -53,6 +61,7 @@ public class BoardTests
             .WithParameterName("name");
     }
     
+    //ADD USER TESTS
     [Fact]
     public void AddUser_WithValidUser_ShouldAddUserToBoard()
     {
@@ -61,8 +70,8 @@ public class BoardTests
         
         board.AddUser(user);
         
-        board.Users.Should().ContainSingle();
-        board.Users.Should().Contain(user);
+        board.Members.Should().ContainSingle();
+        board.Members.Should().Contain(user);
     }
     
     [Fact]
@@ -102,10 +111,11 @@ public class BoardTests
         board.AddUser(user2);
         board.AddUser(user3);
         
-        board.Users.Should().HaveCount(3);
-        board.Users.Should().Contain(new[] { user1, user2, user3 });
+        board.Members.Should().HaveCount(3);
+        board.Members.Should().Contain(new[] { user1, user2, user3 });
     }
-    
+
+    // COLUMN
     [Fact]
     public void Columns_ShouldHaveSequentialPositions()
     {
@@ -114,26 +124,19 @@ public class BoardTests
         board.Columns.Should().OnlyHaveUniqueItems(c => c.Position);
         board.Columns.Should().BeInAscendingOrder(c => c.Position);
     }
-
-    [Fact]
-    public void Constructor_ShouldTrimBoardName()
-    {
-        var board = new Board("  My Board  ");
-
-        board.Name.Should().Be("My Board");
-    }
-
+    
     [Fact]
     public void BoardColumns_ShouldAcceptCardsCorrectly()
     {
         var board = new Board("Test Board");
-        var todo = board.Columns[1]; // "To Do"
-        var card1 = new Card("Bug fix", todo);
-        var card2 = new Card("Feature", todo);
+        var todo = board.Columns.ElementAt(1); 
+
+        var card1 = todo.AddCard("Bug fix");
+        var card2 = todo.AddCard("Feature");
 
         todo.Cards.Should().HaveCount(2);
         card1.Column.Should().Be(todo);
-        card2.Column.Board.Should().Be(board); 
-    }
+        card2.Column.Board.Should().Be(board);
+}
 
 }

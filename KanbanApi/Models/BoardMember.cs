@@ -2,13 +2,12 @@ namespace KanbanApi.Models;
 
 public class BoardMember
 {
-    public string Id { get; set; } = string.Empty;
-    public int BoardId { get; set; }
-    public string UserId { get; set; } = string.Empty;
-    public string Role { get; set; } = "Member";
+    public int BoardId { get; private set; }
+    public string UserId { get; private set; } = string.Empty;
+    public string Role { get; private set; } = "Member";
     
-    public Board Board { get; set; } = null!;
-    public ApplicationUser User { get; set; } = null!;
+    public Board Board { get; private set; } = null!;
+    public ApplicationUser User { get; private set; } = null!;
 
     // Default constructor
     private BoardMember() { }

@@ -2,14 +2,14 @@ namespace KanbanApi.Models;
 
 public class Column
 {
-    public int Id { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public int Position { get; set; }
+    public int Id { get; private set; }
+    public string Name { get; private set; } = string.Empty;
+    public int Position { get; private set; }
 
-    public int BoardId { get; set; }
-    public Board Board { get; set; } = null!;
+    public int BoardId { get; private set; }
+    public Board Board { get; private set; } = null!;
 
-    public List<Card> Cards { get; set; } = new List<Card>();
+    public ICollection<Card> Cards { get; private set; } = new List<Card>();
 
     // Default constructor
     private Column() { }
@@ -29,15 +29,17 @@ public class Column
         Name = name.Trim();
         Position = position;
         Board = board;
-        Cards = new List<Card>();
     }
 
-    public void AddCard(Card card)
+    public Card AddCard(string title)
     {
-        if (card == null)
-            throw new ArgumentNullException(nameof(card));
+        if (string.IsNullOrWhiteSpace(title))
+        throw new ArgumentException("Card title cannot be empty!", nameof(title));
 
-        card.Column = this;
+        title = title.Trim();
+
+        var card = new Card(title, this);
         Cards.Add(card);
+        return card;
     }
 }

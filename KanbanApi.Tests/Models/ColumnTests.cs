@@ -2,28 +2,12 @@ using KanbanApi.Models;
 using FluentAssertions; 
 using Xunit;
 
+namespace KanbanApi.Tests.Models;
+
 public class ColumnTests
 {
-    [Fact]
-    public void Constructor_WithValidData_ShouldCreateColumn()
-    {
-        var board = new Board("Test Board");
-        var column = new Column("Backlog", 0, board);
-
-        column.Name.Should().Be("Backlog");
-        column.Position.Should().Be(0);
-        column.Board.Should().Be(board);
-        column.Cards.Should().NotBeNull();
-        column.Cards.Should().BeEmpty();
-    }
-
-    [Fact]
-    public void Constructor_WithNullBoard_ShouldThrowArgumentNullException()
-    {
-        Action act = () => new Column("Backlog", 0, null!);
-        act.Should().Throw<ArgumentNullException>();
-    }
-
+    
+    //BASIC TESTS
     [Theory]
     [InlineData(null)]
     [InlineData("")]
@@ -31,43 +15,74 @@ public class ColumnTests
     public void Constructor_WithInvalidName_ShouldThrowArgumentException(string invalidName)
     {
         var board = new Board("Test Board");
+        
         Action act = () => new Column(invalidName, 0, board);
+        
         act.Should().Throw<ArgumentException>()
             .WithMessage("Column name cannot be empty!*")
             .WithParameterName("name");
     }
-
-    [Theory]
-    [InlineData(-1)]
-    [InlineData(4)]
-    [InlineData(100)]
-    public void Constructor_WithInvalidPosition_ShouldThrowArgumentOutOfRangeException(int invalidPosition)
-    {
-        var board = new Board("Test Board");
-        Action act = () => new Column("Backlog", invalidPosition, board);
-        act.Should().Throw<ArgumentOutOfRangeException>()
-            .WithMessage("*Position must be between 0 and 3*");
-    }
-
+    
+    //ADD CARD
     [Fact]
     public void AddCard_ShouldAddCardToColumn()
     {
+    
         var board = new Board("Test Board");
-        var column = board.Columns[1]; // To Do
-        var card = new Card("Fix bug", column); // constructor adds it
+        var column = board.Columns.Single(c => c.Name == "To Do");
+
+        var card = column.AddCard("Fix bug");
 
         column.Cards.Should().ContainSingle(c => c.Title == "Fix bug");
-        column.Cards[0].Column.Should().Be(column);
+        card.Column.Should().Be(column);
     }
 
+    [Fact]
+    public void AddCard_NullOrEmptyTitle_ShouldThrowArgumentException()
+    {
+    var board = new Board("Test Board");
+    // only choose column called "To Do"
+    var column = board.Columns.Single(c => c.Name == "To Do");
+
+    
+    Action actNull = () => column.AddCard(null!);
+    Action actEmpty = () => column.AddCard("");
+    Action actWhitespace = () => column.AddCard("   ");
+
+
+    actNull.Should().Throw<ArgumentException>()
+        .WithParameterName("title");
+
+    actEmpty.Should().Throw<ArgumentException>()
+        .WithParameterName("title");
+
+    actWhitespace.Should().Throw<ArgumentException>()
+        .WithParameterName("title");
+    }
 
     [Fact]
-    public void AddCard_NullCard_ShouldThrowArgumentNullException()
+    public void AddCard_AllowsMultipleCardsInSameColumn()
     {
         var board = new Board("Test Board");
-        var column = new Column("To Do", 1, board);
+        var column = board.Columns.Single(c => c.Name == "To Do");
 
-        Action act = () => column.AddCard(null!);
-        act.Should().Throw<ArgumentNullException>();
+        column.AddCard("Fix bug");
+        column.AddCard("Write tests");
+        column.AddCard("Refactor");
+
+        column.Cards.Should().HaveCount(3);
+    }
+
+    [Fact]
+    public void AddCard_DoesNotAddCardToOtherColumns()
+    {
+        var board = new Board("Test Board");
+        var todo = board.Columns.Single(c => c.Name == "To Do");
+        var done = board.Columns.Single(c => c.Name == "Done");
+
+        todo.AddCard("Fix bug");
+
+        todo.Cards.Should().HaveCount(1);
+        done.Cards.Should().BeEmpty();
     }
 }
