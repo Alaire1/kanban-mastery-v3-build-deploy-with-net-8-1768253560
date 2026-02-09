@@ -3,7 +3,7 @@ namespace KanbanApi.Models;
 public class Board{
 
     public int Id {get; private set; }
-    public string Name { get; private set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     public ICollection<Column> Columns { get; private set; } = new List<Column>();
     public ICollection<BoardMember> Members { get; private set; } = new List<BoardMember>();
 
