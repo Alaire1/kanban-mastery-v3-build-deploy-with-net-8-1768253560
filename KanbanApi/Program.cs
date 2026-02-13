@@ -1,5 +1,6 @@
 using KanbanApi.Data;
 using KanbanApi.Models;
+using KanbanApi.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,29 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
+// Register application services
+builder.Services.AddScoped<IBoardService, BoardService>();
+
+// Minimal API helpers
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+app.UseHttpsRedirection();
+
+// Identity API endpoints (e.g., /register, /login, /logout, etc.)
+app.MapIdentityApi<ApplicationUser>();
+
+// Example test endpoint
+app.MapGet("/", () => "Hello World!");
+
 app.Run();
+
+public partial class Program { }
