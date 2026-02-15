@@ -37,4 +37,6 @@ desktop.ini
 *.tmp
 *.temp
 
-
+# Kanban database files
+KanbanApi/kanban.db-shm
+KanbanApi/kanban.db-wal
