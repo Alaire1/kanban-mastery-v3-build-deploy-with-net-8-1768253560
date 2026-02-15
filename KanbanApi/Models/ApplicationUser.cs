@@ -5,6 +5,9 @@ namespace KanbanApi.Models;
 public class ApplicationUser : IdentityUser {
     public ICollection<BoardMember> BoardMemberships { get; private set; } = new List<BoardMember>();
 
+    // Optional display name for user profile
+    public string? DisplayName { get; set; }
+
     //Default constructor
     public ApplicationUser(){} //only for Identity
 
