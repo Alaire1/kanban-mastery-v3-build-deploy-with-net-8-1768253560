@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using KanbanApi.Data;
 using KanbanApi;
@@ -34,6 +35,16 @@ namespace KanbanApi.Tests
                         options.UseInMemoryDatabase("TestDb"));
                 });
             }).CreateClient();
+        }
+
+        [Fact]
+        public async Task GetCurrentUserProfile_WithoutToken_ReturnsUnauthorized()
+        {
+            // Act: Call /api/users/me without an authorization header
+            var response = await _client.GetAsync("/api/users/me");
+
+            // Assert
+            Assert.Equal(HttpStatusCode.Unauthorized, response.StatusCode);
         }
 
         [Fact]
@@ -73,6 +84,49 @@ namespace KanbanApi.Tests
         }
 
         [Fact]
+        public async Task GetCurrentUserProfile_WithValidToken_ReturnsUserProfile()
+        {
+            // Arrange: Register and log in a user
+            const string email = "profileuser@example.com";
+            const string password = "Password123!";
+
+            var registerResponse = await _client.PostAsJsonAsync("/register", new
+            {
+                email,
+                password
+            });
+            Assert.Equal(HttpStatusCode.OK, registerResponse.StatusCode);
+
+            var loginResponse = await _client.PostAsJsonAsync("/login", new
+            {
+                email,
+                password
+            });
+            Assert.Equal(HttpStatusCode.OK, loginResponse.StatusCode);
+
+            var auth = await loginResponse.Content.ReadFromJsonAsync<AuthResponse>();
+            Assert.NotNull(auth);
+            Assert.False(string.IsNullOrWhiteSpace(auth!.AccessToken));
+
+            // Act: Call /api/users/me with the bearer token
+            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", auth.AccessToken);
+
+            var meResponse = await _client.GetAsync("/api/users/me");
+
+            // Assert
+            Assert.Equal(HttpStatusCode.OK, meResponse.StatusCode);
+            var profile = await meResponse.Content.ReadFromJsonAsync<UserProfileResponse>();
+            Assert.NotNull(profile);
+            Assert.False(string.IsNullOrWhiteSpace(profile!.Id));
+            Assert.Equal(email, profile.Email);
+            Assert.False(string.IsNullOrWhiteSpace(profile.UserName));
+            
+            // Assert.Equal(email, profile.UserName);
+            // Print profile properties for visibility in test output
+            Console.WriteLine($"\nPrint user data:\nId: {profile.Id}\nUserName: {profile.UserName}\nEmail: {profile.Email}\nDisplayName: {profile.DisplayName}\n");
+        }
+
+        [Fact]
         public async Task Register_WithDuplicateEmail_ReturnsBadRequest()
         {
             // Arrange: Register a user first
@@ -98,9 +152,17 @@ namespace KanbanApi.Tests
 // This is used in tests to deserialize the JSON response and validate its content.
     public class AuthResponse
     {
-        public string TokenType { get; set; }
-        public string AccessToken { get; set; }
+        public string TokenType { get; set; } = string.Empty;
+        public string AccessToken { get; set; } = string.Empty;
         public int ExpiresIn { get; set; }
-        public string RefreshToken { get; set; }
+        public string RefreshToken { get; set; } = string.Empty;
+    }
+
+    public class UserProfileResponse
+    {
+        public string Id { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string? DisplayName { get; set; }
     }
 }
