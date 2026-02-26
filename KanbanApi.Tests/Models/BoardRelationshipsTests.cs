@@ -21,8 +21,8 @@ public class BoardRelationshipsTests
     public void Board_ShouldLoadMembersCorrectly()
     {
         using var context = CreateContext("BoardMembers");
-
-        var board = new Board("Test Board");
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
         context.Boards.Add(board);
         context.SaveChanges();
 
@@ -41,8 +41,8 @@ public class BoardRelationshipsTests
     public void Board_ShouldLoadColumnsCorrectly()
     {
         using var context = CreateContext("BoardColumns");
-
-        var board = new Board("Test Board");
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
         context.Boards.Add(board);
         context.SaveChanges();
 

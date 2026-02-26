@@ -13,6 +13,8 @@ namespace KanbanApi.Tests.Services
 {
     public class BoardServiceTests
     {
+        private const string DefaultOwnerId = "owner123";
+
         private static (ApplicationDbContext context, BoardService service) CreateContextAndService()
         {
             var options = new DbContextOptionsBuilder<ApplicationDbContext>()
@@ -23,18 +25,35 @@ namespace KanbanApi.Tests.Services
             var service = new BoardService(context);
             return (context, service);
         }
+        // Helper method to seed an owner user into the context for testing
+        private static void SeedOwner(ApplicationDbContext context, string ownerId = DefaultOwnerId)
+        {
+            if (context.Users.Any(u => u.Id == ownerId))
+                return;
+
+            var owner = new ApplicationUser("owner" + ownerId)
+            {
+                Id = ownerId,
+                Email = ownerId + "@test.com"
+            };
+
+            context.Users.Add(owner);
+            context.SaveChanges();
+        }
 
         [Fact]
         public async Task CreateBoardAsync_ShouldCreateBoard_WhenNameIsValid()
         {
             var (context, service) = CreateContextAndService();
             var boardName = "Test Board";
-
-            var result = await service.CreateBoardAsync(boardName);
+            var ownerId = DefaultOwnerId;
+            SeedOwner(context, ownerId);
+            var result = await service.CreateBoardAsync(boardName, ownerId);
 
             
             Assert.NotNull(result);
             Assert.Equal(boardName, result.Name); 
+            Assert.Equal("owner123", result.OwnerId);
             Assert.Single(context.Boards); //only one board should be created
         }
 
@@ -43,15 +62,17 @@ namespace KanbanApi.Tests.Services
         {
             var (context, service) = CreateContextAndService();
             string boardName = null;
-
-            await Assert.ThrowsAsync<ArgumentException>(() => service.CreateBoardAsync(boardName));
+            var ownerId = DefaultOwnerId;
+            SeedOwner(context, ownerId);
+            await Assert.ThrowsAsync<ArgumentException>(() => service.CreateBoardAsync(boardName, ownerId));
         }
 
         [Fact]
         public async Task GetBoardByIdAsync_ShouldReturnBoard_WhenBoardExists()
         {
             var (context, service) = CreateContextAndService();
-            var board = new Board("Test Board");
+            SeedOwner(context);
+            var board = new Board("Test Board", DefaultOwnerId);
             context.Boards.Add(board);
             await context.SaveChangesAsync();
 
@@ -59,6 +80,7 @@ namespace KanbanApi.Tests.Services
 
             Assert.NotNull(result);
             Assert.Equal(board.Id, result.Id);
+            Assert.Equal(board.OwnerId, result.OwnerId);
         }
 
         [Fact]
@@ -75,8 +97,10 @@ namespace KanbanApi.Tests.Services
         public async Task GetAllBoardsAsync_ShouldReturnAllBoards()
         {
             var (context, service) = CreateContextAndService();
-            context.Boards.Add(new Board("Board 1"));
-            context.Boards.Add(new Board("Board 2"));
+            var ownerId = DefaultOwnerId;
+            SeedOwner(context, ownerId);
+            context.Boards.Add(new Board("Board 1", ownerId));
+            context.Boards.Add(new Board("Board 2", ownerId));
             await context.SaveChangesAsync();
 
             var result = await service.GetAllBoardsAsync();
@@ -88,7 +112,9 @@ namespace KanbanApi.Tests.Services
         public async Task UpdateBoardAsync_ShouldPersistChanges()
         {
             var (context, service) = CreateContextAndService();
-            var board = new Board("Original Name");
+            var ownerId = DefaultOwnerId;
+            SeedOwner(context, ownerId);
+            var board = new Board("Original Name", ownerId);
             context.Boards.Add(board);
             await context.SaveChangesAsync();
 
@@ -107,7 +133,9 @@ namespace KanbanApi.Tests.Services
         public async Task DeleteBoardAsync_ShouldRemoveBoard_WhenBoardExists()
         {
             var (context, service) = CreateContextAndService();
-            var board = new Board("To Delete");
+            var ownerId = DefaultOwnerId;
+            SeedOwner(context, ownerId);
+            var board = new Board("To Delete", ownerId);
             context.Boards.Add(board);
             await context.SaveChangesAsync();
 
@@ -120,7 +148,9 @@ namespace KanbanApi.Tests.Services
         public async Task DeleteBoardAsync_ShouldDoNothing_WhenBoardDoesNotExist()
         {
             var (context, service) = CreateContextAndService();
-            var board = new Board("Existing");
+            var ownerId = DefaultOwnerId;
+            SeedOwner(context, ownerId);
+            var board = new Board("Existing", ownerId);
             context.Boards.Add(board);
             await context.SaveChangesAsync();
 
@@ -137,11 +167,13 @@ namespace KanbanApi.Tests.Services
         {
             var (context, service) = CreateContextAndService();
 
-            var board1 = new Board("Board 1");
-            var board2 = new Board("Board 2");
+            var ownerId = DefaultOwnerId;
+            SeedOwner(context, ownerId);
+            var board1 = new Board("Board 1", ownerId);
+            var board2 = new Board("Board 2", ownerId);
             context.Boards.AddRange(board1, board2);
             await context.SaveChangesAsync();
-
+            
             var member1 = new BoardMember("1", board1.Id);
             var member2 = new BoardMember("2", board2.Id);
             context.BoardMembers.AddRange(member1, member2);

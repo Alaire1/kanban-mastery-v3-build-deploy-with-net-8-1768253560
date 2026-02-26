@@ -16,27 +16,31 @@ namespace KanbanApi.Services
             _context = context;
         }
 
-        public async Task<Board> CreateBoardAsync(string name)
+        public async Task<Board> CreateBoardAsync(string name, string ownerId)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("Board name cannot be null or empty.", nameof(name));
             }
 
-            var board = new Board(name);
+            var board = new Board(name, ownerId);
             _context.Boards.Add(board);
             await _context.SaveChangesAsync();
             return board;
         }
 
-        public async Task<Board?> GetBoardByIdAsync(int id)
+    public async Task<Board?> GetBoardByIdAsync(int id)
         {
-            return await _context.Boards.FindAsync(id);
+            return await _context.Boards
+                .Include(b => b.Owner)
+                .FirstOrDefaultAsync(b => b.Id == id);
         }
 
         public async Task<IEnumerable<Board>> GetAllBoardsAsync()
         {
-            return await _context.Boards.ToListAsync();
+            return await _context.Boards
+                .Include(b => b.Owner)
+                .ToListAsync();
         }
 
         public async Task UpdateBoardAsync(Board board)

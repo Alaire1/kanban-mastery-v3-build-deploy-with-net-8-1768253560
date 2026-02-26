@@ -14,7 +14,8 @@ public class ColumnTests
     [InlineData("   ")]
     public void Constructor_WithInvalidName_ShouldThrowArgumentException(string invalidName)
     {
-        var board = new Board("Test Board");
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
         
         Action act = () => new Column(invalidName, 0, board);
         
@@ -27,8 +28,9 @@ public class ColumnTests
     [Fact]
     public void AddCard_ShouldAddCardToColumn()
     {
-    
-        var board = new Board("Test Board");
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
+
         var column = board.Columns.Single(c => c.Name == "To Do");
 
         var card = column.AddCard("Fix bug");
@@ -40,9 +42,10 @@ public class ColumnTests
     [Fact]
     public void AddCard_NullOrEmptyTitle_ShouldThrowArgumentException()
     {
-    var board = new Board("Test Board");
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
     // only choose column called "To Do"
-    var column = board.Columns.Single(c => c.Name == "To Do");
+        var column = board.Columns.Single(c => c.Name == "To Do");
 
     
     Action actNull = () => column.AddCard(null!);
@@ -63,7 +66,8 @@ public class ColumnTests
     [Fact]
     public void AddCard_AllowsMultipleCardsInSameColumn()
     {
-        var board = new Board("Test Board");
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
         var column = board.Columns.Single(c => c.Name == "To Do");
 
         column.AddCard("Fix bug");
@@ -76,7 +80,8 @@ public class ColumnTests
     [Fact]
     public void AddCard_DoesNotAddCardToOtherColumns()
     {
-        var board = new Board("Test Board");
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
         var todo = board.Columns.Single(c => c.Name == "To Do");
         var done = board.Columns.Single(c => c.Name == "Done");
 

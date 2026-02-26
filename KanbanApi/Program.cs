@@ -14,11 +14,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-// Authorization services for policies and [Authorize]
-builder.Services.AddAuthorization();
-
 // Register application services
-builder.Services.AddScoped<IBoardService, BoardService>();
+builder.Services.AddAuthorization(); // authorization 
+builder.Services.AddScoped<IBoardService, BoardService>(); // board management
+builder.Services.AddScoped<IUserProfileService, UserProfileService>(); // user profile management
 
 // Minimal API helpers
 builder.Services.AddEndpointsApiExplorer();
