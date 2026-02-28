@@ -1,4 +1,5 @@
 using KanbanApi.Data;
+using KanbanApi.Endpoints;
 using KanbanApi.Models;
 using KanbanApi.Services;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add Identity with API endpoints
 builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+// Authorization services for policies and [Authorize]
+builder.Services.AddAuthorization();
 
 // Register application services
 builder.Services.AddScoped<IBoardService, BoardService>();
@@ -30,8 +34,14 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 // Identity API endpoints (e.g., /register, /login, /logout, etc.)
 app.MapIdentityApi<ApplicationUser>();
+
+// User-related endpoints
+app.MapUserEndpoints();
 
 // Example test endpoint
 app.MapGet("/", () => "Hello World!");
