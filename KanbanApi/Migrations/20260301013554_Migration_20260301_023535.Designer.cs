@@ -3,6 +3,7 @@ using System;
 using KanbanApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KanbanApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260301013554_Migration_20260301_023535")]
+    partial class Migration_20260301_023535
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
@@ -298,7 +301,7 @@ namespace KanbanApi.Migrations
             modelBuilder.Entity("KanbanApi.Models.Board", b =>
                 {
                     b.HasOne("KanbanApi.Models.ApplicationUser", "Owner")
-                        .WithMany("OwnedBoards")
+                        .WithMany()
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -401,8 +404,6 @@ namespace KanbanApi.Migrations
             modelBuilder.Entity("KanbanApi.Models.ApplicationUser", b =>
                 {
                     b.Navigation("BoardMemberships");
-
-                    b.Navigation("OwnedBoards");
                 });
 
             modelBuilder.Entity("KanbanApi.Models.Board", b =>

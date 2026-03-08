@@ -4,6 +4,9 @@ public class Board{
 
     public int Id {get; private set; }
     public string Name { get; set; } = string.Empty;
+    public string OwnerId { get; set; } = string.Empty;
+    public ApplicationUser Owner { get; set; } = null!;
+
     public ICollection<Column> Columns { get; private set; } = new List<Column>();
     public ICollection<BoardMember> Members { get; private set; } = new List<BoardMember>();
 
@@ -11,12 +14,16 @@ public class Board{
     private Board(){}
 
     // Parameterized constructor
-    public Board(string name){
+    public Board(string name, string ownerId){
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Board name cannot be empty!", nameof(name));
 
+        if (string.IsNullOrWhiteSpace(ownerId))
+            throw new ArgumentException("Owner ID cannot be empty!", nameof(ownerId));
+            
         //trimming the name in case of white spaces
         Name = name.Trim();
+        OwnerId = ownerId;
 
         Columns = new List<Column>
         {

@@ -3,6 +3,7 @@ using System;
 using KanbanApi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KanbanApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260226154731_Migration_20260226_164725")]
+    partial class Migration_20260226_164725
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.11");
@@ -94,13 +97,7 @@ namespace KanbanApi.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("OwnerId")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("OwnerId");
 
                     b.ToTable("Boards");
                 });
@@ -295,17 +292,6 @@ namespace KanbanApi.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("KanbanApi.Models.Board", b =>
-                {
-                    b.HasOne("KanbanApi.Models.ApplicationUser", "Owner")
-                        .WithMany("OwnedBoards")
-                        .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Owner");
-                });
-
             modelBuilder.Entity("KanbanApi.Models.BoardMember", b =>
                 {
                     b.HasOne("KanbanApi.Models.Board", "Board")
@@ -401,8 +387,6 @@ namespace KanbanApi.Migrations
             modelBuilder.Entity("KanbanApi.Models.ApplicationUser", b =>
                 {
                     b.Navigation("BoardMemberships");
-
-                    b.Navigation("OwnedBoards");
                 });
 
             modelBuilder.Entity("KanbanApi.Models.Board", b =>

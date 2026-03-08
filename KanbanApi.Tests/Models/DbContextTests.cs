@@ -54,7 +54,7 @@ public class ApplicationDbContextTests
     {
         using var context = CreateContext("DuplicateMembers");
 
-        var board = new Board("Test Board");
+        var board = new Board("Test Board", "owner-ctx-test");
         context.Boards.Add(board);
         context.SaveChanges();
 

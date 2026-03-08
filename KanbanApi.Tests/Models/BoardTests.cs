@@ -10,10 +10,12 @@ public class BoardTests
     [Fact]
     public void Constructor_WithValidName_ShouldCreateBoard()
     {
-        var board = new Board("My Project");
+        var ownerId = "owner123";
+        var board = new Board("My Project", ownerId);
         
         board.Name.Should().Be("My Project");
         board.Id.Should().Be(0);
+        board.OwnerId.Should().Be(ownerId); 
         
         // Members should exist and be empty
         board.Members.Should().NotBeNull();
@@ -27,7 +29,8 @@ public class BoardTests
     [Fact]
     public void Constructor_WithValidName_ShouldCreateFourDefaultColumns()
     {
-        var board = new Board("Test Board");
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
         var columns = board.Columns.OrderBy(c => c.Position).ToList();
         
         board.Columns.Should().HaveCount(4);
@@ -43,8 +46,10 @@ public class BoardTests
     [Fact]
     public void Constructor_ShouldTrimBoardName()
     {
-        var board = new Board("  My Board  ");
+        var ownerId = "owner123";
+        var board = new Board("  My Board  ", ownerId);
         board.Name.Should().Be("My Board");
+        board.OwnerId.Should().Be(ownerId);
     }  
 
     [Theory]
@@ -54,7 +59,8 @@ public class BoardTests
     [InlineData("\t")]
     public void Constructor_WithInvalidName_ShouldThrowArgumentException(string invalidName)
     {
-        Action act = () => new Board(invalidName);
+        var ownerId = "owner123";
+        Action act = () => new Board(invalidName, ownerId);
         
         act.Should().Throw<ArgumentException>()
             .WithMessage("Board name cannot be empty!*")
@@ -65,7 +71,8 @@ public class BoardTests
     [Fact]
     public void AddUser_WithValidUser_ShouldAddUserToBoard()
     {
-        var board = new Board("Test Board");
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
         var user = new BoardMember("user1", 1);
         
         board.AddUser(user);
@@ -77,7 +84,8 @@ public class BoardTests
     [Fact]
     public void AddUser_WithNullUser_ShouldThrowArgumentNullException()
     {
-        var board = new Board("Test Board");
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
         
         Action act = () => board.AddUser(null!);
         
@@ -88,7 +96,8 @@ public class BoardTests
     [Fact]
     public void AddUser_WithDuplicateUserId_ShouldThrowInvalidOperationException()
     {
-        var board = new Board("Test Board");
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
         var user1 = new BoardMember("user1", 1);
         board.AddUser(user1);
         
@@ -102,7 +111,8 @@ public class BoardTests
     [Fact]
     public void AddUser_WithMultipleDifferentUsers_ShouldAddAllUsers()
     {
-        var board = new Board("Test Board");
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
         var user1 = new BoardMember("user1", 1);
         var user2 = new BoardMember("user2", 1);
         var user3 = new BoardMember("user3", 1);
@@ -119,7 +129,8 @@ public class BoardTests
     [Fact]
     public void Columns_ShouldHaveSequentialPositions()
     {
-        var board = new Board("Test Board");
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
         
         board.Columns.Should().OnlyHaveUniqueItems(c => c.Position);
         board.Columns.Should().BeInAscendingOrder(c => c.Position);
@@ -128,7 +139,8 @@ public class BoardTests
     [Fact]
     public void BoardColumns_ShouldAcceptCardsCorrectly()
     {
-        var board = new Board("Test Board");
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
         var todo = board.Columns.ElementAt(1); 
 
         var card1 = todo.AddCard("Bug fix");

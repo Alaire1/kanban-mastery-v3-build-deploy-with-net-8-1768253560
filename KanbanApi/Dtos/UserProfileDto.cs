@@ -10,8 +10,8 @@ public record UserProfileResponseDto
 
 }
 
-public record UserProfileUpdateDto
-{
-    public string? UserName { get; init; }
-    public string? Email { get; init; }
-}
+// public record UserProfileUpdateDto
+// {
+//     public string? UserName { get; init; }
+//     public string? Email { get; init; }
+// }

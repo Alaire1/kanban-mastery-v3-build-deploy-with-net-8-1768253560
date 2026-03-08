@@ -4,7 +4,7 @@ namespace KanbanApi.Models;
 
 public class ApplicationUser : IdentityUser {
     public ICollection<BoardMember> BoardMemberships { get; private set; } = new List<BoardMember>();
-
+    public ICollection<Board> OwnedBoards { get; private set; } = new List<Board>();
     // Optional display name for user profile
     public string? DisplayName { get; set; }
 
@@ -18,5 +18,6 @@ public class ApplicationUser : IdentityUser {
         
         UserName = nickname;
         BoardMemberships = new List<BoardMember>();
+        OwnedBoards = new List<Board>();
     }
 }
