@@ -19,11 +19,14 @@ namespace KanbanApi.Services
         public async Task<Board> CreateBoardAsync(string name, string ownerId)
         {
             if (string.IsNullOrWhiteSpace(name))
-            {
                 throw new ArgumentException("Board name cannot be null or empty.", nameof(name));
-            }
 
             var board = new Board(name, ownerId);
+
+            var ownerMembership = new BoardMember(ownerId, board.Id, "Owner");
+            
+            board.Members.Add(ownerMembership);
+
             _context.Boards.Add(board);
             await _context.SaveChangesAsync();
             return board;
