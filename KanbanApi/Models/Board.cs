@@ -12,7 +12,7 @@ public class Board{
 
     //Default constructor
     private Board(){}
-
+    
     // Parameterized constructor
     public Board(string name, string ownerId){
         if (string.IsNullOrWhiteSpace(name))
@@ -24,6 +24,7 @@ public class Board{
         //trimming the name in case of white spaces
         Name = name.Trim();
         OwnerId = ownerId;
+        
 
         Columns = new List<Column>
         {

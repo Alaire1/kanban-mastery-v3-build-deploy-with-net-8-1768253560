@@ -18,7 +18,6 @@ builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
 builder.Services.AddAuthorization(); // authorization 
 builder.Services.AddScoped<IBoardService, BoardService>(); // board management
 builder.Services.AddScoped<IUserProfileService, UserProfileService>(); // user profile management
-
 // Minimal API helpers
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -41,6 +40,9 @@ app.MapIdentityApi<ApplicationUser>();
 
 // User-related endpoints
 app.MapUserEndpoints();
+
+// Board-related endpoints
+app.MapBoardEnpoints();
 
 // Example test endpoint
 app.MapGet("/", () => "Hello World!");
