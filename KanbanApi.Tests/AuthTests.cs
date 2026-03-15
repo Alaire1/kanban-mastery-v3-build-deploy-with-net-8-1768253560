@@ -123,7 +123,7 @@ namespace KanbanApi.Tests
             
             // Assert.Equal(email, profile.UserName);
             // Print profile properties for visibility in test output
-            Console.WriteLine($"\nPrint user data:\nId: {profile.Id}\nUserName: {profile.UserName}\nEmail: {profile.Email}\nDisplayName: {profile.DisplayName}\n");
+            Console.WriteLine($"\nPrint user data:\nId: {TestConsole.Value(profile.Id, ConsoleColor.Cyan)}\nUserName: {TestConsole.Value(profile.UserName, ConsoleColor.Cyan)}\nEmail: {TestConsole.Value(profile.Email, ConsoleColor.Cyan)}\nDisplayName: {TestConsole.Value(profile.DisplayName ?? string.Empty, ConsoleColor.Cyan)}\n");
         }
 
         [Fact]
