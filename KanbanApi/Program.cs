@@ -2,6 +2,7 @@ using KanbanApi.Data;
 using KanbanApi.Endpoints;
 using KanbanApi.Models;
 using KanbanApi.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +16,14 @@ builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Register application services
-builder.Services.AddAuthorization(); // authorization 
+builder.Services.AddScoped<IAuthorizationHandler, IsBoardOwnerHandler>(); // board owner authorization
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("IsBoardOwner", policy =>
+        policy.Requirements.Add(new IsBoardOwnerRequirement()));
+});
+
 builder.Services.AddScoped<IBoardService, BoardService>(); // board management
 builder.Services.AddScoped<IUserProfileService, UserProfileService>(); // user profile management
 // Minimal API helpers
@@ -43,6 +51,9 @@ app.MapUserEndpoints();
 
 // Board-related endpoints
 app.MapBoardEnpoints();
+
+// Board members endpoints
+app.MapBoardMembersEndpoints();
 
 // Example test endpoint
 app.MapGet("/", () => "Hello World!");

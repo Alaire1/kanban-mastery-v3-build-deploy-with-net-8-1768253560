@@ -101,9 +101,9 @@ namespace KanbanApi.Tests
             }
             
             // Print board data for visibility in test output
-            Console.WriteLine($"\nBoard Data:\nId: {board.Id}\nName: {board.Name}\nOwnerId: {board.OwnerId}\nRole: {board.Role}\nMembers Count: {board.Members.Count}");
-            Console.WriteLine($"User ID: {userProfile.Id}\nOwner ID Match: {userProfile.Id == board.OwnerId}");
-            Console.WriteLine($"Members: [{string.Join(", ", board.Members)}]\n");
+            Console.WriteLine($"\nBoard Data:\nId: {TestConsole.Value(board.Id, ConsoleColor.Cyan)}\nName: {TestConsole.Value(board.Name, ConsoleColor.Cyan)}\nOwnerId: {TestConsole.Value(board.OwnerId, ConsoleColor.Cyan)}\nRole: {TestConsole.Value(board.Role, ConsoleColor.Cyan)}\nMembers Count: {TestConsole.Value(board.Members.Count, ConsoleColor.Cyan)}");
+            Console.WriteLine($"User ID: {TestConsole.Value(userProfile.Id, ConsoleColor.Green)}\nOwner ID Match: {TestConsole.Value(userProfile.Id == board.OwnerId, ConsoleColor.Green)}");
+            Console.WriteLine($"Members: {TestConsole.Value($"[{string.Join(", ", board.Members)}]", ConsoleColor.Yellow)}\n");
         }
 
         [Fact]

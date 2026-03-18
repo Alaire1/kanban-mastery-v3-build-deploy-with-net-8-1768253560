@@ -32,7 +32,7 @@ namespace KanbanApi.Services
             return board;
         }
 
-    public async Task<Board?> GetBoardByIdAsync(int id)
+        public async Task<Board?> GetBoardByIdAsync(int id)
         {
             return await _context.Boards
                 .Include(b => b.Owner)
