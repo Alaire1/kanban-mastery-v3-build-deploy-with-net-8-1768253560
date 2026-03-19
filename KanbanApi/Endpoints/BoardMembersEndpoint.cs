@@ -1,6 +1,3 @@
-
-
-
 using KanbanApi.Data;
 using KanbanApi.Models;
 using KanbanApi.Services;

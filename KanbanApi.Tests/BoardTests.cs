@@ -19,6 +19,8 @@ namespace KanbanApi.Tests
 
         public BoardTests(WebApplicationFactory<Program> factory)
         {
+            var dbName = $"TestDb_Boards_{Guid.NewGuid()}";
+
             _factory = factory.WithWebHostBuilder(builder =>
             {
                 builder.ConfigureServices(services =>
@@ -34,7 +36,7 @@ namespace KanbanApi.Tests
 
                     services.AddDbContext<ApplicationDbContext>(options =>
                     {
-                        options.UseInMemoryDatabase("TestDb_Boards");
+                        options.UseInMemoryDatabase(dbName);
                     });
 
                     // Ensure database is created
@@ -101,6 +103,7 @@ namespace KanbanApi.Tests
             }
             
             // Print board data for visibility in test output
+            TestConsole.FileHeader();
             Console.WriteLine($"\nBoard Data:\nId: {TestConsole.Value(board.Id, ConsoleColor.Cyan)}\nName: {TestConsole.Value(board.Name, ConsoleColor.Cyan)}\nOwnerId: {TestConsole.Value(board.OwnerId, ConsoleColor.Cyan)}\nRole: {TestConsole.Value(board.Role, ConsoleColor.Cyan)}\nMembers Count: {TestConsole.Value(board.Members.Count, ConsoleColor.Cyan)}");
             Console.WriteLine($"User ID: {TestConsole.Value(userProfile.Id, ConsoleColor.Green)}\nOwner ID Match: {TestConsole.Value(userProfile.Id == board.OwnerId, ConsoleColor.Green)}");
             Console.WriteLine($"Members: {TestConsole.Value($"[{string.Join(", ", board.Members)}]", ConsoleColor.Yellow)}\n");
