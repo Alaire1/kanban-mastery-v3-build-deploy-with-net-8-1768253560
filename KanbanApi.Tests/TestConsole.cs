@@ -1,8 +1,12 @@
 namespace KanbanApi.Tests;
 
+using System.IO;
+using System.Runtime.CompilerServices;
+
 public static class TestConsole
 {
     private static readonly object _lock = new();
+    private static readonly HashSet<string> _printedHeaders = new(StringComparer.OrdinalIgnoreCase);
 
     public static void Green(string text) => Write(text, ConsoleColor.Green);
     public static void Yellow(string text) => Write(text, ConsoleColor.Yellow);
@@ -24,6 +28,27 @@ public static class TestConsole
         };
 
         return $"\u001b[{code}m{value}\u001b[0m";
+    }
+
+    public static void FileHeader([CallerFilePath] string filePath = "")
+    {
+        var fileName = Path.GetFileName(filePath);
+
+        lock (_lock)
+        {
+            if (!_printedHeaders.Add(fileName)) return;
+
+            var old = Console.ForegroundColor;
+            try
+            {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"\n==================== {fileName} ====================\n");
+            }
+            finally
+            {
+                Console.ForegroundColor = old;
+            }
+        }
     }
 
     public static void LabelValue(string label, object? value, ConsoleColor valueColor)

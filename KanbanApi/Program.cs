@@ -17,11 +17,15 @@ builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
 
 // Register application services
 builder.Services.AddScoped<IAuthorizationHandler, IsBoardOwnerHandler>(); // board owner authorization
+builder.Services.AddScoped<IAuthorizationHandler, IsBoardMemberHandler>(); // board member authorization
 
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("IsBoardOwner", policy =>
         policy.Requirements.Add(new IsBoardOwnerRequirement()));
+
+    options.AddPolicy("IsBoardMember", policy =>
+        policy.Requirements.Add(new IsBoardMemberRequirement()));
 });
 
 builder.Services.AddScoped<IBoardService, BoardService>(); // board management
@@ -51,6 +55,7 @@ app.MapUserEndpoints();
 
 // Board-related endpoints
 app.MapBoardEnpoints();
+app.MapBoardIdEndpoints();
 
 // Board members endpoints
 app.MapBoardMembersEndpoints();

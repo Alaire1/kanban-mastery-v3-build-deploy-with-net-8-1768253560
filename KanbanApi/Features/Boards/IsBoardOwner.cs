@@ -24,6 +24,9 @@ public class IsBoardOwnerHandler : AuthorizationHandler<IsBoardOwnerRequirement,
         int boardId)
     {
         var userId = context.User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrWhiteSpace(userId))
+            return;
+            
         var isOwner = await _db.BoardMembers
             .AnyAsync(m => m.BoardId == boardId && m.UserId == userId && m.Role == "Owner");
 

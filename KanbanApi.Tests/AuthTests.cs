@@ -18,6 +18,8 @@ namespace KanbanApi.Tests
 
         public AuthTests(WebApplicationFactory<Program> factory)
         {
+            var dbName = $"TestDb_Auth_{Guid.NewGuid()}";
+
             _client = factory.WithWebHostBuilder(builder =>
             {
                 builder.ConfigureServices(services =>
@@ -32,7 +34,7 @@ namespace KanbanApi.Tests
                     }
 
                     services.AddDbContext<ApplicationDbContext>(options =>
-                        options.UseInMemoryDatabase("TestDb"));
+                        options.UseInMemoryDatabase(dbName));
                 });
             }).CreateClient();
         }
@@ -123,6 +125,7 @@ namespace KanbanApi.Tests
             
             // Assert.Equal(email, profile.UserName);
             // Print profile properties for visibility in test output
+            TestConsole.FileHeader();
             Console.WriteLine($"\nPrint user data:\nId: {TestConsole.Value(profile.Id, ConsoleColor.Cyan)}\nUserName: {TestConsole.Value(profile.UserName, ConsoleColor.Cyan)}\nEmail: {TestConsole.Value(profile.Email, ConsoleColor.Cyan)}\nDisplayName: {TestConsole.Value(profile.DisplayName ?? string.Empty, ConsoleColor.Cyan)}\n");
         }
 
