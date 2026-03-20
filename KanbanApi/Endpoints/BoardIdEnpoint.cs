@@ -14,13 +14,13 @@ public static class BoardIdEndpoint
 
         group.MapGet("/", async Task<IResult> (
             int boardId,
-            HttpContext httpContext) =>
+            HttpContext httpContext,
+            ApplicationDbContext db,
+            IAuthorizationService authService) =>
         {
             var userId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId is null)
                 return TypedResults.Unauthorized();
-
-            var db = httpContext.RequestServices.GetRequiredService<ApplicationDbContext>();
 
             var board = await db.Boards
                 .AsNoTracking()
@@ -33,7 +33,6 @@ public static class BoardIdEndpoint
             if (board == null)
                 return TypedResults.NotFound("Board not found.");
 
-            var authService = httpContext.RequestServices.GetRequiredService<IAuthorizationService>();
             var authResult = await authService.AuthorizeAsync(httpContext.User, boardId, "IsBoardMember");
             if (!authResult.Succeeded)
                 return TypedResults.Forbid();

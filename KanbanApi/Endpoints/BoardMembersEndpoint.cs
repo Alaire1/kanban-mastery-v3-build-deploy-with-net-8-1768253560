@@ -16,17 +16,16 @@ public static class BoardMembersEndpoint
         group.MapPost("/", async Task<IResult> (
             int boardId,
             AddMemberRequest request,
-            HttpContext httpContext) =>
+            HttpContext httpContext,
+            ApplicationDbContext db,
+            IAuthorizationService authService) =>
         {
             // 1. Check if board exists
-            var db = httpContext.RequestServices.GetRequiredService<ApplicationDbContext>();
-
             var boardExists = await db.Boards.AnyAsync(b => b.Id == boardId);
             if (!boardExists)
                 return TypedResults.NotFound("Board not found.");
 
             // 2. Authorize user with IAuthorizationService + IsBoardOwnerRequirement
-            var authService = httpContext.RequestServices.GetRequiredService<IAuthorizationService>();
             var authResult = await authService.AuthorizeAsync(
                 httpContext.User, boardId, new IsBoardOwnerRequirement());
 
