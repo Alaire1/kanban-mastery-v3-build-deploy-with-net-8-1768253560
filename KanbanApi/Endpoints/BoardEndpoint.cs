@@ -12,7 +12,9 @@ public static class BoardEndpoint
     {
         var group = routes.MapGroup("/api/boards").RequireAuthorization();
 
-        group.MapPost("/", async Task<IResult> (HttpContext httpContext) =>
+        group.MapPost("/", async Task<IResult> (
+            HttpContext httpContext,
+            IBoardService boardService) =>
         {
             var userId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (userId is null)
@@ -21,7 +23,7 @@ public static class BoardEndpoint
             var dto = await httpContext.Request.ReadFromJsonAsync<CreateBoardDto>();
             if (dto is null || string.IsNullOrWhiteSpace(dto.BoardName))
                 return TypedResults.BadRequest("Board name cannot be empty.");
-            var boardService = httpContext.RequestServices.GetRequiredService<IBoardService>();
+
             // Create the Board entity
             var board = await boardService.CreateBoardAsync(dto.BoardName, userId);
 
