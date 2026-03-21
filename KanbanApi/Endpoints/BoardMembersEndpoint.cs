@@ -1,9 +1,9 @@
 using KanbanApi.Data;
 using KanbanApi.Models;
 using KanbanApi.Services;
+using KanbanApi.Dtos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using KanbanApi.Dtos;
 using Microsoft.AspNetCore.Http.HttpResults; 
 namespace KanbanApi.Endpoints;
 
