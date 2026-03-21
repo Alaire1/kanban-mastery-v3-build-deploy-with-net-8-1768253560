@@ -59,6 +59,7 @@ app.MapBoardIdEndpoints();
 
 // Board members endpoints
 app.MapBoardMembersEndpoints();
+app.MapColumnsEndpoints();
 
 // Example test endpoint
 app.MapGet("/", () => "Hello World!");
