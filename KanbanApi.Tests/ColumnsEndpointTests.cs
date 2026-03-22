@@ -58,7 +58,7 @@ public class ColumnsEndpointTests : IClassFixture<WebApplicationFactory<Program>
         LogHttp("CreateColumn_AsMember", createResponse.StatusCode, HttpStatusCode.Created);
 
         Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
-        var created = await createResponse.Content.ReadFromJsonAsync<ColumnDto>();
+        var created = await createResponse.Content.ReadFromJsonAsync<ColumnApiResponseDto>();
         Assert.NotNull(created);
         Assert.Equal("Review", created!.Name);
         Assert.Equal(10, created.Position);
@@ -67,16 +67,16 @@ public class ColumnsEndpointTests : IClassFixture<WebApplicationFactory<Program>
 
         var updateResponse = await memberClient.PutAsJsonAsync(
             $"/api/boards/{boardId}/columns/{created.Id}",
-            new { Name = "QA Review", Position = 11 });
+            new { Name = "QA Review" });
 
         LogHttp("UpdateColumn_AsMember", updateResponse.StatusCode, HttpStatusCode.OK);
 
         Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
-        var updated = await updateResponse.Content.ReadFromJsonAsync<ColumnDto>();
+        var updated = await updateResponse.Content.ReadFromJsonAsync<ColumnApiResponseDto>();
         Assert.NotNull(updated);
         Assert.Equal(created.Id, updated!.Id);
         Assert.Equal("QA Review", updated.Name);
-        Assert.Equal(11, updated.Position);
+        Assert.Equal(10, updated.Position);
 
         PrintColumnDto("Updated Column DTO", updated);
 
@@ -193,7 +193,7 @@ public class ColumnsEndpointTests : IClassFixture<WebApplicationFactory<Program>
 
         var response = await ownerClient.PutAsJsonAsync(
             $"/api/boards/{boardId}/columns/999999",
-            new { Name = "Renamed", Position = 10 });
+            new { Name = "Renamed" });
 
         LogHttp(nameof(UpdateColumn_MissingColumn_ReturnsNotFound), response.StatusCode, HttpStatusCode.NotFound);
         Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
@@ -204,29 +204,108 @@ public class ColumnsEndpointTests : IClassFixture<WebApplicationFactory<Program>
     }
 
     [Fact]
-    public async Task UpdateColumn_DuplicatePosition_ReturnsConflict()
+    public async Task UpdateColumn_RenameOnly_LeavesPositionUnchanged()
     {
-        var (ownerClient, _) = await CreateAuthenticatedUser("owner.columns.update.duplicate@example.com");
-        var boardId = await CreateBoard(ownerClient, "Update Duplicate Position Board");
+        var (ownerClient, _) = await CreateAuthenticatedUser("owner.columns.update.renameonly@example.com");
+        var boardId = await CreateBoard(ownerClient, "Update Rename Only Board");
 
         var createResponse = await ownerClient.PostAsJsonAsync(
             $"/api/boards/{boardId}/columns",
             new { Name = "Review", Position = 10 });
 
         Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
-        var created = await createResponse.Content.ReadFromJsonAsync<ColumnDto>();
+        var created = await createResponse.Content.ReadFromJsonAsync<ColumnApiResponseDto>();
         Assert.NotNull(created);
 
         var updateResponse = await ownerClient.PutAsJsonAsync(
             $"/api/boards/{boardId}/columns/{created!.Id}",
-            new { Name = "Review Updated", Position = 1 });
+            new { Name = "Review Updated" });
 
-        LogHttp(nameof(UpdateColumn_DuplicatePosition_ReturnsConflict), updateResponse.StatusCode, HttpStatusCode.Conflict);
-        Assert.Equal(HttpStatusCode.Conflict, updateResponse.StatusCode);
+        LogHttp(nameof(UpdateColumn_RenameOnly_LeavesPositionUnchanged), updateResponse.StatusCode, HttpStatusCode.OK);
+        Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
 
-        var errorBody = await updateResponse.Content.ReadAsStringAsync();
-        PrintErrorResponse("UpdateColumn duplicate position message", errorBody);
-        Assert.Contains("already exists at this position", errorBody);
+        var updated = await updateResponse.Content.ReadFromJsonAsync<ColumnApiResponseDto>();
+        Assert.NotNull(updated);
+        Assert.Equal(created.Id, updated!.Id);
+        Assert.Equal("Review Updated", updated.Name);
+        Assert.Equal(10, updated.Position);
+    }
+
+    [Fact]
+    public async Task DeleteColumn_WithExistingCards_ReturnsBadRequest()
+    {
+        var (ownerClient, _) = await CreateAuthenticatedUser("owner.columns.delete.withcards@example.com");
+        var boardId = await CreateBoard(ownerClient, "Delete Column With Cards Board");
+
+        var createResponse = await ownerClient.PostAsJsonAsync(
+            $"/api/boards/{boardId}/columns",
+            new { Name = "Needs Cleanup", Position = 10 });
+
+        Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+        var created = await createResponse.Content.ReadFromJsonAsync<ColumnApiResponseDto>();
+        Assert.NotNull(created);
+
+        await AddCardToColumn(created!.Id, "Card that blocks deletion");
+
+        var deleteResponse = await ownerClient.DeleteAsync($"/api/boards/{boardId}/columns/{created.Id}");
+
+        LogHttp(nameof(DeleteColumn_WithExistingCards_ReturnsBadRequest), deleteResponse.StatusCode, HttpStatusCode.BadRequest);
+        Assert.Equal(HttpStatusCode.BadRequest, deleteResponse.StatusCode);
+
+        var errorBody = await deleteResponse.Content.ReadAsStringAsync();
+        PrintErrorResponse("DeleteColumn with cards message", errorBody);
+        Assert.Contains("Cannot delete column with existing cards.", errorBody);
+
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+        var columnStillExists = await db.Columns.AnyAsync(c => c.Id == created.Id && c.BoardId == boardId);
+        var cardStillExists = await db.Cards.AnyAsync(card => card.ColumnId == created.Id);
+
+        Assert.True(columnStillExists);
+        Assert.True(cardStillExists);
+    }
+
+    [Fact]
+    public async Task DeleteColumn_AfterCardsRemoved_DeletesColumn()
+    {
+        var (ownerClient, _) = await CreateAuthenticatedUser("owner.columns.delete.aftercardcleanup@example.com");
+        var boardId = await CreateBoard(ownerClient, "Delete Column After Card Cleanup Board");
+
+        var createResponse = await ownerClient.PostAsJsonAsync(
+            $"/api/boards/{boardId}/columns",
+            new { Name = "Cleanup Me", Position = 10 });
+
+        Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+        var created = await createResponse.Content.ReadFromJsonAsync<ColumnApiResponseDto>();
+        Assert.NotNull(created);
+
+        await AddCardToColumn(created!.Id, "Card to remove first");
+
+        var firstDeleteResponse = await ownerClient.DeleteAsync($"/api/boards/{boardId}/columns/{created.Id}");
+        LogHttp("DeleteColumn first attempt (with cards)", firstDeleteResponse.StatusCode, HttpStatusCode.BadRequest);
+        Assert.Equal(HttpStatusCode.BadRequest, firstDeleteResponse.StatusCode);
+
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            var cards = await db.Cards.Where(card => card.ColumnId == created.Id).ToListAsync();
+            db.Cards.RemoveRange(cards);
+            await db.SaveChangesAsync();
+        }
+
+        var secondDeleteResponse = await ownerClient.DeleteAsync($"/api/boards/{boardId}/columns/{created.Id}");
+        LogHttp(nameof(DeleteColumn_AfterCardsRemoved_DeletesColumn), secondDeleteResponse.StatusCode, HttpStatusCode.NoContent);
+        Assert.Equal(HttpStatusCode.NoContent, secondDeleteResponse.StatusCode);
+
+        using var verifyScope = _factory.Services.CreateScope();
+        var verifyDb = verifyScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+        var columnStillExists = await verifyDb.Columns.AnyAsync(c => c.Id == created.Id && c.BoardId == boardId);
+        var cardStillExists = await verifyDb.Cards.AnyAsync(card => card.ColumnId == created.Id);
+
+        Assert.False(columnStillExists);
+        Assert.False(cardStillExists);
     }
 
     [Fact]
@@ -312,7 +391,20 @@ public class ColumnsEndpointTests : IClassFixture<WebApplicationFactory<Program>
             $"\n{operation} -> HTTP {TestConsole.Value((int)actual, statusColor)} ({TestConsole.Value(actual, statusColor)})");
     }
 
-    private static void PrintColumnDto(string label, ColumnDto dto)
+    private async Task AddCardToColumn(int columnId, string title)
+    {
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+        var column = await db.Columns.FirstOrDefaultAsync(c => c.Id == columnId);
+        Assert.NotNull(column);
+
+        var card = column!.AddCard(title);
+        db.Cards.Add(card);
+        await db.SaveChangesAsync();
+    }
+
+    private static void PrintColumnDto(string label, ColumnApiResponseDto dto)
     {
         TestConsole.FileHeader();
         Console.WriteLine(
