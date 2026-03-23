@@ -1,10 +1,8 @@
-using KanbanApi.Data;
-using KanbanApi.Models;
-using KanbanApi.Services;
+using System.Security.Claims;
 using KanbanApi.Dtos;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http.HttpResults; 
+using KanbanApi.Filters;
+using KanbanApi.Services;
+
 namespace KanbanApi.Endpoints;
 
 public static class BoardMembersEndpoint
@@ -16,46 +14,24 @@ public static class BoardMembersEndpoint
         group.MapPost("/", async Task<IResult> (
             int boardId,
             AddMemberRequest request,
-            HttpContext httpContext,
-            ApplicationDbContext db,
-            IAuthorizationService authService) =>
+            ClaimsPrincipal user,
+            IBoardMembersService service) =>
         {
-            // 1. Check if board exists
-            var boardExists = await db.Boards.AnyAsync(b => b.Id == boardId);
-            if (!boardExists)
-                return TypedResults.NotFound("Board not found.");
+            var userId = user.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId is null)
+                return TypedResults.Unauthorized();
 
-            // 2. Authorize user with IAuthorizationService + IsBoardOwnerRequirement
-            var authResult = await authService.AuthorizeAsync(
-                httpContext.User, boardId, new IsBoardOwnerRequirement());
-
-            if (!authResult.Succeeded)
-                return TypedResults.Forbid();
-
-            // 3. Check if user is already a member
-
-            var alreadyMember = await db.BoardMembers
-                .AnyAsync(m => m.BoardId == boardId && m.UserId == request.UserId);
-            if (alreadyMember)
-                return TypedResults.Conflict("User is already a member of this board.");
-
-            
-            var member = new BoardMember(request.UserId, boardId, "Member");
-            db.BoardMembers.Add(member);
-            await db.SaveChangesAsync();
-
-            var response = new BoardMemberDto
+            return await service.AddMemberAsync(boardId, userId, request.UserId) switch
             {
-                UserId = member.UserId,
-                BoardId = member.BoardId.ToString(),
-                Role = member.Role
+                AddMemberResult.Created c       => TypedResults.Created($"/api/boards/{boardId}/members/{c.Dto.UserId}", c.Dto),
+                AddMemberResult.BoardNotFound   => TypedResults.NotFound("Board not found."),
+                AddMemberResult.Forbidden       => TypedResults.Forbid(),
+                AddMemberResult.AlreadyMember   => TypedResults.Conflict("User is already a member of this board."),
+                _                               => TypedResults.StatusCode(500)
             };
-            
-            return TypedResults.Created($"/api/boards/{boardId}/members/{member.UserId}", response);
-        });
+        })
+        .WithValidation<AddMemberRequest>();
 
         return routes;
     }
 }
-
-public record AddMemberRequest(string UserId, string? Role);

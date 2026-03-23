@@ -1,3 +1,5 @@
+
+using System.ComponentModel.DataAnnotations;
 namespace KanbanApi.Dtos;
 
 // used in BoardEndpoint for returning board details along with members and their roles
@@ -11,21 +13,31 @@ public record BoardDto
 }
 
 //used in BoardEndpoint for creating a new board
-public record CreateBoardDto
+public class CreateBoardDto
 {
-    public string BoardName { get; init; } = string.Empty;
+    [Required]
+    [MinLength(2)]
+    [MaxLength(50)]
+    [RegularExpression(@"^[a-zA-Z0-9]+( [a-zA-Z0-9]+)*$",
+        ErrorMessage = "Board name may only contain letters and numbers, with single spaces between words.")]
+    public string BoardName { get; set; } = string.Empty;
+}
+
+public class UpdateBoardNameDto
+{
+    [Required]
+    [MinLength(2)]
+    [MaxLength(50)]
+    [RegularExpression(@"^[a-zA-Z0-9]+( [a-zA-Z0-9]+)*$",
+        ErrorMessage = "Board name may only contain letters and numbers, with single spaces between words.")]
+    public string Name { get; set; } = string.Empty;
 }
 
 //not used yet
-public record UpdateBoardNameDto
-{
-    public required string Name { get; init; } = string.Empty;
-}
-//not used yet
-public record UpdateBoardOwnerDto
-{
-    public required string OwnerId { get; init; } = string.Empty;
-}
+// public record UpdateBoardOwnerDto
+// {
+//     public required string OwnerId { get; init; } = string.Empty;
+// }
 
 //used in BoardMembersEndpoint for returning member details when a new member is added to a board
 public record BoardMemberDto

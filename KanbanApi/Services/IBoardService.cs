@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using KanbanApi.Models;
+using KanbanApi.Dtos;
 
 namespace KanbanApi.Services
 {
     public interface IBoardService
     {
-        Task<Board> CreateBoardAsync(string name, string ownerId);
+        Task<BoardDto> CreateBoardAsync(string name, string ownerId);
+        Task<BoardResult> GetBoardAsync(string userId, int boardId);
         Task<Board?> GetBoardByIdAsync(int id);
         Task<IEnumerable<Board>> GetAllBoardsAsync();
         Task UpdateBoardAsync(Board board);

@@ -84,7 +84,7 @@ namespace KanbanApi.Tests
             Assert.Equal("Test Board", board.Name);
             Assert.Equal(userProfile.Id, board.OwnerId); // OwnerId should match the logged-in user's ID
             Assert.Equal("Owner", board.Role);
-            Assert.Equal(1, board.Members.Count); // Owner should be in the members list
+            Assert.Single(board.Members); // Owner should be in the members list
             Assert.Contains(userProfile.Id, board.Members); // Owner's ID should be in members
             
             // Verify both Board and BoardMember records are created in the database

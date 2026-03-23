@@ -29,7 +29,10 @@ builder.Services.AddAuthorization(options =>
 });
 
 builder.Services.AddScoped<IBoardService, BoardService>(); // board management
-builder.Services.AddScoped<IUserProfileService, UserProfileService>(); // user profile management
+builder.Services.AddScoped<IUserProfileService, UserProfileService>(); 
+builder.Services.AddScoped<IBoardMembersService, BoardMembersService>();
+
+// user profile management
 // Minimal API helpers
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -54,7 +57,7 @@ app.MapIdentityApi<ApplicationUser>();
 app.MapUserEndpoints();
 
 // Board-related endpoints
-app.MapBoardEnpoints();
+app.MapBoardEndpoints();
 app.MapBoardIdEndpoints();
 
 // Board members endpoints
