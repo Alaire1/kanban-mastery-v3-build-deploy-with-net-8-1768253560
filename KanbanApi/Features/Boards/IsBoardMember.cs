@@ -29,6 +29,16 @@ public class IsBoardMemberHandler : AuthorizationHandler<IsBoardMemberRequiremen
             .AnyAsync(m => m.BoardId == boardId && m.UserId == userId);
 
         if (isMember)
+        {
+            context.Succeed(requirement);
+            return;
+        }
+
+        // Also treat the board owner as an authorized member
+        var isOwner = await _db.Boards
+            .AnyAsync(b => b.Id == boardId && b.OwnerId == userId);
+
+        if (isOwner)
             context.Succeed(requirement);
     }
 }
