@@ -11,8 +11,87 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace KanbanApi.Tests;
 
+
+
 public class ColumnsEndpointTests : IClassFixture<WebApplicationFactory<Program>>
 {
+
+    [Fact]
+    public async Task UpdateColumn_AsMember_ReturnsForbidden()
+    {
+        var (ownerClient, _) = await CreateAuthenticatedUser("owner.columns.update.forbidden@example.com");
+        var (memberClient, memberId) = await CreateAuthenticatedUser("member.columns.update.forbidden@example.com");
+        var boardId = await CreateBoard(ownerClient, "Update Forbidden Board");
+        await AddBoardMember(boardId, memberId, "Member");
+
+        // Owner creates the column
+        var createResponse = await ownerClient.PostAsJsonAsync(
+            $"/api/boards/{boardId}/columns",
+            new { Name = "Original", Position = 10 });
+        Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+        var created = await createResponse.Content.ReadFromJsonAsync<ColumnApiResponseDto>();
+
+        // Member tries to rename it — should be allowed
+        var updateResponse = await memberClient.PutAsJsonAsync(
+            $"/api/boards/{boardId}/columns/{created!.Id}",
+            new { Name = "Renamed" });
+        Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
+    }
+
+    [Fact]
+    public async Task DeleteColumn_AsMember_ReturnsForbidden()
+    {
+        var (ownerClient, _) = await CreateAuthenticatedUser("owner.columns.delete.forbidden@example.com");
+        var (memberClient, memberId) = await CreateAuthenticatedUser("member.columns.delete.forbidden@example.com");
+        var boardId = await CreateBoard(ownerClient, "Delete Forbidden Board");
+        await AddBoardMember(boardId, memberId, "Member");
+
+        var createResponse = await ownerClient.PostAsJsonAsync(
+            $"/api/boards/{boardId}/columns",
+            new { Name = "Protected", Position = 10 });
+        Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+        var created = await createResponse.Content.ReadFromJsonAsync<ColumnApiResponseDto>();
+
+        // Member tries to delete it — should be allowed
+        var deleteResponse = await memberClient.DeleteAsync(
+            $"/api/boards/{boardId}/columns/{created!.Id}");
+        Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateColumn_AsOwner_ReturnsOk()
+    {
+        var (ownerClient, _) = await CreateAuthenticatedUser("owner.columns.update.ok@example.com");
+        var boardId = await CreateBoard(ownerClient, "Owner Update Board");
+
+        var createResponse = await ownerClient.PostAsJsonAsync(
+            $"/api/boards/{boardId}/columns",
+            new { Name = "Original", Position = 10 });
+        Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+        var created = await createResponse.Content.ReadFromJsonAsync<ColumnApiResponseDto>();
+
+        var updateResponse = await ownerClient.PutAsJsonAsync(
+            $"/api/boards/{boardId}/columns/{created!.Id}",
+            new { Name = "Renamed By Owner" });
+        Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
+    }
+
+    [Fact]
+    public async Task DeleteColumn_AsOwner_ReturnsNoContent()
+    {
+        var (ownerClient, _) = await CreateAuthenticatedUser("owner.columns.delete.ok@example.com");
+        var boardId = await CreateBoard(ownerClient, "Owner Delete Board");
+
+        var createResponse = await ownerClient.PostAsJsonAsync(
+            $"/api/boards/{boardId}/columns",
+            new { Name = "To Delete", Position = 10 });
+        Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+        var created = await createResponse.Content.ReadFromJsonAsync<ColumnApiResponseDto>();
+
+        var deleteResponse = await ownerClient.DeleteAsync(
+            $"/api/boards/{boardId}/columns/{created!.Id}");
+        Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
+    }
     private readonly WebApplicationFactory<Program> _factory;
 
     public ColumnsEndpointTests(WebApplicationFactory<Program> factory)
@@ -132,7 +211,7 @@ public class ColumnsEndpointTests : IClassFixture<WebApplicationFactory<Program>
     }
 
     [Fact]
-    public async Task CreateColumn_MissingBoard_ReturnsNotFound()
+    public async Task CreateColumn_MissingBoard_ReturnsForbidden()
     {
         var (client, _) = await CreateAuthenticatedUser("member.columns.notfound@example.com");
 
@@ -141,12 +220,11 @@ public class ColumnsEndpointTests : IClassFixture<WebApplicationFactory<Program>
             $"/api/boards/{missingBoardId}/columns",
             new { Name = "Review", Position = 10 });
 
-        LogHttp(nameof(CreateColumn_MissingBoard_ReturnsNotFound), response.StatusCode, HttpStatusCode.NotFound);
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
 
-        var errorBody = await response.Content.ReadAsStringAsync();
-        PrintErrorResponse("CreateColumn missing board message", errorBody);
-        Assert.Contains("Board not found", errorBody);
+        LogHttp(nameof(CreateColumn_MissingBoard_ReturnsForbidden), response.StatusCode, HttpStatusCode.Forbidden);
+        Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
+
+        // No response body expected for Forbidden
     }
 
     [Fact]
@@ -164,7 +242,19 @@ public class ColumnsEndpointTests : IClassFixture<WebApplicationFactory<Program>
 
         var errorBody = await response.Content.ReadAsStringAsync();
         PrintErrorResponse("CreateColumn invalid name message", errorBody);
-        Assert.Contains("Column name cannot be empty", errorBody);
+
+        // Parse the error response as JSON and check the 'Name' property
+        using var doc = System.Text.Json.JsonDocument.Parse(errorBody);
+        var root = doc.RootElement;
+        Assert.True(root.TryGetProperty("errors", out var errors), "Response does not contain 'errors' property");
+        Assert.True(errors.TryGetProperty("Name", out var nameErrors), "'errors' does not contain 'Name' property");
+
+        // Print all error messages for diagnosis
+        var errorList = nameErrors.EnumerateArray().Select(e => e.GetString()).ToList();
+        Console.WriteLine($"Actual Name errors: {string.Join(", ", errorList)}");
+
+        var found = errorList.Contains("Column name cannot be empty");
+        Assert.True(found, $"'Column name cannot be empty' not found in Name errors. Actual errors: {string.Join(", ", errorList)}");
     }
 
     [Fact]
@@ -429,3 +519,4 @@ public class ColumnsEndpointTests : IClassFixture<WebApplicationFactory<Program>
         return singleLine.Length <= maxLength ? singleLine : $"{singleLine[..maxLength]}...";
     }
 }
+    

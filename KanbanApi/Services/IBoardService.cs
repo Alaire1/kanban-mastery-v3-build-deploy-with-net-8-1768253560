@@ -14,5 +14,8 @@ namespace KanbanApi.Services
         Task UpdateBoardAsync(Board board);
         Task DeleteBoardAsync(int id);
         Task<IEnumerable<Board>> GetBoardsByUserIdAsync(int userId);
+
+        Task<BoardResult> UpdateBoardAsync(string userId, int boardId, string name);
+        Task<BoardResult> DeleteBoardAsync(string userId, int boardId);
     }
 }

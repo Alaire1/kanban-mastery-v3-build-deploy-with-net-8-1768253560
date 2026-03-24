@@ -317,7 +317,7 @@ public class BoardMembersTests : IClassFixture<WebApplicationFactory<Program>>
     }
 
     [Fact]
-    public async Task AddMember_MissingBoard_ReturnsNotFound()
+    public async Task AddMember_MissingBoard_ReturnsForbidden()
     {
         var (ownerClient, _) = await CreateAuthenticatedUser("owner-missing-board@example.com");
         var (_, memberId) = await CreateAuthenticatedUser("missing-board-member@example.com");
@@ -327,7 +327,7 @@ public class BoardMembersTests : IClassFixture<WebApplicationFactory<Program>>
             $"/api/boards/{missingBoardId}/members",
             new { UserId = memberId });
 
-        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
     }
 
     // ──────────────────────────────────────────────

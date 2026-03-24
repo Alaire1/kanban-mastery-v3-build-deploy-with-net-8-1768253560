@@ -141,5 +141,54 @@ namespace KanbanApi.Services
         }
 
 
+        public async Task<BoardResult> UpdateBoardAsync(string userId, int boardId, string name)
+        {
+            var board = await _context.Boards
+                .Include(b => b.Members)
+                .FirstOrDefaultAsync(b => b.Id == boardId);
+
+            if (board is null)
+                return new BoardResult.NotFound("Board not found.");
+
+            if (board.OwnerId != userId)
+                return new BoardResult.Forbidden();
+
+            board.Name = name;
+            await _context.SaveChangesAsync();
+
+            return new BoardResult.Updated(new BoardIdResultDto
+            {
+                Id = board.Id,
+                Name = board.Name,
+                OwnerId = board.OwnerId,
+                Role = "Owner",
+                Members = board.Members.Select(m => new BoardMemberResultDto
+            {
+                UserId = m.UserId,
+                Role = m.Role
+                }).ToList(),
+                Columns = new()
+            });
+        }
+
+        public async Task<BoardResult> DeleteBoardAsync(string userId, int boardId)
+        {
+            var board = await _context.Boards
+                .Include(b => b.Columns)
+                .ThenInclude(c => c.Cards)
+                .FirstOrDefaultAsync(b => b.Id == boardId);
+
+            if (board is null)
+                return new BoardResult.NotFound("Board not found.");
+
+            if (board.OwnerId != userId)
+                return new BoardResult.Forbidden();
+
+            _context.Boards.Remove(board);
+            await _context.SaveChangesAsync();
+
+            return new BoardResult.Deleted();
+        }
+
     }
 }
