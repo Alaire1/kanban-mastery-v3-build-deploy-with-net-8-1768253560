@@ -30,7 +30,8 @@ public static class BoardMembersEndpoint
                 _                               => TypedResults.StatusCode(500)
             };
         })
-        .WithValidation<AddMemberRequest>();
+        .WithValidation<AddMemberRequest>()
+        .RequireAuthorization("IsBoardOwner");
 
         return routes;
     }

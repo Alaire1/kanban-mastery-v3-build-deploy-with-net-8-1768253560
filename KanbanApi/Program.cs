@@ -16,8 +16,9 @@ builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
 // Register application services
-builder.Services.AddScoped<IAuthorizationHandler, IsBoardOwnerHandler>(); // board owner authorization
-builder.Services.AddScoped<IAuthorizationHandler, IsBoardMemberHandler>(); // board member authorization
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IAuthorizationHandler, IsBoardOwnerHandler>();
+builder.Services.AddScoped<IAuthorizationHandler, IsBoardMemberHandler>();// board member authorization
 
 builder.Services.AddAuthorization(options =>
 {
@@ -30,13 +31,13 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddScoped<IBoardService, BoardService>(); // board management
 builder.Services.AddScoped<IUserProfileService, UserProfileService>(); 
+builder.Services.AddScoped<IColumnService, ColumnService>();
 builder.Services.AddScoped<IBoardMembersService, BoardMembersService>();
 
 // user profile management
 // Minimal API helpers
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
