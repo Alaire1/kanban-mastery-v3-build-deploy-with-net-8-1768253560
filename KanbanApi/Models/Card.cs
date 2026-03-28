@@ -8,6 +8,8 @@ public class Card
     public int ColumnId { get;  set; }
     public Column Column { get; set; } = null!;
 
+    public string? AssignedUserId { get; set; }
+
     // Default constructor
     private Card() { }
 
