@@ -130,14 +130,8 @@ namespace KanbanApi.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("AssignedUserId")
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("ColumnId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Title")
                         .IsRequired()

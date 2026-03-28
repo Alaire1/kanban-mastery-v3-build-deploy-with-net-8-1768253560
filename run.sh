@@ -1,30 +1,3 @@
-# Map short aliases to test class names
-get_test_class_name() {
-    local alias="$1"
-    case "$alias" in
-        cards)
-            echo "CardsEndpointTests"
-            ;;
-        columns)
-            echo "ColumnsEndpointTests"
-            ;;
-        boardid)
-            echo "BoardIdEndpointTests"
-            ;;
-        boardmembers)
-            echo "BoardMembersTests"
-            ;;
-        board)
-            echo "BoardTests"
-            ;;
-        auth)
-            echo "AuthTests"
-            ;;
-        *)
-            echo "$alias" # fallback to user input
-            ;;
-    esac
-}
 #!/usr/bin/env bash
 set -euo pipefail
 
@@ -114,30 +87,22 @@ run_migration() {
 
 run_tests() {
     local skip_build="${1:-0}"
-    local test_filter="${2:-}"
 
     if [[ "$skip_build" -ne 1 ]]; then
         build_project
     fi
 
     log_info "Running tests..."
-    if [[ -n "$test_filter" ]]; then
-        local class_name
-        class_name=$(get_test_class_name "$test_filter")
-        run_with_log_profile dotnet test --filter "FullyQualifiedName~$class_name"
-    else
-        run_with_log_profile dotnet test
-    fi
+    run_with_log_profile dotnet test
 
     log_success "Tests complete!"
 }
 
 run_migration_and_tests() {
     local name="${1:-}"
-    local test_filter="${2:-}"
 
     run_migration "$name"
-    run_tests 1 "$test_filter"
+    run_tests 1
 }
 
 show_help() {
@@ -147,24 +112,22 @@ Usage: ./run.sh [COMMAND] [OPTIONS]
 Commands:
   build, b          Build the project only
   mig, m [name]     Run migration workflow
-    test, t [test]    Run tests (optionally only for [test] class, or alias: cards, columns, boardid, boardmembers, board, auth)
-    mt, tm [name] [test]  Run migrations, update DB, then run tests (optionally only for [test] class or alias)
+  test, t           Run tests
+    mt, tm [name]     Run migrations, update DB, then run tests
   help, h           Show this help
 
 Options:
     --verbose-logs, -v  Show full framework logs (default for m/t is reduced logs)
 
 Examples:
-    ./run.sh build
-    ./run.sh b
-    ./run.sh mig AddUserEmail
-        ./run.sh mig AddUserEmail --verbose-logs
-    ./run.sh test
-        ./run.sh test -v
-        ./run.sh test CardsEndpointTests
-        ./run.sh mt
-        ./run.sh mt AddUserEmail -v
-        ./run.sh mt AddUserEmail CardsEndpointTests
+  ./run.sh build
+  ./run.sh b
+  ./run.sh mig AddUserEmail
+    ./run.sh mig AddUserEmail --verbose-logs
+  ./run.sh test
+    ./run.sh test -v
+    ./run.sh mt
+    ./run.sh mt AddUserEmail -v
 EOF
 }
 
@@ -195,10 +158,10 @@ case "$command" in
         run_migration "${args[0]:-}"
         ;;
     test|t)
-        run_tests 0 "${args[0]:-}"
+        run_tests
         ;;
     mt|tm)
-        run_migration_and_tests "${args[0]:-}" "${args[1]:-}"
+        run_migration_and_tests "${args[0]:-}"
         ;;
     help|h|"")
         show_help

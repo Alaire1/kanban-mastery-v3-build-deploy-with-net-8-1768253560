@@ -32,14 +32,9 @@ public class ValidationEndpointFilter<T> : IEndpointFilter
 
             if (!valid)
             {
-                var errors = results
-                    .SelectMany(r => (r.MemberNames.Any() ? r.MemberNames : new[] { "error" })
-                        .Select(name => new { Name = name, Error = r.ErrorMessage ?? "Invalid value." }))
-                    .GroupBy(x => x.Name)
-                    .ToDictionary(
-                        g => g.Key,
-                        g => g.Select(x => x.Error).ToArray()
-                    );
+                var errors = results.ToDictionary(
+                    r => r.MemberNames.FirstOrDefault() ?? "error",
+                    r => new[] { r.ErrorMessage ?? "Invalid value." });
 
                 return TypedResults.ValidationProblem(errors);
             }
