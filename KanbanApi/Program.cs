@@ -68,6 +68,7 @@ app.MapColumnsEndpoints();
 
 // Card endpoints
 app.MapCardsEndpoints();
+app.MapCardsAssignEndpoints();
 
 // Example test endpoint
 app.MapGet("/", () => "Hello World!");

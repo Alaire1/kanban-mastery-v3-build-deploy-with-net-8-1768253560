@@ -9,4 +9,5 @@ public interface ICardService
     Task<CardResult> UpdateCardAsync(int cardId, UpdateCardDto dto);
     Task<CardResult> DeleteCardAsync(int cardId, string userId, int boardId);
     Task<Card?> GetCardAsync(int cardId);
+    Task<CardResult> AssignCardAsync(int cardId, string targetUserId, int boardId);
 }

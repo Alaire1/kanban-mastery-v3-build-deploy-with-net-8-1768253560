@@ -32,7 +32,6 @@ public static class CardsEndpoint
             };
         })
         .WithValidation<CreateCardRequestDto>()
-        
         .RequireAuthorization("IsBoardMember");
 
         group.MapPut("/{cardId}", async Task<IResult> (
