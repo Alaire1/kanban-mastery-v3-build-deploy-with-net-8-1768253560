@@ -78,4 +78,26 @@ public class CardService : ICardService
     {
         return await _db.Cards.FindAsync(cardId);
     }
+
+    public async Task<CardResult> AssignCardAsync(int cardId, string targetUserId, int boardId)
+    {
+        // Check if the user being assigned is a board member
+        bool isMember = await _db.BoardMembers.AnyAsync(m => m.BoardId == boardId && m.UserId == targetUserId);
+        if (!isMember)
+            return CardResult.BadRequest("Assignee must be a board member.");
+
+        var card = await _db.Cards.FindAsync(cardId);
+        if (card == null)
+            return CardResult.CardNotFound();
+
+        card.AssignedUserId = targetUserId;
+        await _db.SaveChangesAsync();
+
+        var assignDto = new AssignCardResponseDto
+        {
+            CardId = card.Id,
+            UserId = targetUserId
+        };
+        return CardResult.Success(assignDto);
+    }
 }

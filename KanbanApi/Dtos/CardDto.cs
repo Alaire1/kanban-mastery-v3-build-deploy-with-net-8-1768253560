@@ -20,3 +20,10 @@ public record UpdateCardDto
 	public string? Description { get; init; }
 	public required int ColumnId { get; init; }
 }
+
+public record AssignCardResponseDto
+{
+	public required int CardId { get; init; }
+	public required string UserId { get; init; }
+}
+
