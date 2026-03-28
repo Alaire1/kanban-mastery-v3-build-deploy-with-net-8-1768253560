@@ -33,7 +33,6 @@ builder.Services.AddScoped<IBoardService, BoardService>(); // board management
 builder.Services.AddScoped<IUserProfileService, UserProfileService>(); 
 builder.Services.AddScoped<IColumnService, ColumnService>();
 builder.Services.AddScoped<IBoardMembersService, BoardMembersService>();
-builder.Services.AddScoped<ICardService, CardService>();
 
 // user profile management
 // Minimal API helpers
@@ -65,10 +64,6 @@ app.MapBoardIdEndpoints();
 // Board members endpoints
 app.MapBoardMembersEndpoints();
 app.MapColumnsEndpoints();
-
-// Card endpoints
-app.MapCardsEndpoints();
-app.MapCardsAssignEndpoints();
 
 // Example test endpoint
 app.MapGet("/", () => "Hello World!");
