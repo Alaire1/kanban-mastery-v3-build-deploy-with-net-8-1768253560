@@ -40,3 +40,4 @@ desktop.ini
 # Kanban database files
 KanbanApi/kanban.db-shm
 KanbanApi/kanban.db-wal
+node_modules

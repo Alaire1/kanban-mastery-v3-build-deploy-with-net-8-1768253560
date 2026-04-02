@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../services/api';
 import { useFormValidation } from '../hooks/useFormValidation';
+import { ROUTES } from '../constants/routes';
 
 function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -34,9 +35,8 @@ function RegisterPage() {
       await api.post('/register', {
         email: formData.email,
         password: formData.password,
-        // name is not sent — ASP.NET Identity doesn't accept it by default
       });
-      navigate('/');
+      navigate(ROUTES.LOGIN);
     } catch (error) {
       setApiError(error.response?.data?.detail || error.response?.data?.title || 'Registration failed');
     } finally {
@@ -156,7 +156,7 @@ function RegisterPage() {
 
         <p className="text-center text-xs text-green-400 mt-6">
           Already have an account?{' '}
-          <Link to="/" className="text-green-600 font-semibold hover:underline">Sign in</Link>
+          <Link to={ROUTES.LOGIN} className="text-green-600 font-semibold hover:underline">Sign in</Link>
         </p>
 
       </div>
