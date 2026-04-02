@@ -18,27 +18,33 @@ builder.Services.AddIdentityApiEndpoints<ApplicationUser>()
 // Register application services
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IAuthorizationHandler, IsBoardOwnerHandler>();
-builder.Services.AddScoped<IAuthorizationHandler, IsBoardMemberHandler>();// board member authorization
+builder.Services.AddScoped<IAuthorizationHandler, IsBoardMemberHandler>();
 
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("IsBoardOwner", policy =>
         policy.Requirements.Add(new IsBoardOwnerRequirement()));
-
     options.AddPolicy("IsBoardMember", policy =>
         policy.Requirements.Add(new IsBoardMemberRequirement()));
 });
 
-builder.Services.AddScoped<IBoardService, BoardService>(); // board management
-builder.Services.AddScoped<IUserProfileService, UserProfileService>(); 
+builder.Services.AddScoped<IBoardService, BoardService>();
+builder.Services.AddScoped<IUserProfileService, UserProfileService>();
 builder.Services.AddScoped<IColumnService, ColumnService>();
 builder.Services.AddScoped<IBoardMembersService, BoardMembersService>();
 builder.Services.AddScoped<ICardService, CardService>();
 
-// user profile management
-// Minimal API helpers
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowReact", policy => {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -48,29 +54,19 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowReact");
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Identity API endpoints (e.g., /register, /login, /logout, etc.)
 app.MapIdentityApi<ApplicationUser>();
-
-// User-related endpoints
 app.MapUserEndpoints();
-
-// Board-related endpoints
 app.MapBoardEndpoints();
 app.MapBoardIdEndpoints();
-
-// Board members endpoints
 app.MapBoardMembersEndpoints();
 app.MapColumnsEndpoints();
-
-// Card endpoints
 app.MapCardsEndpoints();
 app.MapCardsAssignEndpoints();
 
-// Example test endpoint
 app.MapGet("/", () => "Hello World!");
 
 app.Run();
