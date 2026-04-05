@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import api from '../services/api';
 import { useFormValidation } from '../hooks/useFormValidation';
+import { ROUTES } from '../constants/routes';
 
 
 function LoginPage() {
@@ -22,7 +23,7 @@ function LoginPage() {
     try {
       const response = await api.post('/login', values);
       localStorage.setItem('token', response.data.accessToken);
-      navigate('/dashboard');
+      navigate(ROUTES.DASHBOARD);
     } catch (error) {
       setApiError(error.response?.data?.message || 'Login failed');
     } finally {
@@ -91,7 +92,7 @@ function LoginPage() {
 
         <p className="text-center text-xs text-green-400 mt-6">
           Don't have an account?{' '}
-          <Link to="/register" className="text-green-600 font-semibold hover:underline">Create one</Link>
+          <Link to={ROUTES.REGISTER} className="text-green-600 font-semibold hover:underline">Create one</Link>
         </p>
       </div>
     </div>

@@ -24,6 +24,9 @@ namespace KanbanApi.Services
 
             var user = await _context.Users
                 .AsNoTracking()
+                .Include(u => u.OwnedBoards)
+                .Include(u => u.BoardMemberships)
+                    .ThenInclude(bm => bm.Board)
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
             if (user == null)
@@ -34,7 +37,14 @@ namespace KanbanApi.Services
                 Id = user.Id,
                 UserName = user.UserName!,
                 Email = user.Email!,
-                DisplayName = user.DisplayName // if exists
+                DisplayName = user.DisplayName,
+                Boards = user.OwnedBoards
+                    .Select(b => new BoardDto { Id = b.Id, Name = b.Name, OwnerId = b.OwnerId, Role = "Owner" })
+                    .UnionBy(
+                        user.BoardMemberships.Select(bm => new BoardDto { Id = bm.BoardId, Name = bm.Board.Name, OwnerId = bm.Board.OwnerId, Role = bm.Role }),
+                        b => b.Id
+                    )
+                    .ToList()
             };
         }
     }
