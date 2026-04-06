@@ -87,7 +87,7 @@ public class BoardIdEndpointTests : IClassFixture<WebApplicationFactory<Program>
         }
     }
 
-    private async Task AddCardToBoardColumn(int boardId, int columnPosition, string title)
+    private async Task AddCardToBoardColumn(int boardId, int columnPosition, string title, string? assignedUserId = null)
     {
         using var scope = _factory.Services.CreateScope();
         var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -95,7 +95,9 @@ public class BoardIdEndpointTests : IClassFixture<WebApplicationFactory<Program>
             .Include(c => c.Cards)
             .FirstOrDefaultAsync(c => c.BoardId == boardId && c.Position == columnPosition);
         Assert.NotNull(column);
-        column!.AddCard(title);
+        var card = column!.AddCard(title);
+        if (!string.IsNullOrWhiteSpace(assignedUserId))
+            card.AssignedUserId = assignedUserId;
         await db.SaveChangesAsync();
     }
 
@@ -141,7 +143,12 @@ public class BoardIdEndpointTests : IClassFixture<WebApplicationFactory<Program>
         List<MemberResponse> Members, List<ColumnResponse> Columns);
     private sealed record MemberResponse(string UserId, string Role);
     private sealed record ColumnResponse(int Id, string Name, int Position, List<CardResponse> Cards);
-    private sealed record CardResponse(int Id, string Title);
+    private sealed record CardResponse(
+        int Id,
+        string Title,
+        string? AssignedUserId,
+        string? AssigneeUserName,
+        string? AssigneeDisplayName);
 
     // --- GET /api/boards/{id} ---
 
@@ -242,6 +249,28 @@ public class BoardIdEndpointTests : IClassFixture<WebApplicationFactory<Program>
                      columns.Select(c => c.Position).ToList());
         Assert.Equal(new[] { "Backlog", "To Do", "In Progress", "Done" },
                      columns.Select(c => c.Name).ToArray());
+    }
+
+    [Fact]
+    public async Task GetBoardById_AssignedCard_IncludesAssigneeProfileFields()
+    {
+        var (ownerClient, _) = await CreateAuthenticatedUser();
+        var (_, memberId) = await CreateAuthenticatedUser();
+        var boardId = await CreateBoard(ownerClient, "Assigned Card Board");
+        await AddBoardMember(boardId, memberId, "Member");
+        await AddCardToBoardColumn(boardId, 0, "Assigned card", memberId);
+
+        var response = await ownerClient.GetAsync($"/api/boards/{boardId}/");
+        LogHttp(nameof(GetBoardById_AssignedCard_IncludesAssigneeProfileFields), response.StatusCode, HttpStatusCode.OK);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        var payload = await ReadBoardByIdResponse(response);
+        Assert.NotNull(payload);
+
+        var card = payload!.Columns.SelectMany(c => c.Cards).FirstOrDefault(c => c.Title == "Assigned card");
+        Assert.NotNull(card);
+        Assert.Equal(memberId, card!.AssignedUserId);
+        Assert.False(string.IsNullOrWhiteSpace(card.AssigneeUserName));
     }
 
     // --- PUT /api/boards/{id} ---

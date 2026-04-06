@@ -65,7 +65,7 @@ namespace KanbanApi.Services
         var board = await _context.Boards
             .AsNoTracking()
             .Include(b => b.Columns).ThenInclude(c => c.Cards)
-            .Include(b => b.Members)
+            .Include(b => b.Members).ThenInclude(m => m.User)
             .AsSplitQuery()
             .FirstOrDefaultAsync(b => b.Id == boardId);
 
@@ -77,6 +77,12 @@ namespace KanbanApi.Services
             return new BoardResult.Forbidden();
 
         var membership = board.Members.FirstOrDefault(m => m.UserId == userId);
+
+        var assigneesByUserId = board.Members
+            .Where(m => m.User is not null)
+            .ToDictionary(
+                m => m.UserId,
+                m => m.User);
 
         return new BoardResult.Found(new BoardIdResultDto
         {
@@ -94,10 +100,18 @@ namespace KanbanApi.Services
                 Id = c.Id,
                 Name = c.Name,
                 Position = c.Position,
-                Cards = c.Cards.Select(card => new BoardCardResultDto
+                Cards = c.Cards.Select(card =>
                 {
-                    Id = card.Id,
-                    Title = card.Title
+                    assigneesByUserId.TryGetValue(card.AssignedUserId ?? string.Empty, out var assignee);
+                    return new BoardCardResultDto
+                    {
+                        Id = card.Id,
+                        Title = card.Title,
+                        Description = card.Description,
+                        AssignedUserId = card.AssignedUserId,
+                        AssigneeUserName = assignee?.UserName,
+                        AssigneeDisplayName = assignee?.DisplayName
+                    };
                 }).ToList()
             }).ToList()
         });

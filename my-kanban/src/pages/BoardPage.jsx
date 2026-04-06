@@ -3,6 +3,49 @@ import { Link, useParams } from 'react-router-dom';
 import api from '../services/api';
 import { ROUTES } from '../constants/routes';
 
+const getInitials = (name) => {
+  if (!name || typeof name !== 'string') return '??';
+
+  const parts = name
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+
+  if (parts.length === 0) return '??';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+
+  return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+};
+
+const normalizeCard = (card) => {
+  const displayName = card.assigneeDisplayName ?? card.AssigneeDisplayName ?? null;
+  const userName = card.assigneeUserName ?? card.AssigneeUserName ?? null;
+  const assignedUserId = card.assignedUserId ?? card.AssignedUserId ?? null;
+  const avatarUrl =
+    card.assigneeAvatarUrl ??
+    card.AssigneeAvatarUrl ??
+    card.assigneeProfilePictureUrl ??
+    card.AssigneeProfilePictureUrl ??
+    card.assigneePhotoUrl ??
+    card.AssigneePhotoUrl ??
+    null;
+
+  const fallbackAssigneeName = displayName || userName || 'Unassigned';
+
+  return {
+    id: card.id ?? card.Id,
+    title: card.title ?? card.Title ?? 'Untitled card',
+    description: card.description ?? card.Description ?? 'No description provided.',
+    assignedUserId,
+    assigneeDisplayName: displayName,
+    assigneeUserName: userName,
+    assigneeAvatarUrl: avatarUrl,
+    assigneeFallbackName: fallbackAssigneeName, //fallback name for tooltip and avatar title
+    assigneeInitials: getInitials(fallbackAssigneeName),
+    isAssigned: Boolean(assignedUserId),
+  };
+};
+
 function BoardPage() {
   const COLUMNS_PER_VIEW = 4;
   const { boardId } = useParams();
@@ -32,12 +75,23 @@ function BoardPage() {
         const boardData = response.data ?? {};
         const boardColumns = boardData.columns ?? boardData.Columns ?? [];
 
+        const normalizedColumns = Array.isArray(boardColumns)
+          ? boardColumns
+              .map((column) => {
+                const cards = Array.isArray(column.cards ?? column.Cards)
+                  ? (column.cards ?? column.Cards)
+                  : [];
+
+                return {
+                  ...column,
+                  cards: cards.map(normalizeCard),
+                };
+              })
+              .sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
+          : [];
+
         setBoard(boardData);
-        setColumns(
-          Array.isArray(boardColumns)
-            ? [...boardColumns].sort((a, b) => (a.position ?? 0) - (b.position ?? 0))
-            : [],
-        );
+        setColumns(normalizedColumns);
       } catch (error) {
         if (!isMounted) return;
         setApiError(error.response?.data?.message || 'Failed to load board details.');
@@ -115,9 +169,72 @@ function BoardPage() {
                     {visibleColumns.map((column) => (
                       <div
                         key={column.id}
-                        className="rounded-xl border border-green-200 bg-white px-3 py-2 min-h-[52px]"
+                        className="rounded-xl border border-green-200 bg-white px-3 py-3 min-h-[180px]"
                       >
-                        <p className="text-sm font-medium text-green-800 truncate">{column.name}</p>
+                        <p className="text-sm font-medium text-green-800 truncate mb-2">{column.name}</p>
+
+                        <div className="space-y-2">
+                          {column.cards.length > 0 ? (
+                            column.cards.map((card) => (
+                              <article
+                                key={card.id}
+                                data-testid="board-card"
+                                data-assigned={card.isAssigned ? 'assigned' : 'unassigned'}
+                                className={`rounded-lg border p-2.5 transition-shadow ${
+                                  card.isAssigned
+                                    ? 'border-emerald-200 bg-emerald-50/70'
+                                    : 'border-amber-200 bg-amber-50/80'
+                                }`}
+                              >
+                                <div className="flex items-start justify-between gap-2">
+                                  <h3 data-testid="card-title" className="text-sm font-semibold text-slate-800 leading-5 line-clamp-2">
+                                    {card.title}
+                                  </h3>
+
+                                  <div className="relative group shrink-0">
+                                    <div
+                                      data-testid="card-assignee-avatar"
+                                      className={`h-8 w-8 rounded-full border overflow-hidden flex items-center justify-center text-[10px] font-semibold ${
+                                        card.isAssigned
+                                          ? 'border-emerald-300 bg-emerald-100 text-emerald-800'
+                                          : 'border-amber-300 bg-amber-100 text-amber-800'
+                                      }`}
+                                      title={card.isAssigned ? card.assigneeFallbackName : 'Unassigned'}
+                                    >
+                                      {card.isAssigned && card.assigneeAvatarUrl ? (
+                                        <img
+                                          src={card.assigneeAvatarUrl}
+                                          alt={card.assigneeFallbackName}
+                                          className="h-full w-full object-cover"
+                                        />
+                                      ) : (
+                                        <span>{card.assigneeInitials}</span>
+                                      )}
+                                    </div>
+
+                                    <div data-testid="card-assignee-tooltip" className="absolute left-full top-0 ml-2 z-20 hidden group-hover:block w-52 rounded-lg border border-slate-200 bg-white p-2 shadow-lg">
+                                      <p className="text-xs font-semibold text-slate-800 truncate">
+                                        {card.assigneeDisplayName || card.assigneeUserName || 'Unassigned'}
+                                      </p>
+                                      <p className="text-[11px] text-slate-500 truncate mt-0.5">
+                                        {card.assigneeUserName ? `@${card.assigneeUserName}` : 'No username'}
+                                      </p>
+                                      <p className="text-[11px] text-slate-500 truncate mt-1">
+                                        {card.assignedUserId ? `ID: ${card.assignedUserId}` : 'No member assigned'}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <p data-testid="card-description" className="mt-1.5 text-xs text-slate-600 leading-4 line-clamp-3">
+                                  {card.description}
+                                </p>
+                              </article>
+                            ))
+                          ) : (
+                            <p className="text-xs text-green-500">No cards in this column.</p>
+                          )}
+                        </div>
                       </div>
                     ))}
                   </div>
