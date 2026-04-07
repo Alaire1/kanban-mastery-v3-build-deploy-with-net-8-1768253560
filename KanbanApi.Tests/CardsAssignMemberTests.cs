@@ -402,4 +402,5 @@ public class CardsAssignEndpointTests : IClassFixture<WebApplicationFactory<Prog
             $"\nFinal assignee: {TestConsole.Value(secondMemberId, ConsoleColor.Green)}" +
             $"\nPersistedAssignedUserId: {TestConsole.Value(card.AssignedUserId, ConsoleColor.Green)}\n");
     }
+
 }

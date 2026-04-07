@@ -140,6 +140,37 @@ run_migration_and_tests() {
     run_tests 1 "$test_filter"
 }
 
+run_backend() {
+    log_info "Starting backend (KanbanApi)..."
+    (cd KanbanApi && dotnet run)
+}
+
+run_frontend() {
+    log_info "Starting frontend (my-kanban)..."
+    (cd my-kanban && npm start)
+}
+
+run_all_services() {
+    log_info "Starting backend and frontend..."
+
+    (cd KanbanApi && dotnet run) &
+    local backend_pid=$!
+
+    (cd my-kanban && npm start) &
+    local frontend_pid=$!
+
+    cleanup() {
+        log_info "Stopping services..."
+        kill "$backend_pid" "$frontend_pid" 2>/dev/null || true
+        wait "$backend_pid" "$frontend_pid" 2>/dev/null || true
+    }
+
+    trap cleanup INT TERM EXIT
+
+    log_success "Backend PID: $backend_pid | Frontend PID: $frontend_pid"
+    wait -n "$backend_pid" "$frontend_pid"
+}
+
 show_help() {
     cat <<EOF
 Usage: ./run.sh [COMMAND] [OPTIONS]
@@ -149,6 +180,9 @@ Commands:
   mig, m [name]     Run migration workflow
     test, t [test]    Run tests (optionally only for [test] class, or alias: cards, columns, boardid, boardmembers, board, auth)
     mt, tm [name] [test]  Run migrations, update DB, then run tests (optionally only for [test] class or alias)
+    api               Run backend only (KanbanApi)
+    web               Run frontend only (my-kanban)
+    dev               Run backend + frontend together
   help, h           Show this help
 
 Options:
@@ -199,6 +233,15 @@ case "$command" in
         ;;
     mt|tm)
         run_migration_and_tests "${args[0]:-}" "${args[1]:-}"
+        ;;
+    api)
+        run_backend
+        ;;
+    web)
+        run_frontend
+        ;;
+    dev)
+        run_all_services
         ;;
     help|h|"")
         show_help

@@ -31,4 +31,8 @@ public record BoardCardResultDto
 {
     public required int Id { get; init; }
     public required string Title { get; init; } = string.Empty;
+    public string? Description { get; init; }
+    public string? AssignedUserId { get; init; }
+    public string? AssigneeUserName { get; init; }
+    public string? AssigneeDisplayName { get; init; }
 }
