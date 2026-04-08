@@ -38,6 +38,7 @@ namespace KanbanApi.Services
                 UserName = user.UserName!,
                 Email = user.Email!,
                 DisplayName = user.DisplayName,
+                ProfileImageUrl = user.ProfileImageUrl,
                 Boards = user.OwnedBoards
                     .Select(b => new BoardDto { Id = b.Id, Name = b.Name, OwnerId = b.OwnerId, Role = "Owner" })
                     .UnionBy(

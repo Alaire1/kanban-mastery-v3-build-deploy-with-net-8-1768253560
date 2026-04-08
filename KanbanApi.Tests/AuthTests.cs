@@ -150,6 +150,99 @@ namespace KanbanApi.Tests
             // Assert
             Assert.Equal(HttpStatusCode.BadRequest, registerResponse2.StatusCode);
         }
+
+        [Fact]
+        public async Task CustomRegister_WithUniqueUserName_ReturnsOk()
+        {
+            var suffix = Guid.NewGuid().ToString("N")[..8];
+
+            var response = await _client.PostAsJsonAsync("/api/auth/register", new
+            {
+                email = $"custom_{suffix}@example.com",
+                password = "Password123!",
+                userName = $"custom_user_{suffix}"
+            });
+
+            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Fact]
+        public async Task CustomRegister_WithDuplicateUserName_ReturnsConflict()
+        {
+            var suffix = Guid.NewGuid().ToString("N")[..8];
+            var userName = $"duplicate_user_{suffix}";
+
+            var first = await _client.PostAsJsonAsync("/api/auth/register", new
+            {
+                email = $"first_{suffix}@example.com",
+                password = "Password123!",
+                userName
+            });
+            Assert.Equal(HttpStatusCode.OK, first.StatusCode);
+
+            var second = await _client.PostAsJsonAsync("/api/auth/register", new
+            {
+                email = $"second_{suffix}@example.com",
+                password = "Password123!",
+                userName
+            });
+
+            Assert.Equal(HttpStatusCode.Conflict, second.StatusCode);
+        }
+
+        [Fact]
+        public async Task CustomLogin_WithUserName_ReturnsOkWithToken()
+        {
+            var suffix = Guid.NewGuid().ToString("N")[..8];
+            var userName = $"login_user_{suffix}";
+            var email = $"login_{suffix}@example.com";
+            const string password = "Password123!";
+
+            var register = await _client.PostAsJsonAsync("/api/auth/register", new
+            {
+                email,
+                password,
+                userName
+            });
+            Assert.Equal(HttpStatusCode.OK, register.StatusCode);
+
+            var login = await _client.PostAsJsonAsync("/api/auth/login", new
+            {
+                identifier = userName,
+                password
+            });
+
+            Assert.Equal(HttpStatusCode.OK, login.StatusCode);
+            var responseContent = await login.Content.ReadFromJsonAsync<AuthResponse>();
+            Assert.NotNull(responseContent?.AccessToken);
+        }
+
+        [Fact]
+        public async Task CustomLogin_WithEmail_ReturnsOkWithToken()
+        {
+            var suffix = Guid.NewGuid().ToString("N")[..8];
+            var userName = $"login_user_{suffix}";
+            var email = $"login_{suffix}@example.com";
+            const string password = "Password123!";
+
+            var register = await _client.PostAsJsonAsync("/api/auth/register", new
+            {
+                email,
+                password,
+                userName
+            });
+            Assert.Equal(HttpStatusCode.OK, register.StatusCode);
+
+            var login = await _client.PostAsJsonAsync("/api/auth/login", new
+            {
+                identifier = email,
+                password
+            });
+
+            Assert.Equal(HttpStatusCode.OK, login.StatusCode);
+            var responseContent = await login.Content.ReadFromJsonAsync<AuthResponse>();
+            Assert.NotNull(responseContent?.AccessToken);
+        }
     }
     // Represents the structure of the authentication response returned by the API.
 // This is used in tests to deserialize the JSON response and validate its content.

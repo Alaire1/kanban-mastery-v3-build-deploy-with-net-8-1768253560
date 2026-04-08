@@ -78,11 +78,35 @@ namespace KanbanApi.Services
 
         var membership = board.Members.FirstOrDefault(m => m.UserId == userId);
 
+        var memberIdentifiers = board.Members
+            .Select(m => m.UserId)
+            .Where(id => !string.IsNullOrWhiteSpace(id))
+            .Distinct()
+            .ToList();
+
+        var matchedUsers = await _context.Users
+            .Where(u => memberIdentifiers.Contains(u.Id)
+                || (u.Email != null && memberIdentifiers.Contains(u.Email))
+                || (u.UserName != null && memberIdentifiers.Contains(u.UserName)))
+            .ToListAsync();
+
+        ApplicationUser? ResolveMemberUser(BoardMember member)
+        {
+            if (member.User is not null)
+                return member.User;
+
+            return matchedUsers.FirstOrDefault(u =>
+                u.Id == member.UserId
+                || string.Equals(u.Email, member.UserId, StringComparison.OrdinalIgnoreCase)
+                || string.Equals(u.UserName, member.UserId, StringComparison.OrdinalIgnoreCase));
+        }
+
         var assigneesByUserId = board.Members
-            .Where(m => m.User is not null)
+            .Select(m => new { Member = m, User = ResolveMemberUser(m) })
+            .Where(x => x.User is not null)
             .ToDictionary(
-                m => m.UserId,
-                m => m.User);
+                x => x.Member.UserId,
+                x => x.User!);
 
         return new BoardResult.Found(new BoardIdResultDto
         {
@@ -93,7 +117,11 @@ namespace KanbanApi.Services
             Members = board.Members.Select(m => new BoardMemberResultDto
         {
             UserId = m.UserId,
-            Role = m.Role
+            Role = m.Role,
+            UserName = ResolveMemberUser(m)?.UserName,
+            DisplayName = ResolveMemberUser(m)?.DisplayName,
+            Email = ResolveMemberUser(m)?.Email,
+            ProfileImageUrl = ResolveMemberUser(m)?.ProfileImageUrl
             }).ToList(),
             Columns = board.Columns.OrderBy(c => c.Position).Select(c => new BoardColumnResultDto
             {
@@ -110,7 +138,8 @@ namespace KanbanApi.Services
                         Description = card.Description,
                         AssignedUserId = card.AssignedUserId,
                         AssigneeUserName = assignee?.UserName,
-                        AssigneeDisplayName = assignee?.DisplayName
+                        AssigneeDisplayName = assignee?.DisplayName,
+                        AssigneeAvatarUrl = assignee?.ProfileImageUrl
                     };
                 }).ToList()
             }).ToList()
@@ -179,7 +208,11 @@ namespace KanbanApi.Services
                 Members = board.Members.Select(m => new BoardMemberResultDto
             {
                 UserId = m.UserId,
-                Role = m.Role
+                Role = m.Role,
+                UserName = m.User?.UserName,
+                DisplayName = m.User?.DisplayName,
+                Email = m.User?.Email,
+                ProfileImageUrl = m.User?.ProfileImageUrl
                 }).ToList(),
                 Columns = new()
             });

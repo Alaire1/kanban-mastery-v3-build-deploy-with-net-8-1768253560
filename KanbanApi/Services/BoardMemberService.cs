@@ -8,7 +8,7 @@ namespace KanbanApi.Services;
 
 public class BoardMembersService(ApplicationDbContext context) : IBoardMembersService
 {
-    public async Task<AddMemberResult> AddMemberAsync(int boardId, string requestingUserId, string targetUserId)
+    public async Task<AddMemberResult> AddMemberAsync(int boardId, string requestingUserId, string targetUserIdentifier)
     {
         var board = await context.Boards
             .Include(b => b.Members)
@@ -20,11 +20,24 @@ public class BoardMembersService(ApplicationDbContext context) : IBoardMembersSe
         if (board.OwnerId != requestingUserId)
             return new AddMemberResult.Forbidden();
 
-        var alreadyMember = board.Members.Any(m => m.UserId == targetUserId);
+        var identifier = targetUserIdentifier.Trim();
+        var normalizedIdentifier = identifier.ToUpperInvariant();
+
+        var targetUser = await context.Users.FirstOrDefaultAsync(u =>
+            u.Id == identifier
+            || u.Email == identifier
+            || u.UserName == identifier
+            || u.NormalizedEmail == normalizedIdentifier
+            || u.NormalizedUserName == normalizedIdentifier);
+
+        if (targetUser is null)
+            return new AddMemberResult.UserNotFound();
+
+        var alreadyMember = board.Members.Any(m => m.UserId == targetUser.Id);
         if (alreadyMember)
             return new AddMemberResult.AlreadyMember();
 
-        var member = new BoardMember(targetUserId, boardId, "Member");
+        var member = new BoardMember(targetUser.Id, boardId, "Member");
         context.BoardMembers.Add(member);
         await context.SaveChangesAsync();
 

@@ -21,16 +21,25 @@ public static class BoardMembersEndpoint
             if (userId is null)
                 return TypedResults.Unauthorized();
 
-            return await service.AddMemberAsync(boardId, userId, request.UserId) switch
+            var targetIdentifier = !string.IsNullOrWhiteSpace(request.UserId)
+                ? request.UserId
+                : !string.IsNullOrWhiteSpace(request.UserName)
+                    ? request.UserName
+                    : request.Email;
+
+            if (string.IsNullOrWhiteSpace(targetIdentifier))
+                return TypedResults.BadRequest("Provide either userId, userName, or email.");
+
+            return await service.AddMemberAsync(boardId, userId, targetIdentifier) switch
             {
                 AddMemberResult.Created c       => TypedResults.Created($"/api/boards/{boardId}/members/{c.Dto.UserId}", c.Dto),
                 AddMemberResult.BoardNotFound   => TypedResults.NotFound("Board not found."),
+                AddMemberResult.UserNotFound    => TypedResults.NotFound("User not found."),
                 AddMemberResult.Forbidden       => TypedResults.Forbid(),
                 AddMemberResult.AlreadyMember   => TypedResults.Conflict("User is already a member of this board."),
                 _                               => TypedResults.StatusCode(500)
             };
         })
-        .WithValidation<AddMemberRequest>()
         .RequireAuthorization("IsBoardOwner");
 
         return routes;
