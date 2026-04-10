@@ -41,3 +41,6 @@ desktop.ini
 KanbanApi/kanban.db-shm
 KanbanApi/kanban.db-wal
 node_modules
+
+# Runtime user uploads
+KanbanApi/wwwroot/uploads/

@@ -264,7 +264,7 @@ export default function BoardColumn({
         </div>
       </div>
 
-      <div className="flex-1 min-h-0 space-y-2 overflow-y-auto pr-1">
+      <div className="flex-1 min-h-0 space-y-2 overflow-y-auto overflow-x-hidden pr-1">
         {column.cards.length > 0 ? (
           column.cards.map((card) => (
             <DraggableCard
@@ -280,12 +280,17 @@ export default function BoardColumn({
         ) : (
           <p className="text-xs text-green-500">No cards in this column.</p>
         )}
-      </div>
 
-      <div
-        ref={setEndDropNodeRef}
-        className={isDragModeEnabled ? 'mt-2 h-5 w-full' : 'h-0 w-full pointer-events-none'}
-      />
+        <div
+          ref={setEndDropNodeRef}
+          className={`w-full rounded-md transition-colors ${
+            isDragModeEnabled
+              ? 'mt-1 h-10 border border-dashed border-emerald-300 bg-emerald-50/60'
+              : 'h-0 pointer-events-none border-0 bg-transparent'
+          }`}
+          aria-hidden={!isDragModeEnabled}
+        />
+      </div>
 
       {formError && (
         <p className="mt-3 rounded-md border border-red-200 bg-red-50 px-2 py-1 text-xs text-red-700">{formError}</p>

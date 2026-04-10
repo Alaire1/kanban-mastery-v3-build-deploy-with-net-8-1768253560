@@ -3,6 +3,7 @@ import { useState } from 'react';
 import {
   closestCorners,
   DndContext,
+  DragOverlay,
   pointerWithin,
 } from '@dnd-kit/core';
 import { ROUTES } from '../constants/routes';
@@ -12,7 +13,7 @@ import useBoardData from '../hooks/useBoardData';
 import useBoardDragDrop from '../hooks/useBoardDragDrop';
 import useColumnsPagination from '../hooks/useColumnsPagination';
 import api from '../services/api';
-import { normalizeCard } from './board/boardUtils';
+import { normalizeCard, parseCardIdFromDragId, parseColumnIdFromDragId } from './board/boardUtils';
 
 const getMemberDisplayLabel = (member) => (
   member.displayName
@@ -21,6 +22,42 @@ const getMemberDisplayLabel = (member) => (
   || (member.userId?.includes('@') ? member.userId : null)
   || 'Board member'
 );
+
+const getInitials = (value) => {
+  if (!value || typeof value !== 'string') return '??';
+
+  const parts = value.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return '??';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+
+  return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+};
+
+const toAbsoluteMemberAvatarUrl = (value) => {
+  if (!value || typeof value !== 'string') return null;
+  if (/^https?:\/\//i.test(value)) return value;
+
+  try {
+    return new URL(value, api.defaults.baseURL).toString();
+  } catch {
+    return value;
+  }
+};
+
+const getCurrentUserIdFromToken = () => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) return null;
+
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    return payload.sub
+      || payload.nameid
+      || payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier']
+      || null;
+  } catch {
+    return null;
+  }
+};
 
 function BoardPage() {
   const COLUMNS_PER_VIEW = 4;
@@ -31,6 +68,10 @@ function BoardPage() {
   const [isCreatingColumn, setIsCreatingColumn] = useState(false);
   const [createColumnError, setCreateColumnError] = useState('');
   const { board, columns, setColumns, loading, apiError } = useBoardData(boardId);
+  const currentUserRole = String(board?.role ?? board?.Role ?? '').toLowerCase();
+  const currentUserId = getCurrentUserIdFromToken();
+  const boardOwnerId = board?.ownerId ?? board?.OwnerId ?? null;
+  const canInviteMembers = currentUserRole === 'owner' || (currentUserId && boardOwnerId && currentUserId === boardOwnerId);
 
   const members = (board?.members ?? board?.Members ?? [])
     .map((member) => {
@@ -44,10 +85,23 @@ function BoardPage() {
         userName: member.userName ?? member.UserName ?? null,
         displayName: member.displayName ?? member.DisplayName ?? null,
         email: member.email ?? member.Email ?? null,
-        profileImageUrl: member.profileImageUrl ?? member.ProfileImageUrl ?? null,
+        profileImageUrl: toAbsoluteMemberAvatarUrl(
+          member.profileImageUrl
+          ?? member.ProfileImageUrl
+          ?? member.profilePictureUrl
+          ?? member.ProfilePictureUrl
+          ?? member.photoUrl
+          ?? member.PhotoUrl
+          ?? member.avatarUrl
+          ?? member.AvatarUrl
+          ?? null
+        ),
       };
     })
     .filter(Boolean);
+
+  const visibleMemberAvatars = members.slice(0, 3);
+  const remainingMembersCount = Math.max(0, members.length - visibleMemberAvatars.length);
 
   const addCardToColumn = (columnId, cardData) => {
     const normalizedCard = normalizeCard(cardData);
@@ -280,9 +334,12 @@ function BoardPage() {
   const {
     sensors,
     isDragModeEnabled,
+    activeDragId,
+    activeDragRect,
     actionError,
     handleToggleDragMode,
     handleDragStart,
+    handleDragCancel,
     handleDragEnd,
   } = useBoardDragDrop({
     boardId,
@@ -313,18 +370,24 @@ function BoardPage() {
     return closestCorners(args);
   };
 
+  const activeCardId = activeDragId ? parseCardIdFromDragId(activeDragId) : null;
+  const activeColumnId = activeDragId ? parseColumnIdFromDragId(activeDragId) : null;
+
+  const activeCard = activeCardId === null
+    ? null
+    : columns
+      .flatMap((column) => column.cards)
+      .find((card) => card.id === activeCardId);
+
+  const activeColumn = activeColumnId === null
+    ? null
+    : columns.find((column) => column.id === activeColumnId);
+
   return (
     <div className="h-screen overflow-hidden bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 p-6 md:p-10">
       <div className="max-w-[96.6rem] mx-auto h-[calc(100vh-3rem)] md:h-[calc(100vh-5rem)] overflow-hidden bg-white/80 border border-green-100 rounded-2xl p-6 shadow-sm flex flex-col">
         <div className="flex items-center justify-between gap-3">
           <Link to={ROUTES.DASHBOARD} className="text-sm text-green-700 hover:underline">← Back to dashboard</Link>
-          <button
-            type="button"
-            onClick={() => setIsInviteModalOpen(true)}
-            className="rounded-lg border border-green-200 bg-white px-3 py-1.5 text-xs font-semibold text-green-700 hover:bg-green-100"
-          >
-            Invite
-          </button>
         </div>
 
         {loading && (
@@ -354,7 +417,54 @@ function BoardPage() {
               </div>
             )}
 
-            <div className="-mt-10 flex justify-end">
+            <div className="-mt-10 flex items-center justify-end gap-2">
+              <div className="flex items-center">
+                <div className="flex -space-x-2">
+                  {visibleMemberAvatars.map((member) => {
+                    const memberLabel = getMemberDisplayLabel(member);
+
+                    return (
+                      <div
+                        key={member.userId}
+                        className="h-8 w-8 rounded-full border-2 border-white bg-green-100 text-[10px] font-semibold text-green-800 overflow-hidden flex items-center justify-center shadow-sm"
+                        title={memberLabel}
+                        aria-label={memberLabel}
+                      >
+                        {member.profileImageUrl ? (
+                          <img
+                            src={member.profileImageUrl}
+                            alt={memberLabel}
+                            className="h-full w-full object-cover"
+                          />
+                        ) : (
+                          <span>{getInitials(memberLabel)}</span>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {remainingMembersCount > 0 && (
+                  <span
+                    className="ml-2 text-xs font-semibold text-green-700"
+                    title={`${remainingMembersCount} more member${remainingMembersCount === 1 ? '' : 's'}`}
+                    aria-label={`${remainingMembersCount} more members`}
+                  >
+                    +{remainingMembersCount}
+                  </span>
+                )}
+              </div>
+
+              {canInviteMembers && (
+                <button
+                  type="button"
+                  onClick={() => setIsInviteModalOpen(true)}
+                  className="rounded-lg border border-green-200 bg-white px-3 py-1.5 text-xs font-semibold text-green-700 hover:bg-green-100"
+                >
+                  Invite
+                </button>
+              )}
+
               <button
                 type="button"
                 onClick={handleToggleDragModeSafe}
@@ -375,6 +485,7 @@ function BoardPage() {
                   sensors={sensors}
                   collisionDetection={collisionDetectionStrategy}
                   onDragStart={handleDragStart}
+                  onDragCancel={handleDragCancel}
                   onDragEnd={handleDragEnd}
                 >
                   <div className="flex h-full min-h-0 items-center gap-3">
@@ -472,6 +583,54 @@ function BoardPage() {
                       →
                     </button>
                   </div>
+
+                  <DragOverlay zIndex={2000}>
+                    {activeCard ? (
+                      <article
+                        className={`rounded-lg border p-2.5 opacity-100 shadow-2xl ring-2 ring-emerald-200 ${
+                          activeCard.isAssigned
+                            ? 'border-emerald-200 bg-emerald-50'
+                            : 'border-amber-200 bg-amber-50'
+                        }`}
+                        style={{
+                          width: activeDragRect?.width ? `${activeDragRect.width}px` : undefined,
+                          minHeight: activeDragRect?.height ? `${activeDragRect.height}px` : undefined,
+                        }}
+                      >
+                        <div className="flex items-start justify-between gap-2">
+                          <h3 className="text-sm font-semibold text-slate-800 leading-5 line-clamp-2">
+                            {activeCard.title}
+                          </h3>
+                          <div className={`h-8 w-8 shrink-0 rounded-full border flex items-center justify-center text-[10px] font-semibold ${
+                            activeCard.isAssigned
+                              ? 'border-emerald-300 bg-emerald-100 text-emerald-800'
+                              : 'border-amber-300 bg-amber-100 text-amber-800'
+                          }`}>
+                            {activeCard.isAssigned && activeCard.assigneeAvatarUrl ? (
+                              <img
+                                src={activeCard.assigneeAvatarUrl}
+                                alt={activeCard.assigneeFallbackName}
+                                className="h-full w-full rounded-full object-cover"
+                              />
+                            ) : (
+                              <span>{activeCard.assigneeInitials}</span>
+                            )}
+                          </div>
+                        </div>
+                        <p className="mt-1.5 text-xs text-slate-600 leading-4 line-clamp-3">{activeCard.description}</p>
+                      </article>
+                    ) : activeColumn ? (
+                      <div
+                        className="rounded-xl border border-emerald-300 bg-white px-3 py-3 opacity-100 shadow-2xl ring-2 ring-emerald-200"
+                        style={{
+                          width: activeDragRect?.width ? `${activeDragRect.width}px` : undefined,
+                          minHeight: activeDragRect?.height ? `${activeDragRect.height}px` : undefined,
+                        }}
+                      >
+                        <p className="text-sm font-medium text-green-800 truncate">{activeColumn.name}</p>
+                      </div>
+                    ) : null}
+                  </DragOverlay>
                 </DndContext>
               ) : (
                 <div className="space-y-2">

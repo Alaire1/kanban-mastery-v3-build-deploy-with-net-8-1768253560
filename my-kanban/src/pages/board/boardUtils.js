@@ -43,7 +43,7 @@ export const normalizeCard = (card) => {
   return {
     id: card.id ?? card.Id,
     title: card.title ?? card.Title ?? 'Untitled card',
-    description: card.description ?? card.Description ?? 'No description provided.',
+    description: card.description ?? card.Description ?? '',
     assignedUserId,
     assigneeDisplayName: displayName,
     assigneeUserName: userName,
