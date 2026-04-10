@@ -58,6 +58,7 @@ export const getCardDragId = (cardId) => `card-${cardId}`;
 export const getColumnDropId = (columnId) => `column-${columnId}`;
 export const getColumnEndDropId = (columnId) => `column-end-${columnId}`;
 export const getColumnDragId = (columnId) => `column-drag-${columnId}`;
+export const BOARD_COLUMNS_END_DROP_ID = 'board-columns-end-drop';
 
 export const parseCardIdFromDragId = (dragId) => {
   if (typeof dragId !== 'string' || !dragId.startsWith('card-')) return null;
@@ -266,6 +267,20 @@ export const moveColumnToTargetColumn = (allColumns, draggedColumnId, targetColu
   const [draggedColumn] = nextColumns.splice(sourceIndex, 1);
   const adjustedTargetIndex = sourceIndex < targetIndex ? targetIndex - 1 : targetIndex;
   nextColumns.splice(adjustedTargetIndex, 0, draggedColumn);
+
+  return { nextColumns, moved: true };
+};
+
+export const moveColumnToEnd = (allColumns, draggedColumnId) => {
+  const sourceIndex = allColumns.findIndex((column) => column.id === draggedColumnId);
+
+  if (sourceIndex === -1 || sourceIndex === allColumns.length - 1) {
+    return { nextColumns: allColumns, moved: false };
+  }
+
+  const nextColumns = [...allColumns];
+  const [draggedColumn] = nextColumns.splice(sourceIndex, 1);
+  nextColumns.push(draggedColumn);
 
   return { nextColumns, moved: true };
 };
