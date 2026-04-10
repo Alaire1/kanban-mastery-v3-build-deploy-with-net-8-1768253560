@@ -6,7 +6,7 @@ import { ROUTES } from '../constants/routes';
 
 function RegisterPage() {
   const [formData, setFormData] = useState({
-    name: '',
+    userName: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -16,7 +16,7 @@ function RegisterPage() {
   const navigate = useNavigate();
 
   const { validateAll, touchField, getFieldError } = useFormValidation([
-    'name',
+    'userName',
     'email',
     'password',
     'confirmPassword',
@@ -32,13 +32,19 @@ function RegisterPage() {
     if (!validateAll(formData)) return;
     setLoading(true);
     try {
-      await api.post('/register', {
+      await api.post('/api/auth/register', {
         email: formData.email,
         password: formData.password,
+        userName: formData.userName,
       });
       navigate(ROUTES.LOGIN);
     } catch (error) {
-      setApiError(error.response?.data?.detail || error.response?.data?.title || 'Registration failed');
+      setApiError(
+        error.response?.data?.message
+        || error.response?.data?.detail
+        || error.response?.data?.title
+        || 'Registration failed'
+      );
     } finally {
       setLoading(false);
     }
@@ -61,22 +67,22 @@ function RegisterPage() {
 
         <form onSubmit={handleRegister} noValidate>
 
-          {/* Name */}
+          {/* Username */}
           <div className="mb-4">
             <label className="block text-xs font-semibold text-green-700 uppercase tracking-wide mb-2">
-              Name
+              Username
             </label>
             <input
               type="text"
-              name="name"
-              value={formData.name}
+              name="userName"
+              value={formData.userName}
               onChange={handleChange}
-              onBlur={(e) => touchField('name', e.target.value, formData)}
-              placeholder="Your name"
-              className={inputClass('name')}
+              onBlur={(e) => touchField('userName', e.target.value, formData)}
+              placeholder="your_username"
+              className={inputClass('userName')}
             />
-            {getFieldError('name') && (
-              <p className="text-red-400 text-xs mt-1">{getFieldError('name')}</p>
+            {getFieldError('userName') && (
+              <p className="text-red-400 text-xs mt-1">{getFieldError('userName')}</p>
             )}
           </div>
 

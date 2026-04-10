@@ -6,26 +6,31 @@ import { ROUTES } from '../constants/routes';
 
 
 function LoginPage() {
-  const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [apiError, setApiError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const { validateAll, touchField, getFieldError } = useFormValidation(['email', 'password']);
+  const { validateAll, touchField, getFieldError } = useFormValidation(['identifier', 'password']);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setApiError('');
-    const values = { email, password };
+    const values = { identifier, password };
     if (!validateAll(values)) return; // stop if invalid
     setLoading(true);
     try {
-      const response = await api.post('/login', values);
+      const response = await api.post('/api/auth/login', values);
       localStorage.setItem('token', response.data.accessToken);
       navigate(ROUTES.DASHBOARD);
     } catch (error) {
-      setApiError(error.response?.data?.message || 'Login failed');
+      setApiError(
+        error.response?.data?.message
+        || error.response?.data?.detail
+        || error.response?.data?.title
+        || 'Login failed'
+      );
     } finally {
       setLoading(false);
     }
@@ -47,16 +52,16 @@ function LoginPage() {
 
         <form onSubmit={handleLogin} noValidate>
           <div className="mb-5">
-            <label className="block text-xs font-semibold text-green-700 uppercase tracking-wide mb-2">Email</label>
+            <label className="block text-xs font-semibold text-green-700 uppercase tracking-wide mb-2">Email or Username</label>
             <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              onBlur={(e) => touchField('email', e.target.value)}
-              placeholder="you@example.com"
-              className={inputClass('email')}
+              type="text"
+              value={identifier}
+              onChange={(e) => setIdentifier(e.target.value)}
+              onBlur={(e) => touchField('identifier', e.target.value)}
+              placeholder="you@example.com or your_username"
+              className={inputClass('identifier')}
             />
-            {getFieldError('email') && <p className="text-red-400 text-xs mt-1">{getFieldError('email')}</p>}
+            {getFieldError('identifier') && <p className="text-red-400 text-xs mt-1">{getFieldError('identifier')}</p>}
           </div>
 
           <div className="mb-5">

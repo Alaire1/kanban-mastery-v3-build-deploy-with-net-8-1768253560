@@ -16,6 +16,10 @@ public record BoardMemberResultDto
 {
     public required string UserId { get; init; } = string.Empty;
     public required string Role { get; init; } = string.Empty;
+    public string? UserName { get; init; }
+    public string? DisplayName { get; init; }
+    public string? Email { get; init; }
+    public string? ProfileImageUrl { get; init; }
 }
 
 public record BoardColumnResultDto
@@ -35,4 +39,5 @@ public record BoardCardResultDto
     public string? AssignedUserId { get; init; }
     public string? AssigneeUserName { get; init; }
     public string? AssigneeDisplayName { get; init; }
+    public string? AssigneeAvatarUrl { get; init; }
 }

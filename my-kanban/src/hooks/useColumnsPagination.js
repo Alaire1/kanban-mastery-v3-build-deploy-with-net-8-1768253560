@@ -18,11 +18,11 @@ export default function useColumnsPagination(columns, columnsPerView = 4) {
   const canGoNext = startIndex < maxStartIndex;
 
   const handlePrevColumns = () => {
-    setStartIndex((prev) => Math.max(0, prev - columnsPerView));
+    setStartIndex((prev) => Math.max(0, prev - 1));
   };
 
   const handleNextColumns = () => {
-    setStartIndex((prev) => Math.min(maxStartIndex, prev + columnsPerView));
+    setStartIndex((prev) => Math.min(maxStartIndex, prev + 1));
   };
 
   return {

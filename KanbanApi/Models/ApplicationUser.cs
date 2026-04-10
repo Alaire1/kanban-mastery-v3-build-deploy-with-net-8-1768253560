@@ -7,6 +7,7 @@ public class ApplicationUser : IdentityUser {
     public ICollection<Board> OwnedBoards { get; private set; } = new List<Board>();
     // Optional display name for user profile
     public string? DisplayName { get; set; }
+    public string? ProfileImageUrl { get; set; }
 
     //Default constructor
     public ApplicationUser(){} //only for Identity

@@ -123,6 +123,33 @@ public class BoardMembersTests : IClassFixture<WebApplicationFactory<Program>>
     }
 
     [Fact]
+    public async Task AddMember_AsOwner_ByUserName_ReturnsCreated()
+    {
+        var (ownerClient, ownerId) = await CreateAuthenticatedUser();
+        var boardId = await CreateBoard(ownerId);
+        var (_, memberId) = await CreateAuthenticatedUser();
+
+        using var scope = _factory.Services.CreateScope();
+        var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        var memberUserName = await db.Users
+            .Where(u => u.Id == memberId)
+            .Select(u => u.UserName)
+            .FirstOrDefaultAsync();
+
+        Assert.False(string.IsNullOrWhiteSpace(memberUserName));
+
+        var response = await ownerClient.PostAsJsonAsync(
+            $"/api/boards/{boardId}/members",
+            new { UserName = memberUserName });
+
+        Assert.Equal(HttpStatusCode.Created, response.StatusCode);
+        var body = await response.Content.ReadFromJsonAsync<MemberResponse>(JsonOptions);
+        Assert.NotNull(body);
+        Assert.Equal(memberId, body!.UserId);
+        Assert.Equal("Member", body.Role);
+    }
+
+    [Fact]
     public async Task AddMember_AsOwner_AddsSeveralMembers()
     {
         var (ownerClient, ownerId) = await CreateAuthenticatedUser();
