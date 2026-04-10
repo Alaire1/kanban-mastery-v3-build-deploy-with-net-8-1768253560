@@ -1,18 +1,19 @@
 import { useDraggable, useDroppable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { getColumnDragId, getColumnDropId, getColumnEndDropId } from '../../pages/board/boardUtils';
 import DraggableCard from './DraggableCard';
 
 export default function BoardColumn({
   column,
   isDragModeEnabled,
-  isDeleteModeEnabled,
   onCreateCard,
   members,
   onAssignCard,
   onDeleteCard,
   onDeleteColumn,
+  onUpdateColumn,
+  onUpdateCard,
 }) {
   const { setNodeRef: setDropNodeRef, isOver } = useDroppable({
     id: getColumnDropId(column.id),
@@ -37,6 +38,40 @@ export default function BoardColumn({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState('');
   const [isDeletingColumn, setIsDeletingColumn] = useState(false);
+  const [isActionsOpen, setIsActionsOpen] = useState(false);
+  const [isEditingColumn, setIsEditingColumn] = useState(false);
+  const [columnNameInput, setColumnNameInput] = useState(column.name);
+  const [isUpdatingColumn, setIsUpdatingColumn] = useState(false);
+  const [columnActionError, setColumnActionError] = useState('');
+  const actionsRef = useRef(null);
+
+  useEffect(() => {
+    setColumnNameInput(column.name);
+  }, [column.name]);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!actionsRef.current?.contains(event.target)) {
+        setIsActionsOpen(false);
+      }
+    };
+
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        setIsActionsOpen(false);
+      }
+    };
+
+    if (isActionsOpen) {
+      document.addEventListener('mousedown', handleOutsideClick);
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isActionsOpen]);
 
   const setCombinedNodeRef = (node) => {
     setDropNodeRef(node);
@@ -80,14 +115,49 @@ export default function BoardColumn({
   const handleDeleteColumn = async () => {
     if (!onDeleteColumn || isDeletingColumn) return;
 
+    const confirmed = window.confirm(`Delete "${column.name}" column?`);
+    if (!confirmed) return;
+
+    setColumnActionError('');
     setIsDeletingColumn(true);
 
     try {
       await onDeleteColumn(column.id);
-    } catch {
-      // Alert messaging is handled upstream.
+    } catch (error) {
+      setColumnActionError(error.message || 'Could not delete the column.');
     } finally {
       setIsDeletingColumn(false);
+      setIsActionsOpen(false);
+    }
+  };
+
+  const handleSubmitUpdateColumn = async (event) => {
+    event.preventDefault();
+
+    if (!onUpdateColumn || isUpdatingColumn) return;
+
+    const trimmedName = columnNameInput.trim();
+    if (!trimmedName) {
+      setColumnActionError('Column name is required.');
+      return;
+    }
+
+    if (trimmedName === column.name) {
+      setIsEditingColumn(false);
+      setColumnActionError('');
+      return;
+    }
+
+    setColumnActionError('');
+    setIsUpdatingColumn(true);
+
+    try {
+      await onUpdateColumn(column.id, trimmedName);
+      setIsEditingColumn(false);
+    } catch (error) {
+      setColumnActionError(error.message || 'Could not update the column.');
+    } finally {
+      setIsUpdatingColumn(false);
     }
   };
 
@@ -95,26 +165,50 @@ export default function BoardColumn({
     <div
       ref={setCombinedNodeRef}
       style={style}
-      className={`rounded-xl border bg-white px-3 py-3 min-h-[180px] transition-colors ${
+      className={`flex h-full min-h-0 flex-col rounded-xl border bg-white px-3 py-3 transition-colors ${
         isOver ? 'border-emerald-300 bg-emerald-50' : 'border-green-200'
       } ${isDragging ? 'shadow-lg ring-2 ring-emerald-200' : ''}`}
     >
       <div className="mb-2 flex items-center justify-between gap-2">
-        <p className="text-sm font-medium text-green-800 truncate">{column.name}</p>
-        <div className="flex items-center gap-1">
-          {isDeleteModeEnabled && (
+        {isEditingColumn ? (
+          <form onSubmit={handleSubmitUpdateColumn} className="flex-1 flex items-center gap-1">
+            <input
+              type="text"
+              value={columnNameInput}
+              onChange={(event) => {
+                setColumnNameInput(event.target.value);
+                if (columnActionError) setColumnActionError('');
+              }}
+              className="w-full rounded-md border border-green-200 px-2 py-1 text-xs text-green-800 focus:border-emerald-400 focus:outline-none"
+              maxLength={50}
+              autoFocus
+              disabled={isUpdatingColumn}
+            />
+            <button
+              type="submit"
+              disabled={isUpdatingColumn}
+              className="rounded-md bg-emerald-600 px-2 py-1 text-[11px] font-semibold text-white hover:bg-emerald-700 disabled:opacity-60"
+            >
+              {isUpdatingColumn ? '…' : 'Save'}
+            </button>
             <button
               type="button"
-              onClick={handleDeleteColumn}
-              disabled={isDeletingColumn}
-              className="h-7 w-7 shrink-0 rounded-md border border-red-200 bg-red-50 text-xs font-semibold text-red-700 hover:bg-red-100 disabled:opacity-60"
-              aria-label={`Delete ${column.name} column`}
-              title="Delete column"
+              disabled={isUpdatingColumn}
+              onClick={() => {
+                setIsEditingColumn(false);
+                setColumnNameInput(column.name);
+                setColumnActionError('');
+              }}
+              className="rounded-md border border-green-200 bg-white px-2 py-1 text-[11px] font-semibold text-green-700 hover:bg-green-50"
             >
-              {isDeletingColumn ? '…' : '✕'}
+              Cancel
             </button>
-          )}
+          </form>
+        ) : (
+          <p className="text-sm font-medium text-green-800 truncate">{column.name}</p>
+        )}
 
+        <div className="flex items-center gap-1">
           <button
             type="button"
             {...attributes}
@@ -130,34 +224,80 @@ export default function BoardColumn({
           >
             ↕
           </button>
+
+          <div ref={actionsRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setIsActionsOpen((prev) => !prev)}
+              className="h-7 w-7 shrink-0 rounded-md bg-transparent text-sm font-semibold text-green-700 hover:bg-green-50"
+              aria-label={`Open actions for ${column.name}`}
+              title="Column actions"
+            >
+              ⋮
+            </button>
+
+            {isActionsOpen && (
+              <div className="absolute right-0 top-8 z-20 w-32 rounded-lg border border-green-100 bg-white p-1 shadow-lg">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsActionsOpen(false);
+                    setIsEditingColumn(true);
+                    setColumnNameInput(column.name);
+                    setColumnActionError('');
+                  }}
+                  className="w-full rounded-md px-2 py-1.5 text-left text-xs font-medium text-slate-700 hover:bg-green-50"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDeleteColumn}
+                  disabled={isDeletingColumn}
+                  className="w-full rounded-md px-2 py-1.5 text-left text-xs font-medium text-red-600 hover:bg-red-50 disabled:opacity-60"
+                >
+                  {isDeletingColumn ? 'Deleting…' : 'Delete'}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
-      <div className="space-y-2">
+      <div className="flex-1 min-h-0 space-y-2 overflow-y-auto overflow-x-hidden pr-1">
         {column.cards.length > 0 ? (
           column.cards.map((card) => (
             <DraggableCard
               key={card.id}
               card={card}
               isDragModeEnabled={isDragModeEnabled}
-              isDeleteModeEnabled={isDeleteModeEnabled}
               members={members}
               onAssignCard={onAssignCard}
               onDeleteCard={onDeleteCard}
+              onUpdateCard={onUpdateCard}
             />
           ))
         ) : (
           <p className="text-xs text-green-500">No cards in this column.</p>
         )}
-      </div>
 
-      <div
-        ref={setEndDropNodeRef}
-        className={isDragModeEnabled ? 'mt-2 h-5 w-full' : 'h-0 w-full pointer-events-none'}
-      />
+        <div
+          ref={setEndDropNodeRef}
+          className={`w-full rounded-md transition-colors ${
+            isDragModeEnabled
+              ? 'mt-1 h-10 border border-dashed border-emerald-300 bg-emerald-50/60'
+              : 'h-0 pointer-events-none border-0 bg-transparent'
+          }`}
+          aria-hidden={!isDragModeEnabled}
+        />
+      </div>
 
       {formError && (
         <p className="mt-3 rounded-md border border-red-200 bg-red-50 px-2 py-1 text-xs text-red-700">{formError}</p>
+      )}
+
+      {columnActionError && (
+        <p className="mt-3 rounded-md border border-red-200 bg-red-50 px-2 py-1 text-xs text-red-700">{columnActionError}</p>
       )}
 
       {isCreateFormVisible ? (

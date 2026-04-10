@@ -21,8 +21,11 @@ const validators = {
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) return 'Enter a valid email address';
     return null;
   },
-  password: (value) => {
+  password: (value, allValues = {}) => {
     if (!value) return 'Password is required';
+    // Apply complexity checks only on registration forms.
+    // Login should allow any existing valid account password without client-side strength checks.
+    if (!Object.prototype.hasOwnProperty.call(allValues, 'confirmPassword')) return null;
     if (value.length < 8) return 'Password must be at least 8 characters';
     if (!/[A-Z]/.test(value)) return 'Password must contain at least one uppercase letter';
     if (!/[0-9]/.test(value)) return 'Password must contain at least one number';

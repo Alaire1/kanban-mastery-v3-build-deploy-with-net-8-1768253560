@@ -385,11 +385,11 @@ function DashboardPage() {
                 <button
                   type="button"
                   onClick={(event) => handleToggleBoardMenu(event, board.id)}
-                  className="absolute right-3 top-3 h-8 w-8 rounded-lg border border-green-200 bg-white text-green-700 hover:bg-green-50"
+                  className="absolute right-3 top-3 h-8 w-8 rounded-lg bg-transparent text-green-700 hover:bg-green-50"
                   aria-label={`Open board actions for ${board.name}`}
                   title="Board actions"
                 >
-                  ⋯
+                  ⋮
                 </button>
 
                 {menuBoardId === board.id && (
