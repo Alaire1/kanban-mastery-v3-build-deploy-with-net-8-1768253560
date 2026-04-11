@@ -321,7 +321,7 @@ public class E2ESeedUserBoardsTests : IClassFixture<WebApplicationFactory<Progra
                     {
                         Assert.Equal(
                             HttpStatusCode.Created,
-                            await CreateCard(_client, boardId, firstColumnId, $"Seed-{boardId}-{i}"));
+                            await CreateCard(_client, boardId, firstColumnId, $"Seed {boardId} {i}"));
                     }
                 }
             }

@@ -1,0 +1,2047 @@
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Dtos/CreateColumnRequestDto.cs
+FN:10,System.String CreateColumnRequestDto::get_Name()
+FNDA:38,System.String CreateColumnRequestDto::get_Name()
+DA:11,38
+FN:13,System.Int32 CreateColumnRequestDto::get_Position()
+FNDA:37,System.Int32 CreateColumnRequestDto::get_Position()
+DA:14,37
+FN:23,System.String UpdateColumnNameRequestDto::get_Name()
+FNDA:19,System.String UpdateColumnNameRequestDto::get_Name()
+DA:24,19
+LF:3
+LH:3
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Program.cs
+FN:8,System.Void Program::<Main>$(System.String[])
+FNDA:73,System.Void Program::<Main>$(System.String[])
+DA:9,73
+DA:12,73
+DA:13,73
+DA:16,73
+DA:17,68
+DA:18,68
+DA:19,68
+DA:20,73
+DA:23,73
+DA:24,73
+DA:25,73
+DA:27,73
+DA:28,73
+DA:29,73
+DA:30,146
+DA:31,73
+DA:32,146
+DA:33,146
+DA:35,73
+DA:36,73
+DA:37,73
+DA:38,73
+DA:39,73
+DA:41,73
+DA:42,73
+DA:44,146
+DA:45,146
+DA:46,73
+DA:47,73
+DA:48,73
+DA:49,146
+DA:50,146
+DA:52,73
+DA:54,73
+DA:55,73
+DA:56,73
+DA:57,73
+DA:58,73
+DA:60,73
+DA:61,73
+DA:62,73
+DA:63,73
+DA:64,73
+DA:65,73
+DA:66,73
+DA:67,73
+DA:68,73
+DA:69,73
+DA:71,73
+DA:72,73
+DA:73,73
+DA:74,73
+DA:75,73
+DA:76,73
+DA:77,73
+DA:78,73
+DA:80,73
+DA:82,73
+BRDA:54,394,0,73
+BRDA:54,394,1,73
+LF:58
+LH:58
+BRF:2
+BRH:2
+FNF:1
+FNH:1
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Validation/NameValidator.cs
+FN:16,System.Boolean KanbanApi.Validation.NameValidator::TryValidateAndNormalize(System.String,System.String&,System.String&,System.Int32)
+FNDA:0,System.Boolean KanbanApi.Validation.NameValidator::TryValidateAndNormalize(System.String,System.String&,System.String&,System.Int32)
+DA:17,0
+DA:18,0
+DA:19,0
+DA:21,0
+DA:22,0
+DA:23,0
+DA:24,0
+DA:27,0
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,0
+DA:35,0
+DA:36,0
+DA:37,0
+DA:38,0
+DA:40,0
+DA:41,0
+BRDA:21,23,0,0
+BRDA:21,23,1,0
+BRDA:29,57,0,0
+BRDA:29,57,1,0
+BRDA:35,137,0,0
+BRDA:35,137,1,0
+FN:7,System.Void KanbanApi.Validation.NameValidator::.cctor()
+FNDA:0,System.Void KanbanApi.Validation.NameValidator::.cctor()
+DA:8,0
+DA:9,0
+DA:10,0
+LF:21
+LH:0
+BRF:6
+BRH:0
+FNF:2
+FNH:0
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Validation/NotEmptyOrWhitespaceAttribute.cs
+FN:14,System.Boolean KanbanApi.Validation.NotEmptyOrWhitespaceAttribute::IsValid(System.Object)
+FNDA:14,System.Boolean KanbanApi.Validation.NotEmptyOrWhitespaceAttribute::IsValid(System.Object)
+DA:15,14
+DA:16,14
+DA:17,14
+DA:18,14
+DA:20,0
+DA:21,14
+BRDA:16,14,0,14
+BRDA:16,14,1,0
+FN:8,System.Void KanbanApi.Validation.NotEmptyOrWhitespaceAttribute::.ctor()
+FNDA:2,System.Void KanbanApi.Validation.NotEmptyOrWhitespaceAttribute::.ctor()
+DA:9,2
+DA:10,2
+DA:11,2
+DA:12,2
+LF:10
+LH:9
+BRF:2
+BRH:1
+FNF:2
+FNH:2
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Models/ApplicationUser.cs
+FN:5,System.Collections.Generic.ICollection`1<KanbanApi.Models.BoardMember> KanbanApi.Models.ApplicationUser::get_BoardMemberships()
+FNDA:524,System.Collections.Generic.ICollection`1<KanbanApi.Models.BoardMember> KanbanApi.Models.ApplicationUser::get_BoardMemberships()
+DA:6,524
+FN:6,System.Collections.Generic.ICollection`1<KanbanApi.Models.Board> KanbanApi.Models.ApplicationUser::get_OwnedBoards()
+FNDA:522,System.Collections.Generic.ICollection`1<KanbanApi.Models.Board> KanbanApi.Models.ApplicationUser::get_OwnedBoards()
+DA:7,522
+FN:8,System.String KanbanApi.Models.ApplicationUser::get_DisplayName()
+FNDA:139,System.String KanbanApi.Models.ApplicationUser::get_DisplayName()
+DA:9,139
+FN:9,System.String KanbanApi.Models.ApplicationUser::get_ProfileImageUrl()
+FNDA:134,System.String KanbanApi.Models.ApplicationUser::get_ProfileImageUrl()
+DA:10,134
+FN:12,System.Void KanbanApi.Models.ApplicationUser::.ctor()
+FNDA:1212,System.Void KanbanApi.Models.ApplicationUser::.ctor()
+DA:13,1212
+FN:15,System.Void KanbanApi.Models.ApplicationUser::.ctor(System.String)
+FNDA:16,System.Void KanbanApi.Models.ApplicationUser::.ctor(System.String)
+DA:16,16
+DA:17,8
+DA:18,0
+DA:20,8
+DA:21,8
+DA:22,8
+DA:23,8
+BRDA:17,38,0,0
+BRDA:17,38,1,8
+LF:12
+LH:11
+BRF:2
+BRH:1
+FNF:6
+FNH:6
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Models/Board.cs
+FN:4,System.Int32 KanbanApi.Models.Board::get_Id()
+FNDA:225,System.Int32 KanbanApi.Models.Board::get_Id()
+DA:5,225
+FN:5,System.String KanbanApi.Models.Board::get_Name()
+FNDA:385,System.String KanbanApi.Models.Board::get_Name()
+DA:6,385
+FN:6,System.String KanbanApi.Models.Board::get_OwnerId()
+FNDA:478,System.String KanbanApi.Models.Board::get_OwnerId()
+DA:7,478
+FN:7,KanbanApi.Models.ApplicationUser KanbanApi.Models.Board::get_Owner()
+FNDA:187,KanbanApi.Models.ApplicationUser KanbanApi.Models.Board::get_Owner()
+DA:8,187
+FN:9,System.Collections.Generic.ICollection`1<KanbanApi.Models.Column> KanbanApi.Models.Board::get_Columns()
+FNDA:309,System.Collections.Generic.ICollection`1<KanbanApi.Models.Column> KanbanApi.Models.Board::get_Columns()
+DA:10,309
+FN:10,System.Collections.Generic.ICollection`1<KanbanApi.Models.BoardMember> KanbanApi.Models.Board::get_Members()
+FNDA:630,System.Collections.Generic.ICollection`1<KanbanApi.Models.BoardMember> KanbanApi.Models.Board::get_Members()
+DA:11,630
+FN:38,System.Void KanbanApi.Models.Board::AddUser(KanbanApi.Models.BoardMember)
+FNDA:7,System.Void KanbanApi.Models.Board::AddUser(KanbanApi.Models.BoardMember)
+DA:39,7
+DA:40,7
+DA:41,1
+DA:43,10
+DA:44,1
+DA:45,5
+DA:46,5
+BRDA:40,25,0,1
+BRDA:40,25,1,6
+BRDA:43,63,0,1
+BRDA:43,63,1,5
+FN:13,System.Void KanbanApi.Models.Board::.ctor()
+FNDA:285,System.Void KanbanApi.Models.Board::.ctor()
+DA:14,285
+FN:16,System.Void KanbanApi.Models.Board::.ctor(System.String,System.String)
+FNDA:184,System.Void KanbanApi.Models.Board::.ctor(System.String,System.String)
+DA:17,184
+DA:18,92
+DA:19,4
+DA:21,88
+DA:22,0
+DA:25,88
+DA:26,88
+DA:29,88
+DA:30,88
+DA:31,88
+DA:32,88
+DA:33,88
+DA:34,88
+DA:35,88
+DA:36,88
+BRDA:18,67,0,4
+BRDA:18,67,1,88
+BRDA:21,93,0,0
+BRDA:21,93,1,88
+LF:29
+LH:28
+BRF:8
+BRH:7
+FNF:9
+FNH:9
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Models/BoardMember.cs
+FN:4,System.Int32 KanbanApi.Models.BoardMember::get_BoardId()
+FNDA:341,System.Int32 KanbanApi.Models.BoardMember::get_BoardId()
+DA:5,341
+FN:5,System.String KanbanApi.Models.BoardMember::get_UserId()
+FNDA:811,System.String KanbanApi.Models.BoardMember::get_UserId()
+DA:6,811
+FN:6,System.String KanbanApi.Models.BoardMember::get_Role()
+FNDA:475,System.String KanbanApi.Models.BoardMember::get_Role()
+DA:7,475
+FN:8,KanbanApi.Models.Board KanbanApi.Models.BoardMember::get_Board()
+FNDA:274,KanbanApi.Models.Board KanbanApi.Models.BoardMember::get_Board()
+DA:9,274
+FN:9,KanbanApi.Models.ApplicationUser KanbanApi.Models.BoardMember::get_User()
+FNDA:554,KanbanApi.Models.ApplicationUser KanbanApi.Models.BoardMember::get_User()
+DA:10,554
+FN:12,System.Void KanbanApi.Models.BoardMember::.ctor()
+FNDA:414,System.Void KanbanApi.Models.BoardMember::.ctor()
+DA:13,414
+FN:15,System.Void KanbanApi.Models.BoardMember::.ctor(System.String,System.Int32,System.String)
+FNDA:112,System.Void KanbanApi.Models.BoardMember::.ctor(System.String,System.Int32,System.String)
+DA:16,112
+DA:17,112
+DA:18,112
+DA:19,0
+DA:21,112
+DA:22,112
+DA:23,112
+DA:24,112
+BRDA:18,52,0,0
+BRDA:18,52,1,112
+LF:14
+LH:13
+BRF:2
+BRH:1
+FNF:7
+FNH:7
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Models/Card.cs
+FN:4,System.Int32 KanbanApi.Models.Card::get_Id()
+FNDA:52,System.Int32 KanbanApi.Models.Card::get_Id()
+DA:5,52
+FN:5,System.String KanbanApi.Models.Card::get_Title()
+FNDA:142,System.String KanbanApi.Models.Card::get_Title()
+DA:6,142
+FN:6,System.String KanbanApi.Models.Card::get_Description()
+FNDA:52,System.String KanbanApi.Models.Card::get_Description()
+DA:7,52
+FN:7,System.Int32 KanbanApi.Models.Card::get_ColumnId()
+FNDA:48,System.Int32 KanbanApi.Models.Card::get_ColumnId()
+DA:8,48
+FN:8,KanbanApi.Models.Column KanbanApi.Models.Card::get_Column()
+FNDA:104,KanbanApi.Models.Column KanbanApi.Models.Card::get_Column()
+DA:9,104
+FN:10,System.String KanbanApi.Models.Card::get_AssignedUserId()
+FNDA:59,System.String KanbanApi.Models.Card::get_AssignedUserId()
+DA:11,59
+FN:13,System.Void KanbanApi.Models.Card::.ctor()
+FNDA:111,System.Void KanbanApi.Models.Card::.ctor()
+DA:14,111
+FN:16,System.Void KanbanApi.Models.Card::.ctor(System.String,KanbanApi.Models.Column)
+FNDA:32,System.Void KanbanApi.Models.Card::.ctor(System.String,KanbanApi.Models.Column)
+DA:17,32
+DA:18,32
+DA:19,32
+DA:20,0
+DA:22,32
+DA:23,0
+DA:25,32
+DA:26,32
+DA:27,32
+DA:28,32
+BRDA:19,34,0,0
+BRDA:19,34,1,32
+BRDA:22,58,0,0
+BRDA:22,58,1,32
+LF:17
+LH:15
+BRF:4
+BRH:2
+FNF:8
+FNH:8
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Models/Column.cs
+FN:4,System.Int32 KanbanApi.Models.Column::get_Id()
+FNDA:132,System.Int32 KanbanApi.Models.Column::get_Id()
+DA:5,132
+FN:5,System.String KanbanApi.Models.Column::get_Name()
+FNDA:984,System.String KanbanApi.Models.Column::get_Name()
+DA:6,984
+FN:6,System.Int32 KanbanApi.Models.Column::get_Position()
+FNDA:556,System.Int32 KanbanApi.Models.Column::get_Position()
+DA:7,556
+FN:8,System.Int32 KanbanApi.Models.Column::get_BoardId()
+FNDA:0,System.Int32 KanbanApi.Models.Column::get_BoardId()
+DA:9,0
+FN:9,KanbanApi.Models.Board KanbanApi.Models.Column::get_Board()
+FNDA:861,KanbanApi.Models.Board KanbanApi.Models.Column::get_Board()
+DA:10,861
+FN:11,System.Collections.Generic.ICollection`1<KanbanApi.Models.Card> KanbanApi.Models.Column::get_Cards()
+FNDA:609,System.Collections.Generic.ICollection`1<KanbanApi.Models.Card> KanbanApi.Models.Column::get_Cards()
+DA:12,609
+FN:34,System.Void KanbanApi.Models.Column::Rename(System.String)
+FNDA:4,System.Void KanbanApi.Models.Column::Rename(System.String)
+DA:35,4
+DA:36,4
+DA:37,0
+DA:39,4
+DA:40,4
+BRDA:36,9,0,0
+BRDA:36,9,1,4
+FN:42,System.Void KanbanApi.Models.Column::Reposition(System.Int32)
+FNDA:0,System.Void KanbanApi.Models.Column::Reposition(System.Int32)
+DA:43,0
+DA:44,0
+DA:45,0
+DA:47,0
+DA:48,0
+BRDA:44,7,0,0
+BRDA:44,7,1,0
+FN:50,KanbanApi.Models.Card KanbanApi.Models.Column::AddCard(System.String)
+FNDA:23,KanbanApi.Models.Card KanbanApi.Models.Column::AddCard(System.String)
+DA:51,23
+DA:52,23
+DA:53,3
+DA:55,20
+DA:57,20
+DA:58,20
+DA:59,20
+DA:60,20
+BRDA:52,9,0,3
+BRDA:52,9,1,20
+FN:14,System.Void KanbanApi.Models.Column::.ctor()
+FNDA:411,System.Void KanbanApi.Models.Column::.ctor()
+DA:15,411
+FN:17,System.Void KanbanApi.Models.Column::.ctor(System.String,System.Int32,KanbanApi.Models.Board)
+FNDA:363,System.Void KanbanApi.Models.Column::.ctor(System.String,System.Int32,KanbanApi.Models.Board)
+DA:18,363
+DA:19,363
+DA:20,363
+DA:21,3
+DA:23,360
+DA:24,0
+DA:26,360
+DA:27,0
+DA:29,360
+DA:30,360
+DA:31,360
+DA:32,360
+BRDA:20,45,0,3
+BRDA:20,45,1,360
+BRDA:23,69,0,0
+BRDA:23,69,1,360
+BRDA:26,93,0,0
+BRDA:26,93,1,360
+LF:37
+LH:28
+BRF:12
+BRH:7
+FNF:11
+FNH:9
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Filters/ValidationFilter.cs
+FN:12,Microsoft.AspNetCore.Builder.RouteHandlerBuilder KanbanApi.Filters.ValidationFilterExtensions::WithValidation(Microsoft.AspNetCore.Builder.RouteHandlerBuilder)
+FNDA:511,Microsoft.AspNetCore.Builder.RouteHandlerBuilder KanbanApi.Filters.ValidationFilterExtensions::WithValidation(Microsoft.AspNetCore.Builder.RouteHandlerBuilder)
+DA:13,511
+FN:35,System.Collections.Generic.IEnumerable`1<<>f__AnonymousType3`2<System.String,System.String>> KanbanApi.Filters.ValidationEndpointFilter`1/<>c::<InvokeAsync>b__0_0(System.ComponentModel.DataAnnotations.ValidationResult)
+FNDA:4,System.Collections.Generic.IEnumerable`1<<>f__AnonymousType3`2<System.String,System.String>> KanbanApi.Filters.ValidationEndpointFilter`1/<>c::<InvokeAsync>b__0_0(System.ComponentModel.DataAnnotations.ValidationResult)
+DA:36,4
+DA:37,8
+BRDA:36,29,0,0
+BRDA:36,29,1,4
+BRDA:37,13,0,0
+BRDA:37,13,1,4
+FN:37,System.String KanbanApi.Filters.ValidationEndpointFilter`1/<>c::<InvokeAsync>b__0_1(<>f__AnonymousType3`2<System.String,System.String>)
+FNDA:4,System.String KanbanApi.Filters.ValidationEndpointFilter`1/<>c::<InvokeAsync>b__0_1(<>f__AnonymousType3`2<System.String,System.String>)
+DA:38,4
+FN:39,System.String KanbanApi.Filters.ValidationEndpointFilter`1/<>c::<InvokeAsync>b__0_2(System.Linq.IGrouping`2<System.String,<>f__AnonymousType3`2<System.String,System.String>>)
+FNDA:4,System.String KanbanApi.Filters.ValidationEndpointFilter`1/<>c::<InvokeAsync>b__0_2(System.Linq.IGrouping`2<System.String,<>f__AnonymousType3`2<System.String,System.String>>)
+DA:40,4
+FN:40,System.String[] KanbanApi.Filters.ValidationEndpointFilter`1/<>c::<InvokeAsync>b__0_3(System.Linq.IGrouping`2<System.String,<>f__AnonymousType3`2<System.String,System.String>>)
+FNDA:8,System.String[] KanbanApi.Filters.ValidationEndpointFilter`1/<>c::<InvokeAsync>b__0_3(System.Linq.IGrouping`2<System.String,<>f__AnonymousType3`2<System.String,System.String>>)
+DA:41,8
+BRDA:41,7,0,4
+BRDA:41,7,1,4
+FN:20,System.Void KanbanApi.Filters.ValidationEndpointFilter`1/<InvokeAsync>d__0::MoveNext()
+FNDA:86,System.Void KanbanApi.Filters.ValidationEndpointFilter`1/<InvokeAsync>d__0::MoveNext()
+DA:21,86
+DA:22,86
+DA:24,86
+DA:25,86
+DA:26,86
+DA:27,86
+DA:28,86
+DA:29,86
+DA:30,86
+DA:31,86
+DA:33,86
+DA:34,4
+DA:35,4
+DA:39,4
+DA:42,4
+DA:44,4
+DA:46,82
+DA:48,82
+DA:49,86
+BRDA:24,61,0,86
+BRDA:33,134,0,4
+BRDA:35,153,0,4
+BRDA:35,153,1,4
+BRDA:35,189,0,4
+BRDA:35,189,1,4
+BRDA:35,225,0,4
+BRDA:35,225,1,4
+BRDA:35,256,0,4
+BRDA:35,256,1,4
+BRDA:33,134,1,82
+BRDA:24,61,1,82
+LF:25
+LH:25
+BRF:18
+BRH:16
+FNF:6
+FNH:6
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Features/Boards/IsBoardMember.cs
+FN:14,System.Void KanbanApi.Services.IsBoardMemberHandler::.ctor(KanbanApi.Data.ApplicationDbContext,Microsoft.AspNetCore.Http.IHttpContextAccessor)
+FNDA:275,System.Void KanbanApi.Services.IsBoardMemberHandler::.ctor(KanbanApi.Data.ApplicationDbContext,Microsoft.AspNetCore.Http.IHttpContextAccessor)
+DA:15,275
+DA:16,275
+DA:17,275
+DA:18,275
+DA:19,275
+FN:23,System.Void KanbanApi.Services.IsBoardMemberHandler/<HandleRequirementAsync>d__3::MoveNext()
+FNDA:80,System.Void KanbanApi.Services.IsBoardMemberHandler/<HandleRequirementAsync>d__3::MoveNext()
+DA:24,80
+DA:25,80
+DA:26,80
+DA:28,80
+DA:29,80
+DA:30,0
+DA:32,80
+DA:33,83
+DA:35,77
+DA:36,77
+DA:37,281
+DA:39,9
+DA:40,9
+DA:41,9
+DA:42,0
+DA:43,80
+BRDA:26,73,0,0
+BRDA:26,73,1,80
+BRDA:28,112,0,80
+BRDA:28,121,0,0
+BRDA:28,121,1,80
+BRDA:28,112,1,0
+BRDA:28,156,0,0
+BRDA:28,156,1,80
+BRDA:33,213,0,3
+BRDA:33,213,1,77
+BRDA:37,541,0,68
+BRDA:37,541,1,9
+BRDA:41,888,0,0
+BRDA:41,888,1,9
+LF:21
+LH:19
+BRF:14
+BRH:9
+FNF:2
+FNH:2
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Features/Boards/IsBoardOwner.cs
+FN:16,System.Void KanbanApi.Services.IsBoardOwnerHandler::.ctor(KanbanApi.Data.ApplicationDbContext,Microsoft.AspNetCore.Http.IHttpContextAccessor)
+FNDA:275,System.Void KanbanApi.Services.IsBoardOwnerHandler::.ctor(KanbanApi.Data.ApplicationDbContext,Microsoft.AspNetCore.Http.IHttpContextAccessor)
+DA:17,275
+DA:18,275
+DA:19,275
+DA:20,275
+DA:21,275
+FN:25,System.Void KanbanApi.Services.IsBoardOwnerHandler/<HandleRequirementAsync>d__3::MoveNext()
+FNDA:45,System.Void KanbanApi.Services.IsBoardOwnerHandler/<HandleRequirementAsync>d__3::MoveNext()
+DA:26,45
+DA:27,45
+DA:28,45
+DA:31,45
+DA:32,45
+DA:33,0
+DA:35,45
+DA:36,48
+DA:38,42
+DA:39,42
+DA:40,141
+DA:42,9
+DA:43,9
+DA:44,9
+DA:45,45
+BRDA:28,73,0,0
+BRDA:28,73,1,45
+BRDA:31,112,0,45
+BRDA:31,121,0,0
+BRDA:31,121,1,45
+BRDA:31,112,1,0
+BRDA:31,156,0,0
+BRDA:31,156,1,45
+BRDA:36,213,0,3
+BRDA:36,213,1,42
+BRDA:40,593,0,33
+BRDA:40,593,1,9
+BRDA:44,940,0,0
+BRDA:44,940,1,9
+LF:20
+LH:19
+BRF:14
+BRH:9
+FNF:2
+FNH:2
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Services/AddMemberResult.cs
+FN:6,KanbanApi.Dtos.BoardMemberDto KanbanApi.Services.AddMemberResult/Created::get_Dto()
+FNDA:75,KanbanApi.Dtos.BoardMemberDto KanbanApi.Services.AddMemberResult/Created::get_Dto()
+DA:7,75
+LF:1
+LH:1
+BRF:0
+BRH:0
+FNF:1
+FNH:1
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Services/BoardMemberService.cs
+FN:8,System.Void KanbanApi.Services.BoardMembersService::.ctor(KanbanApi.Data.ApplicationDbContext)
+FNDA:28,System.Void KanbanApi.Services.BoardMembersService::.ctor(KanbanApi.Data.ApplicationDbContext)
+DA:9,28
+FN:35,System.Boolean KanbanApi.Services.BoardMembersService/<>c__DisplayClass2_0::<AddMemberAsync>b__0(KanbanApi.Models.BoardMember)
+FNDA:71,System.Boolean KanbanApi.Services.BoardMembersService/<>c__DisplayClass2_0::<AddMemberAsync>b__0(KanbanApi.Models.BoardMember)
+DA:36,71
+FN:11,System.Void KanbanApi.Services.BoardMembersService/<AddMemberAsync>d__2::MoveNext()
+FNDA:28,System.Void KanbanApi.Services.BoardMembersService/<AddMemberAsync>d__2::MoveNext()
+DA:12,28
+DA:13,28
+DA:14,28
+DA:15,28
+DA:17,28
+DA:18,0
+DA:20,28
+DA:21,0
+DA:23,28
+DA:24,28
+DA:26,28
+DA:27,28
+DA:28,28
+DA:29,28
+DA:30,28
+DA:31,28
+DA:33,28
+DA:34,0
+DA:37,28
+DA:38,3
+DA:40,25
+DA:41,25
+DA:42,25
+DA:44,25
+DA:45,25
+DA:46,25
+DA:47,25
+DA:48,25
+DA:49,25
+DA:50,28
+BRDA:17,390,0,0
+BRDA:17,390,1,28
+BRDA:20,429,0,0
+BRDA:20,429,1,28
+BRDA:33,1054,0,0
+BRDA:33,1054,1,28
+BRDA:37,1116,0,3
+BRDA:37,1116,1,25
+LF:32
+LH:29
+BRF:8
+BRH:5
+FNF:3
+FNH:3
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Services/BoardResult.cs
+FN:7,KanbanApi.Dtos.BoardIdResultDto KanbanApi.Services.BoardResult/Found::get_Dto()
+FNDA:42,KanbanApi.Dtos.BoardIdResultDto KanbanApi.Services.BoardResult/Found::get_Dto()
+DA:8,42
+FN:8,System.String KanbanApi.Services.BoardResult/NotFound::get_Message()
+FNDA:2,System.String KanbanApi.Services.BoardResult/NotFound::get_Message()
+DA:9,2
+FN:10,KanbanApi.Dtos.BoardIdResultDto KanbanApi.Services.BoardResult/Updated::get_Dto()
+FNDA:2,KanbanApi.Dtos.BoardIdResultDto KanbanApi.Services.BoardResult/Updated::get_Dto()
+DA:11,2
+LF:3
+LH:3
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Services/BoardService.cs
+FN:15,System.Void KanbanApi.Services.BoardService::.ctor(KanbanApi.Data.ApplicationDbContext)
+FNDA:106,System.Void KanbanApi.Services.BoardService::.ctor(KanbanApi.Data.ApplicationDbContext)
+DA:16,106
+DA:17,106
+DA:18,106
+DA:19,106
+FN:44,System.String KanbanApi.Services.BoardService/<>c::<CreateBoardAsync>b__2_0(KanbanApi.Models.BoardMember)
+FNDA:122,System.String KanbanApi.Services.BoardService/<>c::<CreateBoardAsync>b__2_0(KanbanApi.Models.BoardMember)
+DA:45,122
+FN:45,KanbanApi.Models.BoardMember KanbanApi.Services.BoardService/<>c::<CreateBoardAsync>b__2_1(System.Linq.IGrouping`2<System.String,KanbanApi.Models.BoardMember>)
+FNDA:61,KanbanApi.Models.BoardMember KanbanApi.Services.BoardService/<>c::<CreateBoardAsync>b__2_1(System.Linq.IGrouping`2<System.String,KanbanApi.Models.BoardMember>)
+DA:46,61
+FN:58,System.String KanbanApi.Services.BoardService/<>c::<CreateBoardAsync>b__2_3(KanbanApi.Models.BoardMember)
+FNDA:61,System.String KanbanApi.Services.BoardService/<>c::<CreateBoardAsync>b__2_3(KanbanApi.Models.BoardMember)
+DA:59,61
+FN:81,System.String KanbanApi.Services.BoardService/<>c::<GetBoardAsync>b__3_2(KanbanApi.Models.BoardMember)
+FNDA:30,System.String KanbanApi.Services.BoardService/<>c::<GetBoardAsync>b__3_2(KanbanApi.Models.BoardMember)
+DA:82,30
+FN:82,System.Boolean KanbanApi.Services.BoardService/<>c::<GetBoardAsync>b__3_3(System.String)
+FNDA:30,System.Boolean KanbanApi.Services.BoardService/<>c::<GetBoardAsync>b__3_3(System.String)
+DA:83,30
+FN:105,System.Boolean KanbanApi.Services.BoardService/<>c::<GetBoardAsync>b__3_6(<>f__AnonymousType17`2<KanbanApi.Models.BoardMember,KanbanApi.Models.ApplicationUser>)
+FNDA:30,System.Boolean KanbanApi.Services.BoardService/<>c::<GetBoardAsync>b__3_6(<>f__AnonymousType17`2<KanbanApi.Models.BoardMember,KanbanApi.Models.ApplicationUser>)
+DA:106,30
+FN:107,System.String KanbanApi.Services.BoardService/<>c::<GetBoardAsync>b__3_7(<>f__AnonymousType17`2<KanbanApi.Models.BoardMember,KanbanApi.Models.ApplicationUser>)
+FNDA:30,System.String KanbanApi.Services.BoardService/<>c::<GetBoardAsync>b__3_7(<>f__AnonymousType17`2<KanbanApi.Models.BoardMember,KanbanApi.Models.ApplicationUser>)
+DA:108,30
+FN:108,KanbanApi.Models.ApplicationUser KanbanApi.Services.BoardService/<>c::<GetBoardAsync>b__3_8(<>f__AnonymousType17`2<KanbanApi.Models.BoardMember,KanbanApi.Models.ApplicationUser>)
+FNDA:51,KanbanApi.Models.ApplicationUser KanbanApi.Services.BoardService/<>c::<GetBoardAsync>b__3_8(<>f__AnonymousType17`2<KanbanApi.Models.BoardMember,KanbanApi.Models.ApplicationUser>)
+DA:109,51
+FN:125,System.Int32 KanbanApi.Services.BoardService/<>c::<GetBoardAsync>b__3_17(KanbanApi.Models.Column)
+FNDA:168,System.Int32 KanbanApi.Services.BoardService/<>c::<GetBoardAsync>b__3_17(KanbanApi.Models.Column)
+DA:126,168
+BRDA:126,58,0,21
+BRDA:126,58,1,84
+FN:207,KanbanApi.Dtos.BoardMemberResultDto KanbanApi.Services.BoardService/<>c::<UpdateBoardAsync>b__9_2(KanbanApi.Models.BoardMember)
+FNDA:1,KanbanApi.Dtos.BoardMemberResultDto KanbanApi.Services.BoardService/<>c::<UpdateBoardAsync>b__9_2(KanbanApi.Models.BoardMember)
+DA:208,1
+DA:209,1
+DA:210,1
+DA:211,1
+DA:212,1
+DA:213,1
+DA:214,1
+DA:215,1
+DA:216,1
+BRDA:208,39,0,1
+BRDA:208,39,1,0
+BRDA:208,64,0,1
+BRDA:208,64,1,0
+BRDA:208,89,0,1
+BRDA:208,89,1,0
+BRDA:208,114,0,1
+BRDA:208,114,1,0
+FN:21,System.Void KanbanApi.Services.BoardService/<CreateBoardAsync>d__2::MoveNext()
+FNDA:62,System.Void KanbanApi.Services.BoardService/<CreateBoardAsync>d__2::MoveNext()
+DA:22,62
+DA:23,62
+DA:24,1
+DA:26,61
+DA:27,61
+DA:28,61
+DA:31,61
+DA:32,61
+DA:34,61
+DA:35,61
+DA:36,61
+DA:37,61
+DA:39,61
+DA:40,61
+DA:41,61
+DA:44,61
+DA:47,61
+DA:49,61
+DA:50,305
+DA:51,61
+DA:53,61
+DA:54,61
+DA:55,61
+DA:56,61
+DA:57,61
+DA:58,61
+DA:60,61
+DA:61,61
+BRDA:23,84,0,1
+BRDA:23,84,1,61
+BRDA:34,629,0,61
+BRDA:34,629,1,61
+BRDA:50,1066,1,61
+BRDA:50,1066,0,61
+FN:221,System.Void KanbanApi.Services.BoardService/<DeleteBoardAsync>d__10::MoveNext()
+FNDA:3,System.Void KanbanApi.Services.BoardService/<DeleteBoardAsync>d__10::MoveNext()
+DA:222,3
+DA:223,3
+DA:224,3
+DA:225,3
+DA:226,3
+DA:228,3
+DA:229,0
+DA:231,3
+DA:232,0
+DA:234,3
+DA:235,3
+DA:237,3
+DA:238,3
+BRDA:228,438,0,0
+BRDA:228,438,1,3
+BRDA:231,482,0,0
+BRDA:231,482,1,3
+FN:168,System.Void KanbanApi.Services.BoardService/<DeleteBoardAsync>d__7::MoveNext()
+FNDA:2,System.Void KanbanApi.Services.BoardService/<DeleteBoardAsync>d__7::MoveNext()
+DA:169,2
+DA:170,2
+DA:171,2
+DA:172,1
+DA:173,1
+DA:174,1
+DA:175,1
+DA:176,2
+BRDA:171,197,0,1
+BRDA:171,197,1,2
+FN:149,System.Void KanbanApi.Services.BoardService/<GetAllBoardsAsync>d__4::MoveNext()
+FNDA:1,System.Void KanbanApi.Services.BoardService/<GetAllBoardsAsync>d__4::MoveNext()
+DA:150,1
+DA:151,1
+DA:152,1
+DA:153,1
+DA:154,1
+FN:63,System.Void KanbanApi.Services.BoardService/<GetBoardAsync>d__3::MoveNext()
+FNDA:22,System.Void KanbanApi.Services.BoardService/<GetBoardAsync>d__3::MoveNext()
+DA:64,22
+DA:65,22
+DA:66,22
+DA:67,22
+DA:68,22
+DA:69,22
+DA:70,22
+DA:72,22
+DA:73,1
+DA:76,21
+DA:77,0
+DA:81,21
+DA:84,21
+DA:85,21
+DA:87,21
+DA:88,21
+DA:89,21
+DA:90,21
+DA:91,21
+DA:104,21
+DA:107,21
+DA:111,21
+DA:112,21
+DA:113,21
+DA:114,21
+DA:115,21
+DA:116,21
+DA:146,21
+DA:147,22
+BRDA:72,589,0,1
+BRDA:72,589,1,21
+BRDA:75,635,0,1
+BRDA:75,635,1,20
+BRDA:76,691,0,0
+BRDA:76,691,1,21
+BRDA:111,1679,0,1
+BRDA:111,1688,0,0
+BRDA:111,1688,1,1
+BRDA:111,1700,0,0
+BRDA:111,1679,1,20
+BRDA:111,1700,1,21
+FN:156,System.Void KanbanApi.Services.BoardService/<GetBoardByIdAsync>d__5::MoveNext()
+FNDA:2,System.Void KanbanApi.Services.BoardService/<GetBoardByIdAsync>d__5::MoveNext()
+DA:157,2
+DA:158,2
+DA:159,2
+DA:160,2
+FN:178,System.Void KanbanApi.Services.BoardService/<GetBoardsByUserIdAsync>d__8::MoveNext()
+FNDA:1,System.Void KanbanApi.Services.BoardService/<GetBoardsByUserIdAsync>d__8::MoveNext()
+DA:179,1
+DA:180,1
+DA:181,1
+DA:182,1
+DA:183,1
+DA:184,1
+FN:162,System.Void KanbanApi.Services.BoardService/<UpdateBoardAsync>d__6::MoveNext()
+FNDA:1,System.Void KanbanApi.Services.BoardService/<UpdateBoardAsync>d__6::MoveNext()
+DA:163,1
+DA:164,1
+DA:165,1
+DA:166,1
+FN:187,System.Void KanbanApi.Services.BoardService/<UpdateBoardAsync>d__9::MoveNext()
+FNDA:1,System.Void KanbanApi.Services.BoardService/<UpdateBoardAsync>d__9::MoveNext()
+DA:188,1
+DA:189,1
+DA:190,1
+DA:191,1
+DA:193,1
+DA:194,0
+DA:196,1
+DA:197,0
+DA:199,1
+DA:200,1
+DA:202,1
+DA:203,1
+DA:204,1
+DA:205,1
+DA:206,1
+DA:207,1
+DA:217,1
+DA:218,1
+DA:219,1
+BRDA:193,376,0,0
+BRDA:193,376,1,1
+BRDA:196,420,0,0
+BRDA:196,420,1,1
+LF:138
+LH:133
+BRF:38
+BRH:27
+FNF:20
+FNH:20
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Services/CardResult.cs
+FN:16,KanbanApi.Services.CardResultType KanbanApi.Services.CardResult::get_ResultType()
+FNDA:46,KanbanApi.Services.CardResultType KanbanApi.Services.CardResult::get_ResultType()
+DA:17,46
+FN:17,KanbanApi.Dtos.CardResponseDto KanbanApi.Services.CardResult::get_Dto()
+FNDA:41,KanbanApi.Dtos.CardResponseDto KanbanApi.Services.CardResult::get_Dto()
+DA:18,41
+FN:18,KanbanApi.Dtos.AssignCardResponseDto KanbanApi.Services.CardResult::get_AssignDto()
+FNDA:12,KanbanApi.Dtos.AssignCardResponseDto KanbanApi.Services.CardResult::get_AssignDto()
+DA:19,12
+FN:19,System.String KanbanApi.Services.CardResult::get_Message()
+FNDA:3,System.String KanbanApi.Services.CardResult::get_Message()
+DA:20,3
+FN:21,KanbanApi.Services.CardResult KanbanApi.Services.CardResult::Success(KanbanApi.Dtos.CardResponseDto)
+FNDA:15,KanbanApi.Services.CardResult KanbanApi.Services.CardResult::Success(KanbanApi.Dtos.CardResponseDto)
+DA:22,15
+FN:22,KanbanApi.Services.CardResult KanbanApi.Services.CardResult::Success(KanbanApi.Dtos.AssignCardResponseDto)
+FNDA:6,KanbanApi.Services.CardResult KanbanApi.Services.CardResult::Success(KanbanApi.Dtos.AssignCardResponseDto)
+DA:23,6
+FN:23,KanbanApi.Services.CardResult KanbanApi.Services.CardResult::CardNotFound()
+FNDA:1,KanbanApi.Services.CardResult KanbanApi.Services.CardResult::CardNotFound()
+DA:24,1
+FN:24,KanbanApi.Services.CardResult KanbanApi.Services.CardResult::ColumnNotFound()
+FNDA:0,KanbanApi.Services.CardResult KanbanApi.Services.CardResult::ColumnNotFound()
+DA:25,0
+FN:25,KanbanApi.Services.CardResult KanbanApi.Services.CardResult::Forbidden()
+FNDA:0,KanbanApi.Services.CardResult KanbanApi.Services.CardResult::Forbidden()
+DA:26,0
+FN:26,KanbanApi.Services.CardResult KanbanApi.Services.CardResult::BadRequest(System.String)
+FNDA:1,KanbanApi.Services.CardResult KanbanApi.Services.CardResult::BadRequest(System.String)
+DA:27,1
+BRDA:27,16,0,0
+BRDA:27,16,1,1
+FN:27,KanbanApi.Services.CardResult KanbanApi.Services.CardResult::UnknownError(System.String)
+FNDA:0,KanbanApi.Services.CardResult KanbanApi.Services.CardResult::UnknownError(System.String)
+DA:28,0
+BRDA:28,16,0,0
+BRDA:28,16,1,0
+LF:11
+LH:8
+BRF:4
+BRH:1
+FNF:11
+FNH:8
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Services/CardService.cs
+FN:11,System.Void KanbanApi.Services.CardService::.ctor(KanbanApi.Data.ApplicationDbContext)
+FNDA:24,System.Void KanbanApi.Services.CardService::.ctor(KanbanApi.Data.ApplicationDbContext)
+DA:12,24
+DA:13,24
+DA:14,24
+DA:15,24
+FN:82,System.Void KanbanApi.Services.CardService/<AssignCardAsync>d__6::MoveNext()
+FNDA:8,System.Void KanbanApi.Services.CardService/<AssignCardAsync>d__6::MoveNext()
+DA:83,8
+DA:85,8
+DA:86,8
+DA:87,1
+DA:89,7
+DA:90,7
+DA:91,1
+DA:93,6
+DA:94,6
+DA:96,6
+DA:97,6
+DA:98,6
+DA:99,6
+DA:100,6
+DA:101,6
+DA:102,8
+BRDA:86,405,0,1
+BRDA:86,405,1,7
+BRDA:90,599,0,1
+BRDA:90,599,1,6
+FN:17,System.Void KanbanApi.Services.CardService/<CreateCardAsync>d__2::MoveNext()
+FNDA:12,System.Void KanbanApi.Services.CardService/<CreateCardAsync>d__2::MoveNext()
+DA:18,12
+DA:19,12
+DA:20,12
+DA:21,0
+DA:23,12
+DA:24,12
+DA:25,12
+DA:26,12
+DA:28,12
+DA:29,12
+DA:31,12
+DA:32,12
+DA:33,12
+DA:34,12
+DA:35,12
+DA:36,12
+DA:37,12
+DA:39,12
+DA:40,12
+BRDA:20,418,0,0
+BRDA:20,418,1,12
+FN:65,System.Void KanbanApi.Services.CardService/<DeleteCardAsync>d__4::MoveNext()
+FNDA:1,System.Void KanbanApi.Services.CardService/<DeleteCardAsync>d__4::MoveNext()
+DA:66,1
+DA:67,1
+DA:68,1
+DA:69,0
+DA:71,1
+DA:72,1
+DA:74,1
+DA:75,1
+BRDA:68,198,0,0
+BRDA:68,198,1,1
+FN:77,System.Void KanbanApi.Services.CardService/<GetCardAsync>d__5::MoveNext()
+FNDA:0,System.Void KanbanApi.Services.CardService/<GetCardAsync>d__5::MoveNext()
+DA:78,0
+DA:79,0
+DA:80,0
+FN:42,System.Void KanbanApi.Services.CardService/<UpdateCardAsync>d__3::MoveNext()
+FNDA:2,System.Void KanbanApi.Services.CardService/<UpdateCardAsync>d__3::MoveNext()
+DA:43,2
+DA:44,2
+DA:45,2
+DA:46,0
+DA:48,2
+DA:49,2
+DA:50,2
+DA:52,2
+DA:54,2
+DA:55,2
+DA:56,2
+DA:57,2
+DA:58,2
+DA:59,2
+DA:60,2
+DA:62,2
+DA:63,2
+BRDA:45,198,0,0
+BRDA:45,198,1,2
+LF:67
+LH:61
+BRF:10
+BRH:7
+FNF:6
+FNH:5
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Services/ColumnResult.cs
+FN:6,KanbanApi.Dtos.ColumnApiResponseDto KanbanApi.Services.ColumnResult/Created::get_Dto()
+FNDA:24,KanbanApi.Dtos.ColumnApiResponseDto KanbanApi.Services.ColumnResult/Created::get_Dto()
+DA:7,24
+FN:7,KanbanApi.Dtos.ColumnApiResponseDto KanbanApi.Services.ColumnResult/Updated::get_Dto()
+FNDA:8,KanbanApi.Dtos.ColumnApiResponseDto KanbanApi.Services.ColumnResult/Updated::get_Dto()
+DA:8,8
+LF:2
+LH:2
+BRF:0
+BRH:0
+FNF:2
+FNH:2
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Services/ColumnService.cs
+FN:7,System.Void KanbanApi.Services.ColumnService::.ctor(KanbanApi.Data.ApplicationDbContext)
+FNDA:22,System.Void KanbanApi.Services.ColumnService::.ctor(KanbanApi.Data.ApplicationDbContext)
+DA:8,22
+FN:18,System.Boolean KanbanApi.Services.ColumnService/<>c__DisplayClass2_0::<CreateColumnAsync>b__0(KanbanApi.Models.BoardMember)
+FNDA:11,System.Boolean KanbanApi.Services.ColumnService/<>c__DisplayClass2_0::<CreateColumnAsync>b__0(KanbanApi.Models.BoardMember)
+DA:19,11
+FN:48,System.Boolean KanbanApi.Services.ColumnService/<>c__DisplayClass3_0::<UpdateColumnAsync>b__0(KanbanApi.Models.BoardMember)
+FNDA:9,System.Boolean KanbanApi.Services.ColumnService/<>c__DisplayClass3_0::<UpdateColumnAsync>b__0(KanbanApi.Models.BoardMember)
+DA:49,9
+FN:77,System.Boolean KanbanApi.Services.ColumnService/<>c__DisplayClass4_0::<DeleteColumnAsync>b__0(KanbanApi.Models.BoardMember)
+FNDA:11,System.Boolean KanbanApi.Services.ColumnService/<>c__DisplayClass4_0::<DeleteColumnAsync>b__0(KanbanApi.Models.BoardMember)
+DA:78,11
+FN:10,System.Void KanbanApi.Services.ColumnService/<CreateColumnAsync>d__2::MoveNext()
+FNDA:9,System.Void KanbanApi.Services.ColumnService/<CreateColumnAsync>d__2::MoveNext()
+DA:11,9
+DA:12,9
+DA:13,9
+DA:14,9
+DA:16,9
+DA:17,0
+DA:20,9
+DA:21,0
+DA:23,9
+DA:24,9
+DA:25,9
+DA:26,1
+DA:28,8
+DA:29,8
+DA:30,8
+DA:32,8
+DA:33,8
+DA:34,8
+DA:35,8
+DA:36,8
+DA:37,8
+DA:38,9
+BRDA:16,424,0,0
+BRDA:16,424,1,9
+BRDA:19,465,0,1
+BRDA:19,465,1,8
+BRDA:20,521,0,0
+BRDA:20,521,1,9
+BRDA:25,871,0,1
+BRDA:25,871,1,8
+FN:69,System.Void KanbanApi.Services.ColumnService/<DeleteColumnAsync>d__4::MoveNext()
+FNDA:7,System.Void KanbanApi.Services.ColumnService/<DeleteColumnAsync>d__4::MoveNext()
+DA:70,7
+DA:71,7
+DA:72,7
+DA:73,7
+DA:75,7
+DA:76,0
+DA:79,7
+DA:80,0
+DA:82,7
+DA:83,7
+DA:84,7
+DA:85,1
+DA:87,6
+DA:88,6
+DA:89,2
+DA:91,4
+DA:92,4
+DA:94,4
+DA:95,7
+BRDA:75,433,0,0
+BRDA:75,433,1,7
+BRDA:78,474,0,2
+BRDA:78,474,1,5
+BRDA:79,530,0,0
+BRDA:79,530,1,7
+BRDA:84,870,0,1
+BRDA:84,870,1,6
+BRDA:88,1133,0,2
+BRDA:88,1133,1,4
+FN:40,System.Void KanbanApi.Services.ColumnService/<UpdateColumnAsync>d__3::MoveNext()
+FNDA:5,System.Void KanbanApi.Services.ColumnService/<UpdateColumnAsync>d__3::MoveNext()
+DA:41,5
+DA:42,5
+DA:43,5
+DA:44,5
+DA:46,5
+DA:47,0
+DA:50,5
+DA:51,0
+DA:53,5
+DA:54,5
+DA:55,5
+DA:56,1
+DA:58,4
+DA:59,4
+DA:61,4
+DA:62,4
+DA:63,4
+DA:64,4
+DA:65,4
+DA:66,4
+DA:67,5
+BRDA:46,424,0,0
+BRDA:46,424,1,5
+BRDA:49,465,0,2
+BRDA:49,465,1,3
+BRDA:50,521,0,0
+BRDA:50,521,1,5
+BRDA:55,861,0,1
+BRDA:55,861,1,4
+LF:66
+LH:60
+BRF:26
+BRH:20
+FNF:7
+FNH:7
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Services/UserProfileService.cs
+FN:14,System.Void KanbanApi.Services.UserProfileService::.ctor(KanbanApi.Data.ApplicationDbContext)
+FNDA:102,System.Void KanbanApi.Services.UserProfileService::.ctor(KanbanApi.Data.ApplicationDbContext)
+DA:15,102
+DA:16,102
+DA:17,102
+DA:18,102
+FN:42,KanbanApi.Dtos.BoardDto KanbanApi.Services.UserProfileService/<>c::<GetUserProfileAsync>b__2_4(KanbanApi.Models.Board)
+FNDA:8,KanbanApi.Dtos.BoardDto KanbanApi.Services.UserProfileService/<>c::<GetUserProfileAsync>b__2_4(KanbanApi.Models.Board)
+DA:43,8
+FN:44,KanbanApi.Dtos.BoardDto KanbanApi.Services.UserProfileService/<>c::<GetUserProfileAsync>b__2_5(KanbanApi.Models.BoardMember)
+FNDA:12,KanbanApi.Dtos.BoardDto KanbanApi.Services.UserProfileService/<>c::<GetUserProfileAsync>b__2_5(KanbanApi.Models.BoardMember)
+DA:45,12
+FN:45,System.Int32 KanbanApi.Services.UserProfileService/<>c::<GetUserProfileAsync>b__2_6(KanbanApi.Dtos.BoardDto)
+FNDA:20,System.Int32 KanbanApi.Services.UserProfileService/<>c::<GetUserProfileAsync>b__2_6(KanbanApi.Dtos.BoardDto)
+DA:46,20
+FN:20,System.Void KanbanApi.Services.UserProfileService/<GetUserProfileAsync>d__2::MoveNext()
+FNDA:102,System.Void KanbanApi.Services.UserProfileService/<GetUserProfileAsync>d__2::MoveNext()
+DA:21,102
+DA:22,102
+DA:23,0
+DA:25,102
+DA:26,102
+DA:27,102
+DA:28,102
+DA:29,102
+DA:30,102
+DA:32,102
+DA:33,0
+DA:35,102
+DA:36,102
+DA:37,102
+DA:38,102
+DA:39,102
+DA:40,102
+DA:41,102
+DA:42,102
+DA:44,102
+DA:47,102
+DA:48,102
+DA:49,102
+DA:50,102
+BRDA:22,64,0,0
+BRDA:22,64,1,102
+BRDA:32,547,0,0
+BRDA:32,547,1,102
+LF:31
+LH:29
+BRF:4
+BRH:2
+FNF:5
+FNH:5
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Endpoints/BoardEndpoint.cs
+FN:10,Microsoft.AspNetCore.Routing.IEndpointRouteBuilder KanbanApi.Endpoints.BoardEndpoint::MapBoardEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+FNDA:73,Microsoft.AspNetCore.Routing.IEndpointRouteBuilder KanbanApi.Endpoints.BoardEndpoint::MapBoardEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+DA:11,73
+DA:12,73
+DA:14,73
+DA:15,73
+DA:16,73
+DA:17,73
+DA:18,45
+DA:19,45
+DA:20,45
+DA:21,0
+DA:22,73
+DA:23,45
+DA:24,73
+DA:25,45
+DA:26,45
+DA:27,73
+DA:29,73
+DA:30,73
+LF:18
+LH:17
+BRF:2
+BRH:1
+FNF:1
+FNH:1
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Endpoints/BoardIdEnpoint.cs
+FN:10,Microsoft.AspNetCore.Routing.IEndpointRouteBuilder KanbanApi.Endpoints.BoardIdEndpoint::MapBoardIdEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+FNDA:73,Microsoft.AspNetCore.Routing.IEndpointRouteBuilder KanbanApi.Endpoints.BoardIdEndpoint::MapBoardIdEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+DA:11,73
+DA:12,73
+DA:14,73
+DA:15,73
+DA:16,73
+DA:17,73
+DA:18,22
+DA:19,22
+DA:20,22
+DA:21,0
+DA:22,73
+DA:23,22
+DA:24,22
+DA:25,21
+DA:26,1
+DA:27,0
+DA:28,0
+DA:29,22
+DA:30,22
+DA:31,73
+DA:34,73
+DA:35,73
+DA:36,73
+DA:37,73
+DA:38,73
+DA:39,1
+DA:40,1
+DA:41,1
+DA:42,0
+DA:43,73
+DA:44,1
+DA:45,1
+DA:46,1
+DA:47,0
+DA:48,0
+DA:49,0
+DA:50,1
+DA:51,1
+DA:52,73
+DA:53,73
+DA:55,73
+DA:56,73
+DA:57,73
+DA:58,73
+DA:59,3
+DA:60,3
+DA:61,3
+DA:62,0
+DA:63,73
+DA:64,3
+DA:65,3
+DA:66,3
+DA:67,0
+DA:68,0
+DA:69,0
+DA:70,3
+DA:71,3
+DA:72,73
+DA:74,73
+DA:75,73
+LF:60
+LH:49
+BRF:24
+BRH:8
+FNF:1
+FNH:1
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Endpoints/BoardMembersEndpoint.cs
+FN:10,Microsoft.AspNetCore.Routing.IEndpointRouteBuilder KanbanApi.Endpoints.BoardMembersEndpoint::MapBoardMembersEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+FNDA:73,Microsoft.AspNetCore.Routing.IEndpointRouteBuilder KanbanApi.Endpoints.BoardMembersEndpoint::MapBoardMembersEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+DA:11,73
+DA:12,73
+DA:14,73
+DA:15,73
+DA:16,73
+DA:17,73
+DA:18,73
+DA:19,28
+DA:20,28
+DA:21,28
+DA:22,0
+DA:23,73
+DA:24,28
+DA:25,28
+DA:26,28
+DA:27,28
+DA:28,28
+DA:29,73
+DA:30,28
+DA:31,0
+DA:32,73
+DA:33,28
+DA:34,28
+DA:35,25
+DA:36,0
+DA:37,0
+DA:38,0
+DA:39,3
+DA:40,0
+DA:41,28
+DA:42,28
+DA:43,73
+DA:45,73
+DA:46,73
+LF:34
+LH:28
+BRF:18
+BRH:11
+FNF:1
+FNH:1
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Endpoints/CardsAssignEndpoint.cs
+FN:10,Microsoft.AspNetCore.Routing.IEndpointRouteBuilder KanbanApi.Endpoints.CardsAssignEndpoint::MapCardsAssignEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+FNDA:73,Microsoft.AspNetCore.Routing.IEndpointRouteBuilder KanbanApi.Endpoints.CardsAssignEndpoint::MapCardsAssignEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+DA:11,73
+DA:12,73
+DA:14,73
+DA:15,73
+DA:16,73
+DA:17,73
+DA:18,73
+DA:19,73
+DA:20,73
+DA:21,8
+DA:22,8
+DA:23,8
+DA:24,8
+DA:25,6
+DA:26,1
+DA:27,0
+DA:28,0
+DA:29,1
+DA:30,0
+DA:31,8
+DA:32,8
+DA:33,73
+DA:34,73
+DA:36,73
+DA:37,73
+LF:25
+LH:22
+BRF:8
+BRH:4
+FNF:1
+FNH:1
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Endpoints/CardsEndpoint.cs
+FN:11,Microsoft.AspNetCore.Routing.IEndpointRouteBuilder KanbanApi.Endpoints.CardsEndpoint::MapCardsEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+FNDA:73,Microsoft.AspNetCore.Routing.IEndpointRouteBuilder KanbanApi.Endpoints.CardsEndpoint::MapCardsEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+DA:12,73
+DA:13,73
+DA:15,73
+DA:16,73
+DA:17,73
+DA:18,73
+DA:19,73
+DA:20,12
+DA:21,12
+DA:22,12
+DA:23,0
+DA:24,73
+DA:25,12
+DA:26,12
+DA:27,12
+DA:28,12
+DA:29,0
+DA:30,0
+DA:31,0
+DA:32,12
+DA:33,12
+DA:34,73
+DA:35,73
+DA:37,73
+DA:38,73
+DA:39,73
+DA:40,73
+DA:41,73
+DA:42,73
+DA:43,2
+DA:44,2
+DA:45,2
+DA:46,2
+DA:47,2
+DA:48,0
+DA:49,0
+DA:50,0
+DA:51,2
+DA:52,2
+DA:53,73
+DA:54,73
+DA:56,73
+DA:57,73
+DA:58,73
+DA:59,73
+DA:60,73
+DA:61,1
+DA:62,1
+DA:63,1
+DA:64,0
+DA:65,73
+DA:66,1
+DA:67,73
+DA:68,1
+DA:69,1
+DA:70,1
+DA:71,0
+DA:72,0
+DA:73,0
+DA:74,1
+DA:75,1
+DA:76,73
+DA:77,73
+DA:78,73
+LF:64
+LH:53
+BRF:19
+BRH:5
+FNF:1
+FNH:1
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Endpoints/ColumnsEndpoint.cs
+FN:10,Microsoft.AspNetCore.Routing.IEndpointRouteBuilder KanbanApi.Endpoints.ColumnsEndpoint::MapColumnsEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+FNDA:73,Microsoft.AspNetCore.Routing.IEndpointRouteBuilder KanbanApi.Endpoints.ColumnsEndpoint::MapColumnsEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+DA:11,73
+DA:12,73
+DA:14,73
+DA:15,73
+DA:16,73
+DA:17,73
+DA:18,73
+DA:19,9
+DA:20,9
+DA:21,9
+DA:22,0
+DA:23,73
+DA:24,9
+DA:25,9
+DA:26,8
+DA:27,0
+DA:28,0
+DA:29,1
+DA:30,0
+DA:31,9
+DA:32,9
+DA:33,73
+DA:34,73
+DA:36,73
+DA:37,73
+DA:38,73
+DA:39,73
+DA:40,73
+DA:41,73
+DA:42,5
+DA:43,5
+DA:44,5
+DA:45,0
+DA:46,73
+DA:47,5
+DA:48,5
+DA:49,4
+DA:50,0
+DA:51,1
+DA:52,0
+DA:53,0
+DA:54,5
+DA:55,5
+DA:56,73
+DA:57,73
+DA:59,73
+DA:60,73
+DA:61,73
+DA:62,73
+DA:63,73
+DA:64,7
+DA:65,7
+DA:66,7
+DA:67,0
+DA:68,73
+DA:69,7
+DA:70,7
+DA:71,4
+DA:72,0
+DA:73,1
+DA:74,0
+DA:75,2
+DA:76,0
+DA:77,7
+DA:78,7
+DA:79,73
+DA:81,73
+DA:82,73
+LF:68
+LH:56
+BRF:32
+BRH:19
+FNF:1
+FNH:1
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Endpoints/UserEndpoints.cs
+FN:12,Microsoft.AspNetCore.Routing.IEndpointRouteBuilder KanbanApi.Endpoints.UserEndpoints::MapUserEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+FNDA:73,Microsoft.AspNetCore.Routing.IEndpointRouteBuilder KanbanApi.Endpoints.UserEndpoints::MapUserEndpoints(Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)
+DA:13,73
+DA:14,73
+DA:15,73
+DA:16,73
+DA:17,73
+DA:18,2
+DA:19,2
+DA:20,2
+DA:21,73
+DA:22,2
+DA:23,0
+DA:24,73
+DA:25,2
+DA:26,0
+DA:27,73
+DA:28,2
+DA:29,2
+DA:30,2
+DA:31,73
+DA:32,2
+DA:33,73
+DA:34,2
+DA:35,0
+DA:36,73
+DA:37,2
+DA:38,2
+DA:39,0
+DA:40,73
+DA:41,2
+DA:42,2
+DA:43,75
+DA:45,73
+DA:46,73
+DA:47,73
+DA:48,5
+DA:49,5
+DA:50,5
+DA:51,5
+DA:52,5
+DA:53,73
+DA:54,5
+DA:55,0
+DA:56,73
+DA:57,5
+DA:58,0
+DA:59,73
+DA:60,5
+DA:61,0
+DA:62,73
+DA:63,5
+DA:64,5
+DA:65,1
+DA:66,73
+DA:67,4
+DA:68,4
+DA:69,0
+DA:70,73
+DA:71,4
+DA:72,4
+DA:73,4
+DA:74,4
+DA:75,4
+DA:76,4
+DA:77,73
+DA:78,4
+DA:79,4
+DA:80,0
+DA:81,0
+DA:82,0
+DA:83,0
+DA:84,73
+DA:85,0
+DA:86,73
+DA:87,73
+DA:88,4
+DA:89,78
+DA:91,73
+DA:93,73
+DA:94,102
+DA:95,102
+DA:96,102
+DA:97,0
+DA:98,73
+DA:99,102
+DA:100,102
+DA:101,0
+DA:102,73
+DA:103,102
+DA:104,175
+DA:106,73
+DA:107,73
+DA:108,73
+DA:109,73
+DA:110,73
+DA:111,73
+DA:112,0
+DA:113,0
+DA:114,0
+DA:115,0
+DA:116,73
+DA:117,0
+DA:118,0
+DA:119,73
+DA:120,73
+DA:121,0
+DA:122,0
+DA:123,73
+DA:124,0
+DA:125,0
+DA:126,73
+DA:127,0
+DA:128,0
+DA:129,0
+DA:130,0
+DA:131,73
+DA:132,0
+DA:133,0
+DA:134,0
+DA:135,73
+DA:136,0
+DA:137,0
+DA:138,73
+DA:139,0
+DA:140,0
+DA:141,73
+DA:142,0
+DA:143,0
+DA:144,0
+DA:145,0
+DA:146,73
+DA:147,0
+DA:148,0
+DA:149,0
+DA:150,0
+DA:151,0
+DA:152,0
+DA:153,0
+DA:154,0
+DA:155,0
+DA:156,0
+DA:157,0
+DA:158,0
+DA:159,0
+DA:160,73
+DA:161,0
+DA:162,0
+DA:163,73
+DA:164,0
+DA:165,0
+DA:166,0
+DA:167,73
+DA:168,0
+DA:169,0
+DA:170,73
+DA:172,73
+DA:173,73
+LF:156
+LH:96
+BRF:74
+BRH:22
+FNF:1
+FNH:1
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Dtos/BoardDto.cs
+FN:7,System.Int32 KanbanApi.Dtos.BoardDto::get_Id()
+FNDA:305,System.Int32 KanbanApi.Dtos.BoardDto::get_Id()
+DA:8,305
+FN:8,System.String KanbanApi.Dtos.BoardDto::get_Name()
+FNDA:308,System.String KanbanApi.Dtos.BoardDto::get_Name()
+DA:9,308
+FN:9,System.String KanbanApi.Dtos.BoardDto::get_OwnerId()
+FNDA:309,System.String KanbanApi.Dtos.BoardDto::get_OwnerId()
+DA:10,309
+FN:10,System.String KanbanApi.Dtos.BoardDto::get_Role()
+FNDA:307,System.String KanbanApi.Dtos.BoardDto::get_Role()
+DA:11,307
+FN:11,System.Collections.Generic.List`1<System.String> KanbanApi.Dtos.BoardDto::get_Members()
+FNDA:289,System.Collections.Generic.List`1<System.String> KanbanApi.Dtos.BoardDto::get_Members()
+DA:12,289
+FN:22,System.String KanbanApi.Dtos.CreateBoardDto::get_BoardName()
+FNDA:183,System.String KanbanApi.Dtos.CreateBoardDto::get_BoardName()
+DA:23,183
+FN:32,System.String KanbanApi.Dtos.UpdateBoardNameDto::get_Name()
+FNDA:7,System.String KanbanApi.Dtos.UpdateBoardNameDto::get_Name()
+DA:33,7
+FN:44,System.String KanbanApi.Dtos.BoardMemberDto::get_UserId()
+FNDA:100,System.String KanbanApi.Dtos.BoardMemberDto::get_UserId()
+DA:45,100
+FN:45,System.String KanbanApi.Dtos.BoardMemberDto::get_BoardId()
+FNDA:75,System.String KanbanApi.Dtos.BoardMemberDto::get_BoardId()
+DA:46,75
+FN:46,System.String KanbanApi.Dtos.BoardMemberDto::get_Role()
+FNDA:75,System.String KanbanApi.Dtos.BoardMemberDto::get_Role()
+DA:47,75
+LF:10
+LH:10
+BRF:0
+BRH:0
+FNF:10
+FNH:10
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Dtos/BoardIdDto.cs
+FN:5,System.Int32 KanbanApi.Dtos.BoardIdResultDto::get_Id()
+FNDA:44,System.Int32 KanbanApi.Dtos.BoardIdResultDto::get_Id()
+DA:6,44
+FN:6,System.String KanbanApi.Dtos.BoardIdResultDto::get_Name()
+FNDA:66,System.String KanbanApi.Dtos.BoardIdResultDto::get_Name()
+DA:7,66
+FN:7,System.String KanbanApi.Dtos.BoardIdResultDto::get_OwnerId()
+FNDA:66,System.String KanbanApi.Dtos.BoardIdResultDto::get_OwnerId()
+DA:8,66
+FN:8,System.String KanbanApi.Dtos.BoardIdResultDto::get_Role()
+FNDA:66,System.String KanbanApi.Dtos.BoardIdResultDto::get_Role()
+DA:9,66
+FN:10,System.Collections.Generic.List`1<KanbanApi.Dtos.BoardMemberResultDto> KanbanApi.Dtos.BoardIdResultDto::get_Members()
+FNDA:66,System.Collections.Generic.List`1<KanbanApi.Dtos.BoardMemberResultDto> KanbanApi.Dtos.BoardIdResultDto::get_Members()
+DA:11,66
+FN:11,System.Collections.Generic.List`1<KanbanApi.Dtos.BoardColumnResultDto> KanbanApi.Dtos.BoardIdResultDto::get_Columns()
+FNDA:66,System.Collections.Generic.List`1<KanbanApi.Dtos.BoardColumnResultDto> KanbanApi.Dtos.BoardIdResultDto::get_Columns()
+DA:12,66
+FN:16,System.String KanbanApi.Dtos.BoardMemberResultDto::get_UserId()
+FNDA:93,System.String KanbanApi.Dtos.BoardMemberResultDto::get_UserId()
+DA:17,93
+FN:17,System.String KanbanApi.Dtos.BoardMemberResultDto::get_Role()
+FNDA:93,System.String KanbanApi.Dtos.BoardMemberResultDto::get_Role()
+DA:18,93
+FN:18,System.String KanbanApi.Dtos.BoardMemberResultDto::get_UserName()
+FNDA:62,System.String KanbanApi.Dtos.BoardMemberResultDto::get_UserName()
+DA:19,62
+FN:19,System.String KanbanApi.Dtos.BoardMemberResultDto::get_DisplayName()
+FNDA:62,System.String KanbanApi.Dtos.BoardMemberResultDto::get_DisplayName()
+DA:20,62
+FN:20,System.String KanbanApi.Dtos.BoardMemberResultDto::get_Email()
+FNDA:62,System.String KanbanApi.Dtos.BoardMemberResultDto::get_Email()
+DA:21,62
+FN:21,System.String KanbanApi.Dtos.BoardMemberResultDto::get_ProfileImageUrl()
+FNDA:62,System.String KanbanApi.Dtos.BoardMemberResultDto::get_ProfileImageUrl()
+DA:22,62
+FN:26,System.Int32 KanbanApi.Dtos.BoardColumnResultDto::get_Id()
+FNDA:168,System.Int32 KanbanApi.Dtos.BoardColumnResultDto::get_Id()
+DA:27,168
+FN:27,System.String KanbanApi.Dtos.BoardColumnResultDto::get_Name()
+FNDA:252,System.String KanbanApi.Dtos.BoardColumnResultDto::get_Name()
+DA:28,252
+FN:28,System.Int32 KanbanApi.Dtos.BoardColumnResultDto::get_Position()
+FNDA:168,System.Int32 KanbanApi.Dtos.BoardColumnResultDto::get_Position()
+DA:29,168
+FN:30,System.Collections.Generic.List`1<KanbanApi.Dtos.BoardCardResultDto> KanbanApi.Dtos.BoardColumnResultDto::get_Cards()
+FNDA:252,System.Collections.Generic.List`1<KanbanApi.Dtos.BoardCardResultDto> KanbanApi.Dtos.BoardColumnResultDto::get_Cards()
+DA:31,252
+FN:35,System.Int32 KanbanApi.Dtos.BoardCardResultDto::get_Id()
+FNDA:48,System.Int32 KanbanApi.Dtos.BoardCardResultDto::get_Id()
+DA:36,48
+FN:36,System.String KanbanApi.Dtos.BoardCardResultDto::get_Title()
+FNDA:72,System.String KanbanApi.Dtos.BoardCardResultDto::get_Title()
+DA:37,72
+FN:37,System.String KanbanApi.Dtos.BoardCardResultDto::get_Description()
+FNDA:48,System.String KanbanApi.Dtos.BoardCardResultDto::get_Description()
+DA:38,48
+FN:38,System.String KanbanApi.Dtos.BoardCardResultDto::get_AssignedUserId()
+FNDA:48,System.String KanbanApi.Dtos.BoardCardResultDto::get_AssignedUserId()
+DA:39,48
+FN:39,System.String KanbanApi.Dtos.BoardCardResultDto::get_AssigneeUserName()
+FNDA:48,System.String KanbanApi.Dtos.BoardCardResultDto::get_AssigneeUserName()
+DA:40,48
+FN:40,System.String KanbanApi.Dtos.BoardCardResultDto::get_AssigneeDisplayName()
+FNDA:48,System.String KanbanApi.Dtos.BoardCardResultDto::get_AssigneeDisplayName()
+DA:41,48
+FN:41,System.String KanbanApi.Dtos.BoardCardResultDto::get_AssigneeAvatarUrl()
+FNDA:48,System.String KanbanApi.Dtos.BoardCardResultDto::get_AssigneeAvatarUrl()
+DA:42,48
+LF:23
+LH:23
+BRF:0
+BRH:0
+FNF:23
+FNH:23
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Dtos/BoardMemebrEndpoint.cs
+FN:4,System.String KanbanApi.Dtos.AddMemberRequest::get_UserId()
+FNDA:82,System.String KanbanApi.Dtos.AddMemberRequest::get_UserId()
+DA:5,82
+FN:5,System.String KanbanApi.Dtos.AddMemberRequest::get_UserName()
+FNDA:3,System.String KanbanApi.Dtos.AddMemberRequest::get_UserName()
+DA:6,3
+FN:6,System.String KanbanApi.Dtos.AddMemberRequest::get_Email()
+FNDA:0,System.String KanbanApi.Dtos.AddMemberRequest::get_Email()
+DA:7,0
+FN:7,System.String KanbanApi.Dtos.AddMemberRequest::get_Role()
+FNDA:1,System.String KanbanApi.Dtos.AddMemberRequest::get_Role()
+DA:8,1
+LF:4
+LH:3
+BRF:0
+BRH:0
+FNF:4
+FNH:3
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Dtos/CardDto.cs
+FN:3,System.Int32 KanbanApi.Dtos.CardResponseDto::get_Id()
+FNDA:40,System.Int32 KanbanApi.Dtos.CardResponseDto::get_Id()
+DA:4,40
+FN:4,System.String KanbanApi.Dtos.CardResponseDto::get_Title()
+FNDA:42,System.String KanbanApi.Dtos.CardResponseDto::get_Title()
+DA:5,42
+FN:5,System.String KanbanApi.Dtos.CardResponseDto::get_Description()
+FNDA:28,System.String KanbanApi.Dtos.CardResponseDto::get_Description()
+DA:6,28
+FN:6,System.Int32 KanbanApi.Dtos.CardResponseDto::get_ColumnId()
+FNDA:28,System.Int32 KanbanApi.Dtos.CardResponseDto::get_ColumnId()
+DA:7,28
+FN:11,System.String KanbanApi.Dtos.CreateCardDto::get_Title()
+FNDA:0,System.String KanbanApi.Dtos.CreateCardDto::get_Title()
+DA:12,0
+FN:12,System.String KanbanApi.Dtos.CreateCardDto::get_Description()
+FNDA:0,System.String KanbanApi.Dtos.CreateCardDto::get_Description()
+DA:13,0
+FN:13,System.Int32 KanbanApi.Dtos.CreateCardDto::get_ColumnId()
+FNDA:0,System.Int32 KanbanApi.Dtos.CreateCardDto::get_ColumnId()
+DA:14,0
+FN:18,System.String KanbanApi.Dtos.UpdateCardDto::get_Title()
+FNDA:6,System.String KanbanApi.Dtos.UpdateCardDto::get_Title()
+DA:19,6
+FN:19,System.String KanbanApi.Dtos.UpdateCardDto::get_Description()
+FNDA:4,System.String KanbanApi.Dtos.UpdateCardDto::get_Description()
+DA:20,4
+FN:20,System.Int32 KanbanApi.Dtos.UpdateCardDto::get_ColumnId()
+FNDA:4,System.Int32 KanbanApi.Dtos.UpdateCardDto::get_ColumnId()
+DA:21,4
+FN:25,System.Int32 KanbanApi.Dtos.AssignCardResponseDto::get_CardId()
+FNDA:23,System.Int32 KanbanApi.Dtos.AssignCardResponseDto::get_CardId()
+DA:26,23
+FN:26,System.String KanbanApi.Dtos.AssignCardResponseDto::get_UserId()
+FNDA:26,System.String KanbanApi.Dtos.AssignCardResponseDto::get_UserId()
+DA:27,26
+LF:12
+LH:9
+BRF:0
+BRH:0
+FNF:12
+FNH:9
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Dtos/ColumnApiResponseDto.cs
+FN:4,System.Int32 KanbanApi.Dtos.ColumnApiResponseDto::get_Id()
+FNDA:66,System.Int32 KanbanApi.Dtos.ColumnApiResponseDto::get_Id()
+DA:5,66
+FN:5,System.String KanbanApi.Dtos.ColumnApiResponseDto::get_Name()
+FNDA:39,System.String KanbanApi.Dtos.ColumnApiResponseDto::get_Name()
+DA:6,39
+FN:6,System.Int32 KanbanApi.Dtos.ColumnApiResponseDto::get_Position()
+FNDA:39,System.Int32 KanbanApi.Dtos.ColumnApiResponseDto::get_Position()
+DA:7,39
+LF:3
+LH:3
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Dtos/CreateCardMemberReqestDto.cs
+FN:9,System.String KanbanApi.Dtos.AssignCardRequestDto::get_UserId()
+FNDA:26,System.String KanbanApi.Dtos.AssignCardRequestDto::get_UserId()
+DA:10,26
+LF:1
+LH:1
+BRF:0
+BRH:0
+FNF:1
+FNH:1
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Dtos/CreateCardRequestDto.cs
+FN:8,System.String KanbanApi.Dtos.CreateCardRequestDto::get_Title()
+FNDA:48,System.String KanbanApi.Dtos.CreateCardRequestDto::get_Title()
+DA:9,48
+FN:10,System.String KanbanApi.Dtos.CreateCardRequestDto::get_Description()
+FNDA:24,System.String KanbanApi.Dtos.CreateCardRequestDto::get_Description()
+DA:11,24
+FN:13,System.Int32 KanbanApi.Dtos.CreateCardRequestDto::get_ColumnId()
+FNDA:36,System.Int32 KanbanApi.Dtos.CreateCardRequestDto::get_ColumnId()
+DA:14,36
+LF:3
+LH:3
+BRF:0
+BRH:0
+FNF:3
+FNH:3
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Dtos/LoginDto.cs
+FN:4,System.String KanbanApi.Dtos.LoginDto::get_Identifier()
+FNDA:4,System.String KanbanApi.Dtos.LoginDto::get_Identifier()
+DA:5,4
+FN:5,System.String KanbanApi.Dtos.LoginDto::get_Email()
+FNDA:0,System.String KanbanApi.Dtos.LoginDto::get_Email()
+DA:6,0
+FN:6,System.String KanbanApi.Dtos.LoginDto::get_Password()
+FNDA:6,System.String KanbanApi.Dtos.LoginDto::get_Password()
+DA:7,6
+LF:3
+LH:2
+BRF:0
+BRH:0
+FNF:3
+FNH:2
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Dtos/RegisterDto.cs
+FN:4,System.String KanbanApi.Dtos.RegisterDto::get_Email()
+FNDA:10,System.String KanbanApi.Dtos.RegisterDto::get_Email()
+DA:5,10
+FN:5,System.String KanbanApi.Dtos.RegisterDto::get_Password()
+FNDA:10,System.String KanbanApi.Dtos.RegisterDto::get_Password()
+DA:6,10
+FN:6,System.String KanbanApi.Dtos.RegisterDto::get_UserName()
+FNDA:10,System.String KanbanApi.Dtos.RegisterDto::get_UserName()
+DA:7,10
+FN:7,System.String KanbanApi.Dtos.RegisterDto::get_DisplayName()
+FNDA:5,System.String KanbanApi.Dtos.RegisterDto::get_DisplayName()
+DA:8,5
+LF:4
+LH:4
+BRF:0
+BRH:0
+FNF:4
+FNH:4
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Dtos/UserProfileDto.cs
+FN:5,System.String KanbanApi.Dtos.UserProfileResponseDto::get_Id()
+FNDA:204,System.String KanbanApi.Dtos.UserProfileResponseDto::get_Id()
+DA:6,204
+FN:6,System.String KanbanApi.Dtos.UserProfileResponseDto::get_UserName()
+FNDA:204,System.String KanbanApi.Dtos.UserProfileResponseDto::get_UserName()
+DA:7,204
+FN:7,System.String KanbanApi.Dtos.UserProfileResponseDto::get_Email()
+FNDA:204,System.String KanbanApi.Dtos.UserProfileResponseDto::get_Email()
+DA:8,204
+FN:8,System.String KanbanApi.Dtos.UserProfileResponseDto::get_DisplayName()
+FNDA:204,System.String KanbanApi.Dtos.UserProfileResponseDto::get_DisplayName()
+DA:9,204
+FN:9,System.String KanbanApi.Dtos.UserProfileResponseDto::get_ProfileImageUrl()
+FNDA:204,System.String KanbanApi.Dtos.UserProfileResponseDto::get_ProfileImageUrl()
+DA:10,204
+FN:10,System.Collections.Generic.List`1<KanbanApi.Dtos.BoardDto> KanbanApi.Dtos.UserProfileResponseDto::get_Boards()
+FNDA:306,System.Collections.Generic.List`1<KanbanApi.Dtos.BoardDto> KanbanApi.Dtos.UserProfileResponseDto::get_Boards()
+DA:11,306
+FN:16,System.String KanbanApi.Dtos.UserProfileUserNameUpdateDto::get_UserName()
+FNDA:0,System.String KanbanApi.Dtos.UserProfileUserNameUpdateDto::get_UserName()
+DA:17,0
+FN:22,System.String KanbanApi.Dtos.UserProfileEmailUpdateDto::get_Email()
+FNDA:0,System.String KanbanApi.Dtos.UserProfileEmailUpdateDto::get_Email()
+DA:23,0
+FN:28,System.String KanbanApi.Dtos.UserProfileDisplayNameUpdateDto::get_DisplayName()
+FNDA:0,System.String KanbanApi.Dtos.UserProfileDisplayNameUpdateDto::get_DisplayName()
+DA:29,0
+LF:9
+LH:6
+BRF:0
+BRH:0
+FNF:9
+FNH:6
+end_of_record
+SF:/home/anita/Desktop/kanban-board/kanban-mastery-v3-build-deploy-with-net-8-1768253560/KanbanApi/Data/ApplicationDbContext.cs
+FN:13,Microsoft.EntityFrameworkCore.DbSet`1<KanbanApi.Models.Board> KanbanApi.Data.ApplicationDbContext::get_Boards()
+FNDA:809,Microsoft.EntityFrameworkCore.DbSet`1<KanbanApi.Models.Board> KanbanApi.Data.ApplicationDbContext::get_Boards()
+DA:14,809
+FN:14,Microsoft.EntityFrameworkCore.DbSet`1<KanbanApi.Models.Column> KanbanApi.Data.ApplicationDbContext::get_Columns()
+FNDA:691,Microsoft.EntityFrameworkCore.DbSet`1<KanbanApi.Models.Column> KanbanApi.Data.ApplicationDbContext::get_Columns()
+DA:15,691
+FN:15,Microsoft.EntityFrameworkCore.DbSet`1<KanbanApi.Models.Card> KanbanApi.Data.ApplicationDbContext::get_Cards()
+FNDA:672,Microsoft.EntityFrameworkCore.DbSet`1<KanbanApi.Models.Card> KanbanApi.Data.ApplicationDbContext::get_Cards()
+DA:16,672
+FN:16,Microsoft.EntityFrameworkCore.DbSet`1<KanbanApi.Models.BoardMember> KanbanApi.Data.ApplicationDbContext::get_BoardMembers()
+FNDA:939,Microsoft.EntityFrameworkCore.DbSet`1<KanbanApi.Models.BoardMember> KanbanApi.Data.ApplicationDbContext::get_BoardMembers()
+DA:17,939
+FN:19,System.Void KanbanApi.Data.ApplicationDbContext::OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)
+FNDA:2,System.Void KanbanApi.Data.ApplicationDbContext::OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)
+DA:20,2
+DA:21,2
+DA:24,2
+DA:25,2
+DA:26,2
+DA:27,2
+DA:28,2
+DA:29,2
+DA:30,2
+DA:31,2
+DA:32,2
+DA:33,2
+DA:34,2
+DA:35,4
+DA:37,2
+DA:38,2
+DA:39,2
+DA:40,2
+DA:41,2
+DA:42,2
+DA:43,2
+DA:44,2
+DA:45,2
+DA:46,2
+DA:47,2
+DA:48,2
+DA:49,4
+DA:51,2
+DA:52,2
+DA:53,2
+DA:54,2
+DA:55,2
+DA:56,2
+DA:57,4
+DA:58,2
+FN:9,System.Void KanbanApi.Data.ApplicationDbContext::.ctor(Microsoft.EntityFrameworkCore.DbContextOptions`1<KanbanApi.Data.ApplicationDbContext>)
+FNDA:624,System.Void KanbanApi.Data.ApplicationDbContext::.ctor(Microsoft.EntityFrameworkCore.DbContextOptions`1<KanbanApi.Data.ApplicationDbContext>)
+DA:10,624
+DA:11,624
+DA:12,624
+LF:42
+LH:42
+BRF:0
+BRH:0
+FNF:6
+FNH:6
+end_of_record
