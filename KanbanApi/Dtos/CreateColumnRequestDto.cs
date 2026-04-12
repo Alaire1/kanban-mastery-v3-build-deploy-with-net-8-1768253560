@@ -1,10 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using KanbanApi.Validation;
 
 public class CreateColumnRequestDto
 {
     [Required(ErrorMessage = "Column name cannot be empty")]
-    [NotEmptyOrWhitespace]
     [MaxLength(50)]
     [RegularExpression(@"^[a-zA-Z0-9]+( [a-zA-Z0-9]+)*$",
         ErrorMessage = "Column name may only contain letters and numbers, with single spaces between words.")]
@@ -17,7 +15,6 @@ public class CreateColumnRequestDto
 public class UpdateColumnNameRequestDto
 {
     [Required(ErrorMessage = "Column name cannot be empty")]
-    [NotEmptyOrWhitespace]
     [MaxLength(50)]
     [RegularExpression(@"^[a-zA-Z0-9]+( [a-zA-Z0-9]+)*$",
         ErrorMessage = "Column name may only contain letters and numbers, with single spaces between words.")]

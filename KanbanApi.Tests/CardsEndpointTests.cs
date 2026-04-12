@@ -203,4 +203,95 @@ public class CardsEndpointTests : IClassFixture<WebApplicationFactory<Program>>
 
         Console.WriteLine("\n");
     }
+
+    [Fact]
+    public async Task CreateCard_WithMissingColumn_ReturnsNotFound()
+    {
+        var (client, userId) = await CreateAuthenticatedUser();
+        var boardId = await CreateBoard(userId);
+
+        var response = await client.PostAsJsonAsync($"/api/boards/{boardId}/cards",
+            new { Title = "Orphan Card", Description = "desc", ColumnId = 999_999 });
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        var body = await response.Content.ReadAsStringAsync();
+        Assert.Contains("Column not found", body);
+    }
+
+    [Fact]
+    public async Task UpdateCard_NonExistentCard_ReturnsNotFound()
+    {
+        var (client, userId) = await CreateAuthenticatedUser();
+        var boardId = await CreateBoard(userId);
+
+        int columnId;
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            columnId = db.Columns.First(c => c.BoardId == boardId).Id;
+        }
+
+        var response = await client.PutAsJsonAsync($"/api/boards/{boardId}/cards/999999",
+            new { Title = "Updated", Description = "desc", ColumnId = columnId });
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        var body = await response.Content.ReadAsStringAsync();
+        Assert.Contains("Card not found", body);
+    }
+
+    [Fact]
+    public async Task DeleteCard_NonExistentCard_ReturnsNotFound()
+    {
+        var (client, userId) = await CreateAuthenticatedUser();
+        var boardId = await CreateBoard(userId);
+
+        var response = await client.DeleteAsync($"/api/boards/{boardId}/cards/999999");
+
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
+        var body = await response.Content.ReadAsStringAsync();
+        Assert.Contains("Card not found", body);
+    }
+
+    [Fact]
+    public async Task UpdateCard_InvalidDto_ReturnsBadRequest()
+    {
+        var (client, userId) = await CreateAuthenticatedUser();
+        var boardId = await CreateBoard(userId);
+
+        int columnId;
+        int cardId;
+        using (var scope = _factory.Services.CreateScope())
+        {
+            var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            columnId = db.Columns.First(c => c.BoardId == boardId).Id;
+        }
+
+        var createResp = await client.PostAsJsonAsync($"/api/boards/{boardId}/cards",
+            new { Title = "Valid Title", Description = "desc", ColumnId = columnId });
+        Assert.Equal(HttpStatusCode.Created, createResp.StatusCode);
+        var created = JsonSerializer.Deserialize<CardResponse>(await createResp.Content.ReadAsStringAsync(), JsonOptions);
+        Assert.NotNull(created);
+        cardId = created!.Id;
+
+        var updateResp = await client.PutAsJsonAsync($"/api/boards/{boardId}/cards/{cardId}",
+            new { Title = "   ", Description = "desc", ColumnId = 0 });
+
+        Assert.Equal(HttpStatusCode.BadRequest, updateResp.StatusCode);
+        var body = await updateResp.Content.ReadAsStringAsync();
+        Assert.Contains("errors", body, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public async Task CreateCard_InvalidColumnId_ReturnsBadRequest()
+    {
+        var (client, userId) = await CreateAuthenticatedUser();
+        var boardId = await CreateBoard(userId);
+
+        var response = await client.PostAsJsonAsync($"/api/boards/{boardId}/cards",
+            new { Title = "ValidTitle", Description = "desc", ColumnId = 0 });
+
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+        var body = await response.Content.ReadAsStringAsync();
+        Assert.Contains("ColumnId", body, StringComparison.OrdinalIgnoreCase);
+    }
 }

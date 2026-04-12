@@ -10,21 +10,3 @@ public record UserProfileResponseDto
     public string? ProfileImageUrl { get; init; }
     public List<BoardDto> Boards { get; set; } = new();
 }
-
-// not used yet
-public record UserProfileUserNameUpdateDto
-{
-    public required string UserName { get; init; }
-}
-
-//not used yet
-public record UserProfileEmailUpdateDto
-{
-    public required string Email { get; init; }
-}
-
-//not used yet
-public record UserProfileDisplayNameUpdateDto
-{
-    public required string DisplayName { get; init; }
-}

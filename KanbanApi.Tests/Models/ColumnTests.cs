@@ -23,6 +23,77 @@ public class ColumnTests
             .WithMessage("Column name cannot be empty!*")
             .WithParameterName("name");
     }
+
+    [Fact]
+    public void Constructor_WithNullBoard_ShouldThrowArgumentNullException()
+    {
+        Action act = () => new Column("Valid Name", 0, null!);
+
+        act.Should().Throw<ArgumentNullException>()
+            .WithParameterName("board");
+    }
+
+    [Fact]
+    public void Constructor_WithNegativePosition_ShouldThrowArgumentOutOfRangeException()
+    {
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
+
+        Action act = () => new Column("Valid Name", -1, board);
+
+        act.Should().Throw<ArgumentOutOfRangeException>()
+            .WithParameterName("position");
+    }
+
+    [Fact]
+    public void Rename_WithInvalidName_ShouldThrowArgumentException()
+    {
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
+        var column = new Column("Initial", 0, board);
+
+        Action act = () => column.Rename("   ");
+
+        act.Should().Throw<ArgumentException>()
+            .WithParameterName("name");
+    }
+
+    [Fact]
+    public void Rename_WithValidName_ShouldTrimAndUpdate()
+    {
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
+        var column = new Column("Initial", 0, board);
+
+        column.Rename("  Updated Name  ");
+
+        column.Name.Should().Be("Updated Name");
+    }
+
+    [Fact]
+    public void Reposition_WithNegativeValue_ShouldThrowArgumentOutOfRangeException()
+    {
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
+        var column = new Column("Initial", 0, board);
+
+        Action act = () => column.Reposition(-1);
+
+        act.Should().Throw<ArgumentOutOfRangeException>()
+            .WithParameterName("position");
+    }
+
+    [Fact]
+    public void Reposition_WithValidValue_ShouldUpdatePosition()
+    {
+        var ownerId = "owner123";
+        var board = new Board("Test Board", ownerId);
+        var column = new Column("Initial", 0, board);
+
+        column.Reposition(3);
+
+        column.Position.Should().Be(3);
+    }
     
     //ADD CARD
     [Fact]

@@ -107,14 +107,20 @@ public class BoardIdEndpointTests : IClassFixture<WebApplicationFactory<Program>
     private static void LogHttp(string testName, HttpStatusCode actual, HttpStatusCode expected)
     {
         var code = (int)actual;
-        var color = actual != expected ? ConsoleColor.Red : code switch
+        var isOk = actual == expected;
+        var color = !isOk ? ConsoleColor.Red : code switch
         {
             >= 200 and < 300 => ConsoleColor.Green,
             >= 300 and < 400 => ConsoleColor.Yellow,
             _ => ConsoleColor.Red
         };
         TestConsole.FileHeader();
-        Console.WriteLine($"\n{testName} -> HTTP {TestConsole.Value(code, color)} ({TestConsole.Value(actual, color)})");
+        Console.WriteLine();
+        Console.WriteLine(TestConsole.Value(testName, ConsoleColor.Yellow));
+        Console.WriteLine($"Result: {TestConsole.Value(isOk ? "OK" : "ERROR", isOk ? ConsoleColor.Green : ConsoleColor.Red)}");
+        Console.WriteLine($"Status: {TestConsole.Value(code, color)} ({TestConsole.Value(actual, color)})");
+        Console.WriteLine($"Message: {TestConsole.Value(isOk ? "No error" : $"Expected {expected} but got {actual}.", isOk ? ConsoleColor.Green : ConsoleColor.Red)}");
+        Console.WriteLine();
     }
 
     private static void PrintBoardByIdDto(BoardByIdResponse dto)
@@ -126,14 +132,15 @@ public class BoardIdEndpointTests : IClassFixture<WebApplicationFactory<Program>
         var columnList = dto.Columns.Count == 0
             ? "[]"
             : $"[{string.Join(", ", dto.Columns.Select(c => $"{c.Name}(pos:{c.Position}, cards:{c.Cards.Count})"))}]";
+        Console.WriteLine(TestConsole.Value("BoardById DTO", ConsoleColor.Yellow));
         Console.WriteLine(
-            $"\nBoardById DTO:" +
-            $"\nId: {TestConsole.Value(dto.Id, ConsoleColor.Cyan)}" +
+            $"Id: {TestConsole.Value(dto.Id, ConsoleColor.Cyan)}" +
             $"\nName: {TestConsole.Value(dto.Name, ConsoleColor.Cyan)}" +
             $"\nOwnerId: {TestConsole.Value(dto.OwnerId, ConsoleColor.Cyan)}" +
             $"\nRole: {TestConsole.Value(dto.Role, ConsoleColor.Cyan)}" +
             $"\nMembers: {TestConsole.Value(memberList, ConsoleColor.Yellow)}" +
             $"\nColumns: {TestConsole.Value(columnList, ConsoleColor.Green)}\n");
+        Console.WriteLine();
     }
 
     // --- Private types ---

@@ -1,75 +1,69 @@
 Summary
-  Generated on: 4/11/2026 - 3:07:25 AM
-  Coverage date: 4/11/2026 - 3:07:23 AM
+  Generated on: 4/12/2026 - 11:46:16 PM
+  Coverage date: 4/12/2026 - 11:46:15 PM
   Parser: Cobertura
   Assemblies: 1
-  Classes: 53
-  Files: 39
-  Line coverage: 84.7%
-  Covered lines: 981
-  Uncovered lines: 176
-  Coverable lines: 1157
-  Total lines: 1913
-  Branch coverage: 65.6% (109 of 166)
-  Covered branches: 109
-  Total branches: 166
-  Method coverage: 91.1% (165 of 181)
-  Full method coverage: 76.2% (138 of 181)
-  Covered methods: 165
-  Fully covered methods: 138
-  Total methods: 181
+  Classes: 47
+  Files: 37
+  Line coverage: 93.2%
+  Covered lines: 1044
+  Uncovered lines: 76
+  Coverable lines: 1120
+  Total lines: 1826
+  Branch coverage: 75.3% (119 of 158)
+  Covered branches: 119
+  Total branches: 158
+  Method coverage: 97.6% (167 of 171)
+  Full method coverage: 85.3% (146 of 171)
+  Covered methods: 167
+  Fully covered methods: 146
+  Total methods: 171
 
-KanbanApi                                              84.7%
-  CreateColumnRequestDto                                100%
-  KanbanApi.Data.ApplicationDbContext                   100%
-  KanbanApi.Dtos.AddMemberRequest                        75%
-  KanbanApi.Dtos.AssignCardRequestDto                   100%
-  KanbanApi.Dtos.AssignCardResponseDto                  100%
-  KanbanApi.Dtos.BoardCardResultDto                     100%
-  KanbanApi.Dtos.BoardColumnResultDto                   100%
-  KanbanApi.Dtos.BoardDto                               100%
-  KanbanApi.Dtos.BoardIdResultDto                       100%
-  KanbanApi.Dtos.BoardMemberDto                         100%
-  KanbanApi.Dtos.BoardMemberResultDto                   100%
-  KanbanApi.Dtos.CardResponseDto                        100%
-  KanbanApi.Dtos.ColumnApiResponseDto                   100%
-  KanbanApi.Dtos.CreateBoardDto                         100%
-  KanbanApi.Dtos.CreateCardDto                            0%
-  KanbanApi.Dtos.CreateCardRequestDto                   100%
-  KanbanApi.Dtos.LoginDto                              66.6%
-  KanbanApi.Dtos.RegisterDto                            100%
-  KanbanApi.Dtos.UpdateBoardNameDto                     100%
-  KanbanApi.Dtos.UpdateCardDto                          100%
-  KanbanApi.Dtos.UserProfileDisplayNameUpdateDto          0%
-  KanbanApi.Dtos.UserProfileEmailUpdateDto                0%
-  KanbanApi.Dtos.UserProfileResponseDto                 100%
-  KanbanApi.Dtos.UserProfileUserNameUpdateDto             0%
-  KanbanApi.Endpoints.BoardEndpoint                    94.4%
-  KanbanApi.Endpoints.BoardIdEndpoint                  81.6%
-  KanbanApi.Endpoints.BoardMembersEndpoint             82.3%
-  KanbanApi.Endpoints.CardsAssignEndpoint                88%
-  KanbanApi.Endpoints.CardsEndpoint                    82.8%
-  KanbanApi.Endpoints.ColumnsEndpoint                  82.3%
-  KanbanApi.Endpoints.UserEndpoints                    61.5%
-  KanbanApi.Filters.ValidationEndpointFilter<T>         100%
-  KanbanApi.Filters.ValidationFilterExtensions          100%
-  KanbanApi.Models.ApplicationUser                     91.6%
-  KanbanApi.Models.Board                               96.5%
-  KanbanApi.Models.BoardMember                         92.8%
-  KanbanApi.Models.Card                                88.2%
-  KanbanApi.Models.Column                              75.6%
-  KanbanApi.Services.AddMemberResult                    100%
-  KanbanApi.Services.BoardMembersService               90.6%
-  KanbanApi.Services.BoardResult                        100%
-  KanbanApi.Services.BoardService                      96.3%
-  KanbanApi.Services.CardResult                        72.7%
-  KanbanApi.Services.CardService                         91%
-  KanbanApi.Services.ColumnResult                       100%
-  KanbanApi.Services.ColumnService                     90.9%
-  KanbanApi.Services.IsBoardMemberHandler              90.4%
-  KanbanApi.Services.IsBoardOwnerHandler                 95%
-  KanbanApi.Services.UserProfileService                93.5%
-  KanbanApi.Validation.NameValidator                      0%
-  KanbanApi.Validation.NotEmptyOrWhitespaceAttribute     90%
-  Program                                               100%
-  UpdateColumnNameRequestDto                            100%
+KanbanApi                                         93.2%
+  CreateColumnRequestDto                           100%
+  KanbanApi.Data.ApplicationDbContext              100%
+  KanbanApi.Dtos.AddMemberRequest                   75%
+  KanbanApi.Dtos.AssignCardRequestDto              100%
+  KanbanApi.Dtos.AssignCardResponseDto             100%
+  KanbanApi.Dtos.BoardCardResultDto                100%
+  KanbanApi.Dtos.BoardColumnResultDto              100%
+  KanbanApi.Dtos.BoardDto                          100%
+  KanbanApi.Dtos.BoardIdResultDto                  100%
+  KanbanApi.Dtos.BoardMemberDto                    100%
+  KanbanApi.Dtos.BoardMemberResultDto              100%
+  KanbanApi.Dtos.CardResponseDto                   100%
+  KanbanApi.Dtos.ColumnApiResponseDto              100%
+  KanbanApi.Dtos.CreateBoardDto                    100%
+  KanbanApi.Dtos.CreateCardRequestDto              100%
+  KanbanApi.Dtos.LoginDto                         66.6%
+  KanbanApi.Dtos.RegisterDto                       100%
+  KanbanApi.Dtos.UpdateBoardNameDto                100%
+  KanbanApi.Dtos.UpdateCardDto                     100%
+  KanbanApi.Dtos.UserProfileResponseDto            100%
+  KanbanApi.Endpoints.BoardEndpoint               94.4%
+  KanbanApi.Endpoints.BoardIdEndpoint             81.6%
+  KanbanApi.Endpoints.BoardMembersEndpoint        82.3%
+  KanbanApi.Endpoints.CardsAssignEndpoint           88%
+  KanbanApi.Endpoints.CardsEndpoint               87.5%
+  KanbanApi.Endpoints.ColumnsEndpoint             82.3%
+  KanbanApi.Endpoints.UserEndpoints               96.7%
+  KanbanApi.Filters.ValidationEndpointFilter<T>    100%
+  KanbanApi.Filters.ValidationFilterExtensions     100%
+  KanbanApi.Models.ApplicationUser                91.6%
+  KanbanApi.Models.Board                          96.5%
+  KanbanApi.Models.BoardMember                    92.8%
+  KanbanApi.Models.Card                           88.2%
+  KanbanApi.Models.Column                         97.2%
+  KanbanApi.Services.AddMemberResult               100%
+  KanbanApi.Services.BoardMembersService          90.6%
+  KanbanApi.Services.BoardResult                   100%
+  KanbanApi.Services.BoardService                 96.3%
+  KanbanApi.Services.CardResult                    100%
+  KanbanApi.Services.CardService                  95.5%
+  KanbanApi.Services.ColumnResult                  100%
+  KanbanApi.Services.ColumnService                90.9%
+  KanbanApi.Services.IsBoardMemberHandler         90.4%
+  KanbanApi.Services.IsBoardOwnerHandler            95%
+  KanbanApi.Services.UserProfileService           93.5%
+  Program                                          100%
+  UpdateColumnNameRequestDto                       100%
