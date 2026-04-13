@@ -10,6 +10,6 @@ public class CreateCardRequestDto
 
     public string? Description { get; set; }
 
-    [Required]
+    [Range(1, int.MaxValue, ErrorMessage = "ColumnId must be a positive integer.")]
     public int ColumnId { get; set; }
 }
