@@ -11,7 +11,7 @@
 
 ### Azure SQL Database
 - Tier: Serverless
-- Region: West Europe
+- Region: North Europe
 
 ### Networking
 - Firewall rule enabled: Allow Azure services to access server
