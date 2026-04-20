@@ -24,7 +24,6 @@ packages/
 *.db
 *.log
 *.vspscc
-appsettings.*.json
 secrets.json
 *.publishsettings
 
@@ -41,6 +40,9 @@ desktop.ini
 KanbanApi/kanban.db-shm
 KanbanApi/kanban.db-wal
 node_modules
+
+# Test
+test-results/
 
 # Runtime user uploads
 KanbanApi/wwwroot/uploads/
