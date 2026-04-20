@@ -10,7 +10,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add DbContext with SQLite for development and SQL Server for production
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
 if (builder.Environment.IsDevelopment())
 {
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -33,7 +32,6 @@ builder.Services.AddIdentityApiEndpoints<ApplicationUser>(options =>
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<IAuthorizationHandler, IsBoardOwnerHandler>();
 builder.Services.AddScoped<IAuthorizationHandler, IsBoardMemberHandler>();
-
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("IsBoardOwner", policy =>
@@ -53,27 +51,35 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowReact", policy => {
-        policy.WithOrigins("http://localhost:3000")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.WithOrigins(
+            "http://localhost:3000",
+            "https://your-frontend-url.com"
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+// Run migrations on startup
+using (var scope = app.Services.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    db.Database.Migrate();
 }
 
-app.UseHttpsRedirection();
+// Swagger available in all environments
+app.UseSwagger();
+app.UseSwaggerUI();
+
 var webRootPath = Path.Combine(app.Environment.ContentRootPath, "wwwroot");
 Directory.CreateDirectory(webRootPath);
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(webRootPath)
 });
+
 app.UseCors("AllowReact");
 app.UseAuthentication();
 app.UseAuthorization();
@@ -90,5 +96,4 @@ app.MapCardsAssignEndpoints();
 app.MapGet("/", () => "Hello World!");
 
 app.Run();
-
 public partial class Program { }
