@@ -11,6 +11,7 @@ bin/
 obj/
 out/
 TestResults/
+publish/
 
 # Rider IDE
 .idea/

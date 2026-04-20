@@ -3,6 +3,7 @@ name: Deploy to Azure
 on:
   push:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -17,11 +18,11 @@ jobs:
 
       - name: Build and Test
         run: |
-          dotnet build
-          dotnet test
+          dotnet build KanbanApi/KanbanApi.csproj -c Release
+          dotnet test KanbanApi.Tests/KanbanApi.Tests.csproj -c Release
 
       - name: Publish
-        run: dotnet publish -c Release -o ./publish
+        run: dotnet publish KanbanApi/KanbanApi.csproj -c Release -o ./publish
 
       - name: Deploy to Azure
         uses: azure/webapps-deploy@v2
