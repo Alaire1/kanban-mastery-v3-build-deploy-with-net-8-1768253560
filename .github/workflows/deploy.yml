@@ -16,10 +16,27 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
       - name: Build and Test
         run: |
           dotnet build KanbanApi/KanbanApi.csproj -c Release
           dotnet test KanbanApi.Tests/KanbanApi.Tests.csproj -c Release
+
+      - name: Build Frontend
+        working-directory: my-kanban
+        run: |
+          npm ci
+          npm run build
+
+      - name: Copy Frontend to API wwwroot
+        run: |
+          rm -rf KanbanApi/wwwroot
+          mkdir -p KanbanApi/wwwroot
+          cp -r my-kanban/build/. KanbanApi/wwwroot/
 
       - name: Publish
         run: dotnet publish KanbanApi/KanbanApi.csproj -c Release -o ./publish
