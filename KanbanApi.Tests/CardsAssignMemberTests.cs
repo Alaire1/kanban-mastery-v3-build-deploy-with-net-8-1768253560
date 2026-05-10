@@ -7,19 +7,23 @@ using KanbanApi.Data;
 using KanbanApi.Dtos;
 using KanbanApi.Models;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace KanbanApi.Tests;
 
-public class CardsAssignEndpointTests : IClassFixture<WebApplicationFactory<Program>>
+public class CardsAssignEndpointTests : IClassFixture<WebApplicationFactory<Program>>, IDisposable
 {
     private readonly WebApplicationFactory<Program> _factory;
+    private readonly SqliteConnection _connection;
     private static readonly JsonSerializerOptions JsonOptions = new() { PropertyNameCaseInsensitive = true };
 
     public CardsAssignEndpointTests(WebApplicationFactory<Program> factory)
     {
-        var dbName = $"TestDb_CardsAssign_{Guid.NewGuid()}";
+        _connection = new SqliteConnection("Data Source=:memory:");
+        _connection.Open();
+
         _factory = factory.WithWebHostBuilder(builder =>
         {
             builder.ConfigureServices(services =>
@@ -30,7 +34,7 @@ public class CardsAssignEndpointTests : IClassFixture<WebApplicationFactory<Prog
                     services.Remove(descriptor);
 
                 services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseInMemoryDatabase(dbName));
+                    options.UseSqlite(_connection));
 
                 var sp = services.BuildServiceProvider();
                 using var scope = sp.CreateScope();
@@ -38,6 +42,12 @@ public class CardsAssignEndpointTests : IClassFixture<WebApplicationFactory<Prog
                 db.Database.EnsureCreated();
             });
         });
+    }
+
+    public void Dispose()
+    {
+        _connection.Dispose();
+        GC.SuppressFinalize(this);
     }
 
     // --- Auth / board / card helpers ---
