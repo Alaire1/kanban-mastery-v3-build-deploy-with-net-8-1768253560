@@ -19,7 +19,6 @@ jobs:
       - name: Build and Test
         run: |
           dotnet build KanbanApi/KanbanApi.csproj -c Release
-          dotnet migrate KanbanApi/KanbanApi.csproj -c Release
           dotnet test KanbanApi.Tests/KanbanApi.Tests.csproj -c Release
 
       - name: Publish
