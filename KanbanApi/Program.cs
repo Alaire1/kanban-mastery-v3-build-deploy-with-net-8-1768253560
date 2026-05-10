@@ -88,7 +88,7 @@ app.MapColumnsEndpoints();
 app.MapCardsEndpoints();
 app.MapCardsAssignEndpoints();
 
-app.MapGet("/", () => "Hello World!");
+app.MapFallbackToFile("index.html");
 
 app.Run();
 public partial class Program { }
