@@ -95,13 +95,16 @@ app.MapCardsAssignEndpoints();
 app.MapFallbackToFile("index.html");
 
 
-
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     if (db.Database.IsRelational())
     {
-        db.Database.Migrate();
+        var pendingMigrations = await db.Database.GetPendingMigrationsAsync();
+        if (pendingMigrations.Any())
+        {
+            await db.Database.MigrateAsync();
+        }
     }
 }
 
