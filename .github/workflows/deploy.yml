@@ -30,6 +30,7 @@ jobs:
         run: dotnet dotnet-ef database update
         env:
           ConnectionStrings__DefaultConnection: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+          ASPNETCORE_ENVIRONMENT: Production
 
       - name: Build Frontend
         working-directory: my-kanban
