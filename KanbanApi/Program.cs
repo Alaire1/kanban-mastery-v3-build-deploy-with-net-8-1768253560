@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add DbContext with SQLite for development and SQL Server for production
@@ -94,11 +95,10 @@ app.MapCardsAssignEndpoints();
 
 app.MapFallbackToFile("index.html");
 
-
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    if (db.Database.IsRelational())
+    if (db.Database.IsRelational() && !db.Database.IsSqlite())
     {
         db.Database.Migrate();
     }

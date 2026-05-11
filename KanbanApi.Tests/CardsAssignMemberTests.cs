@@ -39,8 +39,8 @@ public class CardsAssignEndpointTests : IClassFixture<WebApplicationFactory<Prog
                 var sp = services.BuildServiceProvider();
                 using var scope = sp.CreateScope();
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-                db.Database.EnsureDeleted(); // wipe any leftover state
-                db.Database.Migrate();  
+                db.Database.EnsureDeleted();  // clean slate
+                db.Database.EnsureCreated();  // create schema without migrations
             });
         });
     }
