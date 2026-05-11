@@ -20,7 +20,8 @@ else
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(connectionString));
 }
-
+Console.WriteLine($"ENV: {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}");
+Console.WriteLine($"CONN: {(connectionString == null ? "NULL" : "FOUND")}");
 // Add Identity with API endpoints
 builder.Services.AddIdentityApiEndpoints<ApplicationUser>(options =>
     {
