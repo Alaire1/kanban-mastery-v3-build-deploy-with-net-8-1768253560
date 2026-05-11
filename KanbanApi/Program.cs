@@ -10,8 +10,7 @@ using Microsoft.Extensions.FileProviders;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add DbContext with SQLite for development and SQL Server for production
-var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING") 
-    ?? builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = Environment.GetEnvironmentVariable("DB_CONNECTION_STRING");
 
 Console.WriteLine($"ENV: {Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")}");
 Console.WriteLine($"CONN: {(connectionString == null ? "NULL" : "FOUND")}");
