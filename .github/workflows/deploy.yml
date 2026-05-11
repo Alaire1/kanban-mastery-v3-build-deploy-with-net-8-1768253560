@@ -22,7 +22,7 @@ jobs:
           dotnet test KanbanApi.Tests/KanbanApi.Tests.csproj -c Release
 
       - name: Install EF Core tools
-        run: dotnet tool install --global dotnet-ef
+        run: dotnet tool install --global dotnet-ef --version 8.0.0
 
       - name: Add dotnet tools to PATH
         run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
